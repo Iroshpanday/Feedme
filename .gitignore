@@ -1,0 +1,13 @@
+# Django
+*.sqlite3
+__pycache__/
+*.pyc
+.env
+
+# Node.js
+node_modules/
+static/css/output.css  # Tailwind-generated file (can be rebuilt)
+
+# IDE
+.vscode/
+.idea/
