@@ -39,8 +39,42 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'compressor',
+    'rest_framework', 
+    'django.contrib.sites',  # Required by allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',  # Optional: for social auth
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     
 ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+SITE_ID = 1  # Required for allauth
+
+# Allauth settings
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # or 'mandatory'
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+ACCOUNT_LOGOUT_REDIRECT = '/'  # Where to redirect after logout
+ACCOUNT_SESSION_REMEMBER = True  # "Remember me" functionality
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Allow login via username or email
+ACCOUNT_EMAIL_REQUIRED = True   # Require email for signup
+ACCOUNT_UNIQUE_EMAIL = True     # Ensure emails are unique
+
+
+# Email configuration (for Gmail example)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nepallover2075@gmail.com'  # Your Gmail address
+  # Generate an App Password in Google Account
+  # Move to environment variables
+EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')  # Never hardcode!
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'feedme.urls'
@@ -71,6 +106,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'feedme.wsgi.application'
 
