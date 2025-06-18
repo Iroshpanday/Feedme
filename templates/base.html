@@ -1,0 +1,26 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FeedMe{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    {% include 'includes/_navbar.html' %}
+
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        <!-- Child templates will insert content here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer (optional) -->
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        © 2025 FeedMe
+    </footer>
+</body>
+</html>
