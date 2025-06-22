@@ -1,0 +1,27 @@
+# Core framework
+Django>=5.2.3
+
+# REST framework
+djangorestframework
+
+# Static files compression
+django-compressor
+
+# Authentication (Allauth + Google & GitHub providers)
+django-allauth
+requests  # Needed by allauth social providers
+oauthlib  # Required for OAuth backends
+python3-openid  # Optional but often required for some providers
+
+cryptography
+django-filter
+Pillow
+django-extensions
+
+
+# Optional: Email backend dependencies (if needed for Gmail support)
+# You may not need to explicitly install smtplib, it's built-in
+
+# Optional: If you use SQLite (default), no extra package needed
+# If you switch to PostgreSQL later, you'll need psycopg2 or psycopg2-binary
+
