@@ -3,7 +3,14 @@ from django.db.models import Avg, Count, Q
 from django.utils import timezone
 from datetime import timedelta
 from .models import Product, Category, Brand, Review, SearchQuery, ProductView
-
+# Add these imports at the top of views.py
+from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from .forms import ProductForm
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.utils.text import slugify
 
 def home_view(request):
     """Home page view with dynamic content"""
@@ -273,3 +280,96 @@ def autocomplete_search(request):
             })
     
     return JsonResponse({'suggestions': suggestions})
+
+
+
+# Add these views at the bottom of views.py
+@login_required
+@permission_required('reviews.add_product', raise_exception=True)
+def add_product_view(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Handle brand creation or selection
+            brand_name = form.cleaned_data['brand_name']
+            brand, created = Brand.objects.get_or_create(
+                name=brand_name,
+                defaults={'slug': slugify(brand_name)}
+            )
+            
+            # Create product without saving to DB yet
+            product = form.save(commit=False)
+            product.brand = brand
+            product.created_by = request.user
+            
+            # Generate slug if not provided
+            if not product.slug:
+                product.slug = slugify(f"{brand.name}-{product.name}")
+            
+            product.save()
+            form.save_m2m()  # In case we add many-to-many fields later
+            
+            messages.success(request, f'Product "{product.name}" added successfully!')
+            return redirect('reviews:product_detail', slug=product.slug)
+    else:
+        form = ProductForm()
+    
+    context = {
+        'form': form,
+        'title': 'Add New Product'
+    }
+    return render(request, 'reviews/product_form.html', context)
+
+
+class ProductCreateView(CreateView):
+    """Alternative class-based view for product creation"""
+    model = Product
+    form_class = ProductForm
+    template_name = 'reviews/product_form.html'
+    success_url = reverse_lazy('home')
+    
+    def form_valid(self, form):
+        # Handle brand creation or selection
+        brand_name = form.cleaned_data['brand_name']
+        brand, created = Brand.objects.get_or_create(
+            name=brand_name,
+            defaults={'slug': slugify(brand_name)}
+        )
+        
+        # Set the brand and creator before saving
+        self.object = form.save(commit=False)
+        self.object.brand = brand
+        self.object.created_by = self.request.user
+        
+        # Generate slug if not provided
+        if not self.object.slug:
+            self.object.slug = slugify(f"{brand.name}-{self.object.name}")
+        
+        self.object.save()
+        form.save_m2m()
+        
+        messages.success(self.request, f'Product "{self.object.name}" added successfully!')
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add New Product'
+        return context
+    
+@require_http_methods(["GET"])
+def autocomplete_brands(request):
+    """Autocomplete suggestions for brands in product form"""
+    query = request.GET.get('q', '').strip()
+    suggestions = []
+    
+    if query and len(query) >= 2:
+        brands = Brand.objects.filter(
+            name__icontains=query,
+            is_active=True
+        ).values('id', 'name')[:10]
+        
+        suggestions = list(brands)
+    
+    return JsonResponse({'brands': suggestions})
+   
+    

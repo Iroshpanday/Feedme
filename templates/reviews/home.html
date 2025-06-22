@@ -15,7 +15,7 @@
         </p>
         
         <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto mb-12">
+             <div class="max-w-2xl mx-auto mb-12">
             <form class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
                     <input type="text" 
@@ -29,13 +29,14 @@
                 </button>
             </form>
         </div>
+        
 
         <!-- Category Pills -->
         <div class="flex flex-wrap justify-center gap-3 mb-8">
             {% for category in categories %}
-            <span class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all cursor-pointer">
+            <a href="{% url 'reviews:category' category.slug %}" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all">
                 {{ category.name }} ({{ category.product_count }})
-            </span>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -48,13 +49,13 @@
         
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {% for category in categories %}
-            <div class="bg-gray-50 hover:bg-orange-50 p-6 rounded-xl text-center cursor-pointer transition-colors card-hover">
+            <a href="{% url 'reviews:category' category.slug %}" class="bg-gray-50 hover:bg-orange-50 p-6 rounded-xl text-center transition-colors card-hover">
                 <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="{{ category.icon }} text-orange-500 text-xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h3>
                 <p class="text-sm text-gray-600">{{ category.product_count }} products</p>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -67,7 +68,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for product in top_products %}
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="{% url 'reviews:product_detail' product.slug %}" class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover block">
                 <div class="aspect-square bg-gray-100 relative">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
@@ -84,13 +85,19 @@
                     <h3 class="font-bold text-lg text-gray-900 mb-2">{{ product.name }}</h3>
                     <p class="text-gray-600 text-sm mb-4">{{ product.brand }}</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-orange-600 font-semibold">${{ product.price }}</span>
-                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                            Reviews
-                        </button>
+                        <span class="text-orange-600 font-semibold">
+                            {% if product.price %}
+                                ${{ product.price }}
+                            {% else %}
+                                Price unavailable
+                            {% endif %}
+                        </span>
+                        <span class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            View Details
+                        </span>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -103,7 +110,7 @@
         
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {% for product in popular_products %}
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="{% url 'reviews:product_detail' product.slug %}" class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover block">
                 <div class="aspect-square bg-gray-100 relative">
                     {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
@@ -120,13 +127,19 @@
                     <h3 class="font-bold text-lg text-gray-900 mb-2">{{ product.name }}</h3>
                     <p class="text-gray-600 text-sm mb-4">{{ product.brand }}</p>
                     <div class="flex items-center justify-between">
-                        <span class="text-orange-600 font-semibold">${{ product.price }}</span>
-                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                            Reviews
-                        </button>
+                        <span class="text-orange-600 font-semibold">
+                            {% if product.price %}
+                                ${{ product.price }}
+                            {% else %}
+                                Price unavailable
+                            {% endif %}
+                        </span>
+                        <span class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            View Details
+                        </span>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </div>
@@ -141,9 +154,9 @@
         <p class="text-xl text-orange-100 mb-8">
             Join thousands of users and shape your future.
         </p>
-        <button class="bg-white text-orange-500 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-colors duration-200">
+        <a href="{% url 'account_signup' %}" class="bg-white text-orange-500 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-colors duration-200 inline-block">
             Get Started
-        </button>
+        </a>
     </div>
 </section>
 {% endblock %}

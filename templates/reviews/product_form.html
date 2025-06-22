@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+    <h1 class="text-3xl font-bold mb-6">{{ title }}</h1>
+    
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+                <div>
+                    <label for="id_name" class="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <p class="mt-1 text-sm text-red-600">
+                        {{ form.name.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_brand_name" class="block text-sm font-medium text-gray-700 mb-1">Brand</label>
+                    {{ form.brand_name }}
+                    {% if form.brand_name.errors %}
+                    <p class="mt-1 text-sm text-red-600">
+                        {{ form.brand_name.errors.0 }}
+                    </p>
+                    {% endif %}
+                    <p class="mt-1 text-sm text-gray-500">Start typing to see existing brands</p>
+                </div>
+                
+                <div>
+                    <label for="id_category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                    <p class="mt-1 text-sm text-red-600">
+                        {{ form.category.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_price" class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        {{ form.price }}
+                    </div>
+                    {% if form.price.errors %}
+                    <p class="mt-1 text-sm text-red-600">
+                        {{ form.price.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="id_image" class="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            {{ form.image }}
+                        </div>
+                    </div>
+                    {% if form.image.errors %}
+                    <p class="mt-1 text-sm text-red-600">
+                        {{ form.image.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+            <p class="mt-1 text-sm text-red-600">
+                {{ form.description.errors.0 }}
+            </p>
+            {% endif %}
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="id_meta_title" class="block text-sm font-medium text-gray-700 mb-1">Meta Title (SEO)</label>
+                {{ form.meta_title }}
+                {% if form.meta_title.errors %}
+                <p class="mt-1 text-sm text-red-600">
+                    {{ form.meta_title.errors.0 }}
+                </p>
+                {% endif %}
+                <p class="mt-1 text-sm text-gray-500">Optional - for search engines</p>
+            </div>
+            <div>
+                <label for="id_meta_description" class="block text-sm font-medium text-gray-700 mb-1">Meta Description (SEO)</label>
+                {{ form.meta_description }}
+                {% if form.meta_description.errors %}
+                <p class="mt-1 text-sm text-red-600">
+                    {{ form.meta_description.errors.0 }}
+                </p>
+                {% endif %}
+                <p class="mt-1 text-sm text-gray-500">Optional - for search engines</p>
+            </div>
+        </div>
+        
+        <div class="flex justify-end space-x-3">
+            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Save Product
+            </button>
+            <a href="{% url 'reviews:home' %}" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+// Add brand autocomplete functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const brandInput = document.getElementById('id_brand_name');
+    const brandCache = {};
+    const datalist = document.createElement('datalist');
+    datalist.id = 'brand-suggestions';
+    document.body.appendChild(datalist);
+    
+    brandInput.setAttribute('list', 'brand-suggestions');
+    
+    function showBrandSuggestions(brands) {
+        datalist.innerHTML = '';
+        brands.forEach(brand => {
+            const option = document.createElement('option');
+            option.value = brand.name;
+            datalist.appendChild(option);
+        });
+    }
+    
+    brandInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            datalist.innerHTML = '';
+            return;
+        }
+        
+        if (brandCache[query]) {
+            showBrandSuggestions(brandCache[query]);
+            return;
+        }
+        
+        fetch(`/api/autocomplete-brands/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                brandCache[query] = data.brands;
+                showBrandSuggestions(data.brands);
+            });
+    });
+});
+</script>
+
+<style>
+/* Add basic form styling for Django form fields */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #374151;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #6366f1;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+input[type="file"] {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Error states */
+input[type="text"].error,
+input[type="number"].error,
+textarea.error,
+select.error {
+    border-color: #ef4444;
+}
+
+input[type="text"]:focus.error,
+input[type="number"]:focus.error,
+textarea:focus.error,
+select:focus.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+</style>
+{% endblock %}
