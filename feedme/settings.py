@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'reviews',
+
     'compressor',
     'rest_framework', 
     'django.contrib.sites',  # Required by allauth

@@ -1,0 +1,107 @@
+<nav class="bg-white shadow-lg border-b border-gray-200" x-data="{ mobileMenuOpen: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-comments text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">FeedMe</span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Home
+                </a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Reviews
+                </a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Products
+                </a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    FAQ
+                </a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    About Us
+                </a>
+            </div>
+
+            <!-- Desktop Auth Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-700">Welcome, {{ user.username }}</span>
+                        <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="{% url 'account_logout' %}" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Logout
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Login
+                    </a>
+                    <a href="{% url 'account_signup' %}" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Sign Up
+                    </a>
+                {% endif %}
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95" class="md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                    Home
+                </a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                    Reviews
+                </a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                    Products
+                </a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                    FAQ
+                </a>
+                <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                    About Us
+                </a>
+                
+                {% if user.is_authenticated %}
+                    <div class="border-t border-gray-200 pt-2">
+                        <div class="px-3 py-2 text-gray-700 text-base font-medium">
+                            Welcome, {{ user.username }}
+                        </div>
+                        <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                            Dashboard
+                        </a>
+                        <a href="{% url 'account_logout' %}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                            Logout
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="border-t border-gray-200 pt-2">
+                        <a href="{% url 'account_login' %}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                            Login
+                        </a>
+                        <a href="{% url 'account_signup' %}" class="block px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-base font-medium">
+                            Sign Up
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
