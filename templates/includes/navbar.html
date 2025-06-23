@@ -31,6 +31,11 @@
                 <a href="{% url 'reviews:add_product' %}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Add Product
                 </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'reviews:add_review' %}"class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Add Review
+                    </a>
+                {% endif %}
                 
             </div>
 

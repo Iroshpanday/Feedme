@@ -7,11 +7,11 @@ from .models import Product, Category, Brand, Review, SearchQuery, ProductView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
-from .forms import ProductForm
+from .forms import ProductForm, ReviewForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.text import slugify
-
+from django.urls import reverse
 def home_view(request):
     """Home page view with dynamic content"""
     
@@ -372,4 +372,47 @@ def autocomplete_brands(request):
     
     return JsonResponse({'brands': suggestions})
    
+
+# Add this to your existing views.py
+@login_required
+def add_review_view(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, user=request.user)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.save()
+            
+            messages.success(request, 'Your review has been submitted for approval!')
+            return redirect('reviews:product_detail', slug=review.product.slug)
+    else:
+        form = ReviewForm(user=request.user)
     
+    context = {
+        'form': form,
+        'title': 'Add New Review'
+    }
+    return render(request, 'reviews/review_form.html', context)
+
+
+
+
+class ReviewCreateView(CreateView):
+    """Alternative class-based view for review creation"""
+    model = Review
+    form_class = ReviewForm
+    template_name = 'reviews/review_form.html'
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super().form_valid(form)
+        messages.success(self.request, 'Your review has been submitted for approval!')
+        return response
+    
+    def get_success_url(self):
+        return reverse('reviews:product_detail', kwargs={'slug': self.object.product.slug})    

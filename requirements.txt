@@ -17,6 +17,7 @@ cryptography
 django-filter
 Pillow
 django-extensions
+--save toastify-js
 
 
 # Optional: Email backend dependencies (if needed for Gmail support)

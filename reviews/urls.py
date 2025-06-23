@@ -21,4 +21,8 @@ urlpatterns = [
     path('api/review/<uuid:review_id>/helpful/', views.mark_review_helpful, name='mark_helpful'),
     path('api/autocomplete/', views.autocomplete_search, name='autocomplete'),
     path('api/autocomplete-brands/', views.autocomplete_brands, name='autocomplete_brands'),
+
+    # Review URLs
+    path('review/add/', views.add_review_view, name='add_review'),
+    path('review/create/', views.ReviewCreateView.as_view(), name='create_review'),
 ]

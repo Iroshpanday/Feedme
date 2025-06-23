@@ -59,6 +59,14 @@
             </div>
         </div>
     {% endif %}
+
+    {% if review_submitted %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    showToast('Your review has been submitted for approval!');
+});
+</script>
+{% endif %}
 {% else %}
     <div class="bg-gray-50 p-6 rounded-xl my-8 text-center">
         <p class="text-gray-600 mb-4">Want to share your experience with this product?</p>

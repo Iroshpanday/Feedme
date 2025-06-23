@@ -150,6 +150,48 @@ class Review(models.Model):
         choices=RATING_CHOICES,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
+    overall_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    performance_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    battery_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    camera_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    display_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    value_rating = models.IntegerField(
+        choices=RATING_CHOICES,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        null=True, blank=True
+    )
+    review_video = models.FileField(
+        upload_to='review_videos/',
+        null=True,
+        blank=True,
+        help_text="Upload a video review (only available for verified purchases)"
+    )
+    
+    # Add these new fields for open feedback
+    likes = models.TextField(blank=True, help_text="What do you like most about this mobile phone?")
+    improvements = models.TextField(blank=True, help_text="What improvements would you suggest?")
+    issues = models.TextField(blank=True, help_text="Any specific issues or problems?")
+    recommendation = models.TextField(blank=True, help_text="Would you recommend this phone? Why or why not?")
     
     # Review metadata
     is_verified_purchase = models.BooleanField(default=False)
@@ -170,6 +212,13 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.product.name} ({self.rating}★)"
+     
+     # In models.py, update the Review model
+    def save(self, *args, **kwargs):
+        # Auto-approve reviews from staff/superusers
+        if self.user.is_staff or self.user.is_superuser:
+            self.is_approved = True
+        super().save(*args, **kwargs)
 
 
 class ReviewHelpful(models.Model):
