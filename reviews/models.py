@@ -27,9 +27,9 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-@property
-def product_count_display(self):
-    return self.products.filter(is_active=True).count()
+    @property
+    def product_count_display(self):
+        return self.products.filter(is_active=True).count()
 
 
 class Brand(models.Model):
@@ -54,6 +54,24 @@ class Brand(models.Model):
         super().save(*args, **kwargs)
 
 
+class Specification(models.Model):
+    """Product specifications"""
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='specifications')
+    ram = models.CharField(max_length=50, default='4 GB')
+    processor = models.CharField(max_length=100, default='Unknown Processor')
+    camera = models.CharField(max_length=200, default='Unknown Camera')
+    display_quality = models.CharField(max_length=200, default='Unknown Display')
+    key = models.CharField(max_length=100)
+    value = models.CharField(max_length=200)
+
+    class Meta:
+        unique_together = ['product', 'key']
+        ordering = ['key']
+
+    def __str__(self):
+        return f"{self.key}: {self.value}"
+
+
 class Product(models.Model):
     """Products that can be reviewed"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -63,12 +81,11 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products')
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.ImageField(upload_to='products/', blank=True)
     created_by = models.ForeignKey(
         User, 
         on_delete=models.SET_NULL, 
         null=True, 
-        blank=True,
         related_name='created_products'
     )
     
@@ -103,7 +120,7 @@ class Product(models.Model):
 
     @property
     def average_rating(self):
-        """Calculate average rating from all reviews"""
+        """Calculate average rating"""
         reviews = self.reviews.filter(is_approved=True)
         if reviews.exists():
             return reviews.aggregate(models.Avg('rating'))['rating__avg']
@@ -180,12 +197,12 @@ class Review(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         null=True, blank=True
     )
-    review_video = models.FileField(
-        upload_to='review_videos/',
-        null=True,
-        blank=True,
-        help_text="Upload a video review (only available for verified purchases)"
-    )
+    # review_video = models.FileField(
+    #     upload_to='review_videos/',
+    #     null=True,
+    #     blank=True,
+    #     help_text="Upload a video review (only available for verified purchases)"
+    # )
     
     # Add these new fields for open feedback
     likes = models.TextField(blank=True, help_text="What do you like most about this mobile phone?")
@@ -213,7 +230,6 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.product.name} ({self.rating}★)"
      
-     # In models.py, update the Review model
     def save(self, *args, **kwargs):
         # Auto-approve reviews from staff/superusers
         if self.user.is_staff or self.user.is_superuser:
