@@ -115,8 +115,16 @@ def product_detail_view(request, slug):
     ).select_related('user').order_by('-created_at')
     
     rating_distribution = {}
+    total_reviews = product.total_reviews
+    
+    # Calculate both count and percentage for each rating
     for i in range(1, 6):
-        rating_distribution[i] = reviews.filter(rating=i).count()
+        count = reviews.filter(rating=i).count()
+        percentage = (count / total_reviews * 100) if total_reviews > 0 else 0
+        rating_distribution[i] = {
+            'count': count,
+            'percentage': percentage
+        }
     
     user_has_reviewed = False
     if request.user.is_authenticated:
@@ -136,7 +144,7 @@ def product_detail_view(request, slug):
         'reviews': reviews,
         'rating_distribution': rating_distribution,
         'average_rating': product.average_rating,
-        'total_reviews': product.total_reviews,
+        'total_reviews': total_reviews,
         'user_has_reviewed': user_has_reviewed,
         'review_form': review_form,
         'review_submitted': 'review_submitted' in request.GET,
@@ -144,8 +152,6 @@ def product_detail_view(request, slug):
     }
     
     return render(request, 'reviews/product_detail.html', context)
-
-
 def category_view(request, slug):
     category = get_object_or_404(Category, slug=slug, is_active=True)
     
