@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Out - FeedMe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signout-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        .signout-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f9844a 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .wave-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            animation: waveAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes waveAnimation {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.05); }
+            75% { transform: rotate(10deg) scale(1.05); }
+        }
+
+        .signout-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .signout-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .signout-content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .confirmation-message {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: #666;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .user-info {
+            background: #fff5f2;
+            border: 2px solid #ffe4de;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: #d97734;
+            font-size: 14px;
+        }
+
+        .user-info strong {
+            color: #b85c00;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ff6b35;
+            color: #ff6b35;
+            background: #fff5f2;
+            transform: translateY(-1px);
+        }
+
+        .benefits-info {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #1e40af;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .benefits-info ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .benefits-info li {
+            margin-bottom: 4px;
+        }
+
+        .quick-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quick-action {
+            flex: 1;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            background: #fff5f2;
+            border-color: #ff6b35;
+            color: #ff6b35;
+        }
+
+        .back-link {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5e9;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .back-link a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .signout-container {
+                margin: 10px;
+            }
+            
+            .signout-header {
+                padding: 30px 20px;
+            }
+            
+            .signout-content {
+                padding: 30px 20px;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+
+            .quick-action {
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signout-container">
+        <div class="signout-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <span style="color: #ff6b35; font-weight: bold; font-size: 20px;">F</span>
+                </div>
+                <div class="logo-text">FeedMe</div>
+            </div>
+            <div class="wave-icon">👋</div>
+            <h1 class="signout-title">Sign Out</h1>
+            <p class="signout-subtitle">Are you sure you want to sign out?</p>
+        </div>
+
+        <div class="signout-content">
+            {% if user.is_authenticated %}
+                <div class="user-info">
+                    <strong>Currently signed in as:</strong><br>
+                    {{ user.get_full_name|default:user.username }}
+                    {% if user.email %}
+                        <br><small>{{ user.email }}</small>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="confirmation-message">
+                You're about to sign out of your FeedMe account. You'll need to sign in again to access your reviews and personalized recommendations.
+            </div>
+
+            <div class="benefits-info">
+                <strong>📊 What you'll miss when signed out:</strong>
+                <ul>
+                    <li>Personalized product recommendations</li>
+                    <li>Your saved reviews and favorites</li>
+                    <li>Custom feedback insights</li>
+                    <li>Access to premium features</li>
+                </ul>
+            </div>
+
+            <div class="quick-actions">
+                <a href="/dashboard/" class="quick-action">
+                    📊<br>Dashboard
+                </a>
+                <a href="/profile/" class="quick-action">
+                    👤<br>Profile
+                </a>
+                <a href="/reviews/" class="quick-action">
+                    ⭐<br>Reviews
+                </a>
+            </div>
+
+            <!-- Django form starts here -->
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-danger">
+                        Yes, Sign Me Out
+                    </button>
+                    
+                    <a href="javascript:history.back()" class="btn btn-secondary">
+                        Cancel, Keep Me Signed In
+                    </a>
+                </div>
+            </form>
+
+            <div class="back-link">
+                Need help? <a href="/support/">Contact Support</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load necessary Django allauth template tags -->
+    {% load account %}
+
+    <script>
+        // Add confirmation dialog for extra security
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const confirmed = confirm('Are you sure you want to sign out?');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+
+        // Auto-redirect after successful logout (if needed)
+        // @ts-nocheck
+    // {% if messages %}
+    //     {% for message in messages %}
+    //         {% if message.tags == 'success' %}
+    //             setTimeout(function() {
+    //                 window.location.href = '/';
+    //             }, 2000);
+    //         {% endif %}
+    //     {% endfor %}
+    // {% endif %}
+    </script>
+</body>
+</html>

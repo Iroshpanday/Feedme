@@ -1,0 +1,444 @@
+{% load socialaccount %}
+{% load account %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FeedMe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            margin: 20px;
+        }
+
+        .signup-header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f9844a 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .signup-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .signup-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .signup-form {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .signup-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f9844a 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .signup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5e9;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-messages {
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            color: #c33;
+            font-size: 14px;
+        }
+
+        .error-messages ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .error-messages li {
+            margin-bottom: 5px;
+        }
+
+        .social-signup {
+            margin-bottom: 25px;
+        }
+
+        .social-button {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: white;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-button:hover {
+            border-color: #ff6b35;
+            background: #fff5f2;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .terms-text a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                margin: 10px;
+            }
+            
+            .signup-header {
+                padding: 30px 20px;
+            }
+            
+            .signup-form {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <span style="color: #ff6b35; font-weight: bold; font-size: 20px;">F</span>
+                </div>
+                <div class="logo-text">FeedMe</div>
+            </div>
+            <h1 class="signup-title">Join FeedMe</h1>
+            <p class="signup-subtitle">Create your account to get started</p>
+        </div>
+
+        <div class="signup-form">
+            <!-- Django form starts here -->
+            <form method="post" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="error-messages">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+                    <input 
+                        type="email"
+                        name="{{ form.email.name }}"
+                        class="form-input"
+                        id="{{ form.email.id_for_label }}"
+                        placeholder="Enter your email address"
+                        {% if form.email.value %}value="{{ form.email.value }}"{% endif %}
+                        required
+                    >
+                    {% if form.email.errors %}
+                        <div class="error-messages">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if form.username %}
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+                    <input 
+                        type="text"
+                        name="{{ form.username.name }}"
+                        class="form-input"
+                        id="{{ form.username.id_for_label }}"
+                        placeholder="Choose a username"
+                        {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
+                        required
+                    >
+                    {% if form.username.errors %}
+                        <div class="error-messages">
+                            {% for error in form.username.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if form.first_name %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.first_name.id_for_label }}">First Name</label>
+                        <input 
+                            type="text"
+                            name="{{ form.first_name.name }}"
+                            class="form-input"
+                            id="{{ form.first_name.id_for_label }}"
+                            placeholder="First name"
+                            {% if form.first_name.value %}value="{{ form.first_name.value }}"{% endif %}
+                        >
+                        {% if form.first_name.errors %}
+                            <div class="error-messages">
+                                {% for error in form.first_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form.last_name %}
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        <input 
+                            type="text"
+                            name="{{ form.last_name.name }}"
+                            class="form-input"
+                            id="{{ form.last_name.id_for_label }}"
+                            placeholder="Last name"
+                            {% if form.last_name.value %}value="{{ form.last_name.value }}"{% endif %}
+                        >
+                        {% if form.last_name.errors %}
+                            <div class="error-messages">
+                                {% for error in form.last_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+                    <input 
+                        type="password"
+                        name="{{ form.password1.name }}"
+                        class="form-input"
+                        id="{{ form.password1.id_for_label }}"
+                        placeholder="Create a password"
+                        required
+                    >
+                    {% if form.password1.errors %}
+                        <div class="error-messages">
+                            {% for error in form.password1.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                    <input 
+                        type="password"
+                        name="{{ form.password2.name }}"
+                        class="form-input"
+                        id="{{ form.password2.id_for_label }}"
+                        placeholder="Confirm your password"
+                        required
+                    >
+                    {% if form.password2.errors %}
+                        <div class="error-messages">
+                            {% for error in form.password2.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="terms-text">
+                    By creating an account, you agree to our 
+                    <a href="/terms/">Terms of Service</a> and 
+                    <a href="/privacy/">Privacy Policy</a>
+                </div>
+
+                <button type="submit" class="signup-button">Create Account</button>
+            </form>
+
+            <!-- Social Signup (if enabled) -->
+            {% if socialaccount_providers %}
+                <div class="divider">
+                    <span>or sign up with</span>
+                </div>
+                
+                <div class="social-signup">
+                    {% for provider in socialaccount_providers %}
+                        <a href="{% provider_login_url provider.id %}" class="social-button">
+                            Sign up with {{ provider.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="login-link">
+                Already have an account? <a href="{% url 'account_login' %}">Sign in here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load necessary Django allauth template tags -->
+   
+</body>
+</html>
