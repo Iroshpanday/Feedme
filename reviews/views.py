@@ -1,22 +1,23 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib import messages
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Product, Review, Brand, Specification, Category,SearchQuery,ProductView
+from .forms import ReviewForm, ProductForm, SpecificationFormSet
+import logging
+from django.utils.text import slugify
 from django.db.models import Avg, Count, Q
 from django.utils import timezone
 from datetime import timedelta
-from .models import Product, Category, Brand, Review, SearchQuery, ProductView, Specification
-from django.contrib.auth.decorators import login_required, permission_required
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from .forms import ProductForm, ReviewForm, SpecificationFormSet
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.utils.text import slugify
-from django.urls import reverse
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
+
+logger = logging.getLogger(__name__)
 
 def home_view(request):
     """Home page view with dynamic content"""
-    
     categories = Category.objects.filter(is_active=True).annotate(
         product_count=Count('products', filter=Q(products__is_active=True))
     ).order_by('name')[:12]
@@ -59,7 +60,6 @@ def home_view(request):
     
     return render(request, 'reviews/home.html', context)
 
-
 def search_view(request):
     """Handle search functionality"""
     query = request.GET.get('q', '').strip()
@@ -95,7 +95,6 @@ def search_view(request):
     
     return render(request, 'reviews/search_results.html', context)
 
-
 def product_detail_view(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
     
@@ -117,7 +116,6 @@ def product_detail_view(request, slug):
     rating_distribution = {}
     total_reviews = product.total_reviews
     
-    # Calculate both count and percentage for each rating
     for i in range(1, 6):
         count = reviews.filter(rating=i).count()
         percentage = (count / total_reviews * 100) if total_reviews > 0 else 0
@@ -136,7 +134,6 @@ def product_detail_view(request, slug):
     review_form = ReviewForm(user=request.user)
     review_form.fields['product'].initial = product
     
-    # Get specifications
     specifications = product.specifications.all()
     
     context = {
@@ -152,6 +149,7 @@ def product_detail_view(request, slug):
     }
     
     return render(request, 'reviews/product_detail.html', context)
+
 def category_view(request, slug):
     category = get_object_or_404(Category, slug=slug, is_active=True)
     
@@ -169,7 +167,6 @@ def category_view(request, slug):
     }
     
     return render(request, 'reviews/category.html', context)
-
 
 def brand_view(request, slug):
     brand = get_object_or_404(Brand, slug=slug, is_active=True)
@@ -189,7 +186,6 @@ def brand_view(request, slug):
     
     return render(request, 'reviews/brand.html', context)
 
-
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -198,8 +194,7 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
-
-@require_http_methods(["POST"])
+@require_POST
 @login_required
 def mark_review_helpful(request, review_id):
     from .models import ReviewHelpful
@@ -225,8 +220,7 @@ def mark_review_helpful(request, review_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
-
-@require_http_methods(["GET"])
+@require_POST
 def autocomplete_search(request):
     query = request.GET.get('q', '').strip()
     suggestions = []
@@ -273,8 +267,7 @@ def autocomplete_search(request):
     
     return JsonResponse({'suggestions': suggestions})
 
-
-@require_http_methods(["GET"])
+@require_POST
 def autocomplete_brands(request):
     query = request.GET.get('q', '').strip()
     suggestions = []
@@ -288,7 +281,6 @@ def autocomplete_brands(request):
         suggestions = list(brands)
     
     return JsonResponse({'brands': suggestions})
-
 
 @login_required
 @permission_required('reviews.add_product', raise_exception=True)
@@ -329,7 +321,6 @@ def add_product_view(request):
         'title': 'Add New Product'
     }
     return render(request, 'reviews/product_form.html', context)
-
 
 class ProductCreateView(CreateView):
     model = Product
@@ -373,20 +364,47 @@ class ProductCreateView(CreateView):
         else:
             return self.form_invalid(form)
 
-
 @login_required
 def add_review_view(request):
+    """
+    Render and handle the review form for a standalone review page
+    """
     if request.method == 'POST':
-        form = ReviewForm(request.POST, user=request.user)
+        form = ReviewForm(request.POST, request.FILES, user=request.user)
+        logger.info(f"Received POST data: {request.POST}, Files: {request.FILES}, Initial form: {form.initial}")
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user
-            review.save()
-            
-            messages.success(request, 'Your review has been submitted for approval!')
-            return redirect('reviews:product_detail', slug=review.product.slug)
+            # Check for existing review
+            existing_review = Review.objects.filter(product=review.product, user=review.user).first()
+            if existing_review:
+                logger.info(f"Updating existing review ID: {existing_review.id}")
+                existing_review.title = review.title
+                existing_review.content = review.content
+                existing_review.rating = review.rating
+                existing_review.is_approved = True
+                existing_review.save()
+                messages.success(request, 'Your existing review has been updated successfully!')
+                return redirect('reviews:product_detail', slug=review.product.slug)
+            else:
+                # Force approval for debugging
+                review.is_approved = True
+                review.save()
+                logger.info(f"Review saved successfully! ID: {review.id}, Product: {review.product.id}, User: {review.user.id}, Data: {form.cleaned_data}")
+                messages.success(request, 'Your review has been submitted successfully!')
+                return redirect('reviews:product_detail', slug=review.product.slug)
+        else:
+            logger.warning(f"Form validation failed for /review/add/: Request data: {request.POST}, Files: {request.FILES}, Errors: {form.errors}")
+            context = {
+                'form': form,
+                'title': 'Add New Review',
+                'errors': form.errors,
+                'debug_message': 'POST request received but form validation failed. Check logs for details.'
+            }
+            return render(request, 'reviews/review_form.html', context)
     else:
         form = ReviewForm(user=request.user)
+        logger.info(f"Initial form for GET: {form.initial}")
     
     context = {
         'form': form,
@@ -394,8 +412,85 @@ def add_review_view(request):
     }
     return render(request, 'reviews/review_form.html', context)
 
+@login_required
+@require_POST
+def submit_review_view(request, slug):
+    """
+    Handle review form submission for a specific product
+    """
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    
+    form = ReviewForm(request.POST, request.FILES, user=request.user)
+    
+    if form.is_valid():
+        try:
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product = product
+            # Check for existing review
+            existing_review = Review.objects.filter(product=review.product, user=review.user).first()
+            if existing_review:
+                logger.info(f"Updating existing review ID: {existing_review.id}")
+                existing_review.title = review.title
+                existing_review.content = review.content
+                existing_review.rating = review.rating
+                existing_review.is_approved = True
+                existing_review.save()
+                messages.success(request, 'Your existing review has been updated successfully!')
+            else:
+                # Force approval for debugging
+                review.is_approved = True
+                review.save()
+                logger.info(f"Review saved successfully! ID: {review.id}, Product: {review.product.id}, User: {review.user.id}, Data: {form.cleaned_data}")
+            
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Review submitted successfully!',
+                    'redirect_url': reverse('reviews:product_detail', kwargs={'slug': product.slug})
+                })
+            
+            messages.success(request, 'Your review has submitted successfully!')
+            return redirect('reviews:product_detail', slug=product.slug)
+            
+        except Exception as e:
+            logger.error(f"Error saving review for product {product.slug}: {str(e)}")
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'An error occurred while submitting your review.',
+                    'errors': {'__all__': [str(e)]}
+                }, status=500)
+            messages.error(request, 'An error occurred while submitting your review.')
+            return redirect('reviews:product_detail', slug=product.slug)
+    
+    else:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': False,
+                'message': 'Please fix the errors below.',
+                'errors': dict(form.errors)
+            }, status=400)
+        
+        context = {
+            'product': product,
+            'review_form': form,
+            'user_has_reviewed': Review.objects.filter(product=product, user=request.user).exists(),
+            'reviews': Review.objects.filter(product=product, is_approved=True).select_related('user').order_by('-created_at'),
+            'rating_distribution': {
+                i: {
+                    'count': Review.objects.filter(product=product, rating=i, is_approved=True).count(),
+                    'percentage': (Review.objects.filter(product=product, rating=i, is_approved=True).count() / 
+                                 product.total_reviews * 100) if product.total_reviews > 0 else 0
+                } for i in range(1, 6)
+            },
+            'average_rating': product.average_rating,
+            'total_reviews': product.total_reviews,
+            'specifications': product.specifications.all(),
+        }
+        return render(request, 'reviews/product_detail.html', context)
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
     template_name = 'reviews/review_form.html'
@@ -407,9 +502,38 @@ class ReviewCreateView(CreateView):
     
     def form_valid(self, form):
         form.instance.user = self.request.user
-        response = super().form_valid(form)
-        messages.success(self.request, 'Your review has been submitted for approval!')
-        return response
+        
+        if not form.cleaned_data.get('is_verified_purchase', False):
+            form.instance.review_video = None
+        
+        try:
+            review = form.save()
+            logger.info(f"Review saved successfully! ID: {review.id}")
+            
+            if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Review submitted!',
+                    'redirect_url': self.get_success_url()
+                })
+            
+            messages.success(self.request, 'Review submitted successfully!')
+            return redirect(self.get_success_url())
+            
+        except Exception as e:
+            logger.error(f"Error saving review: {str(e)}")
+            messages.error(self.request, 'Error saving review')
+            return self.form_invalid(form)
+    
+    def form_invalid(self, form):
+        logger.info(f"Form errors: {form.errors}")
+        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': False,
+                'errors': dict(form.errors),
+                'message': 'Please fix the errors below'
+            })
+        return super().form_invalid(form)
     
     def get_success_url(self):
         return reverse('reviews:product_detail', kwargs={'slug': self.object.product.slug})

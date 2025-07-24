@@ -1,0 +1,908 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ title }}</h1>
+            <p class="text-gray-600">Share your experience and help others make informed decisions</p>
+        </div>
+        
+        <form method="post" class="space-y-6" novalidate id="review-form">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                    <div>
+                        {% for error in form.non_field_errors %}
+                            <p class="text-sm text-red-700 font-medium">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            
+            <!-- Product Selection Card -->
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-center mb-4">
+        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-900">Select Product</h2>
+    </div>
+    
+    <label for="{{ form.product.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+        Mobile Phone <span class="text-red-500">*</span>
+    </label>
+    <select name="{{ form.product.name }}" id="{{ form.product.id_for_label }}" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        {% for value, label in form.product.field.choices %}
+            <option value="{{ value }}" {% if form.product.value == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+    {% if form.product.errors %}
+    <p class="mt-2 text-sm text-red-600 flex items-center">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        {{ form.product.errors.0 }}
+    </p>
+    {% endif %}
+</div>
+            
+            <!-- Review Title Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-semibold text-gray-900">Review Title</h2>
+                </div>
+                
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Give your review a title <span class="text-red-500">*</span>
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <p class="mt-2 text-sm text-red-600 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    {{ form.title.errors.0 }}
+                </p>
+                {% endif %}
+            </div>
+            
+            <!-- Star Ratings Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900">Rate This Phone</h2>
+                        <p class="text-sm text-gray-600">Click on the stars to rate each feature</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Overall Satisfaction -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Overall Satisfaction</h3>
+                                <p class="text-sm text-gray-600">Your general experience with this phone</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="overall_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="overall_rating_{{ i }}" name="overall_rating" value="{{ i }}" 
+                                           {% if form.overall_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="overall_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.overall_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.overall_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Performance -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Performance</h3>
+                                <p class="text-sm text-gray-600">Speed, multitasking, and responsiveness</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="performance_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="performance_rating_{{ i }}" name="performance_rating" value="{{ i }}" 
+                                           {% if form.performance_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="performance_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.performance_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.performance_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Battery Life -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Battery Life</h3>
+                                <p class="text-sm text-gray-600">How long the battery lasts during use</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="battery_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="battery_rating_{{ i }}" name="battery_rating" value="{{ i }}" 
+                                           {% if form.battery_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="battery_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.battery_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.battery_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Camera Quality -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Camera Quality</h3>
+                                <p class="text-sm text-gray-600">Photo and video quality in various conditions</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="camera_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="camera_rating_{{ i }}" name="camera_rating" value="{{ i }}" 
+                                           {% if form.camera_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="camera_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.camera_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.camera_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Display Quality -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Display Quality</h3>
+                                <p class="text-sm text-gray-600">Screen brightness, colors, and clarity</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="display_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="display_rating_{{ i }}" name="display_rating" value="{{ i }}" 
+                                           {% if form.display_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="display_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.display_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.display_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Value for Money -->
+                    <div class="rating-row">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900">Value for Money</h3>
+                                <p class="text-sm text-gray-600">Price compared to features and quality</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="star-rating" data-field="value_rating">
+                                    {% for i in "12345" %}
+                                    <input type="radio" id="value_rating_{{ i }}" name="value_rating" value="{{ i }}" 
+                                           {% if form.value_rating.value == i %}checked{% endif %} class="sr-only">
+                                    <label for="value_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
+                                    {% endfor %}
+                                </div>
+                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
+                            </div>
+                        </div>
+                        {% if form.value_rating.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.value_rating.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900">Your Detailed Feedback</h2>
+                        <p class="text-sm text-gray-600">Share your thoughts and experiences</p>
+                    </div>
+                </div>
+                
+                <div class="grid gap-6">
+                    <!-- What you like -->
+                    <div>
+                        <label for="{{ form.likes.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            What do you like most about this mobile phone?
+                        </label>
+                        {{ form.likes }}
+                        {% if form.likes.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.likes.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Improvements -->
+                    <div>
+                        <label for="{{ form.improvements.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            What improvements would you suggest?
+                        </label>
+                        {{ form.improvements }}
+                        {% if form.improvements.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.improvements.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Issues -->
+                    <div>
+                        <label for="{{ form.issues.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Any specific issues or problems?
+                        </label>
+                        {{ form.issues }}
+                        {% if form.issues.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.issues.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Recommendation -->
+                    <div>
+                        <label for="{{ form.recommendation.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Would you recommend this phone? Why or why not?
+                        </label>
+                        {{ form.recommendation }}
+                        {% if form.recommendation.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.recommendation.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Verification -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center">
+                    {{ form.is_verified_purchase }}
+                    <label for="{{ form.is_verified_purchase.id_for_label }}" class="ml-3 text-sm font-medium text-gray-700 flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        I am a verified purchaser of this product
+                    </label>
+                </div>
+            </div>
+
+            <!-- Video Upload Card (Conditional) -->
+<div id="video-upload-card" class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hidden">
+    <div class="flex items-center mb-4">
+        <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-900">Video Review</h2>
+    </div>
+    
+    <div class="space-y-4">
+        <div>
+            <label for="{{ form.review_video.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                Upload your video review
+            </label>
+            <div class="mt-1 flex items-center">
+                <label for="review_video" class="cursor-pointer">
+                    <span class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        Choose Video File
+                    </span>
+                    <input id="review_video" name="review_video" type="file" accept="video/*" class="sr-only">
+                </label>
+                <span id="video-file-name" class="ml-4 text-sm text-gray-500">No file chosen</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-500">
+                Upload a short video review (max 50MB, MP4/MOV/AVI/WEBM formats)
+            </p>
+            {% if form.review_video.errors %}
+            <p class="mt-2 text-sm text-red-600 flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                {{ form.review_video.errors.0 }}
+            </p>
+            {% endif %}
+        </div>
+        
+        <!-- Video Preview (will be shown after selection) -->
+        <div id="video-preview-container" class="hidden mt-4">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">Video Preview</h3>
+            <div class="bg-gray-100 rounded-lg overflow-hidden">
+                <video id="video-preview" controls class="w-full" style="max-height: 300px;">
+                    Your browser doesn't support HTML5 video tag.
+                </video>
+            </div>
+            <button type="button" id="remove-video-btn" class="mt-2 inline-flex items-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Remove Video
+            </button>
+        </div>
+    </div>
+</div>
+
+
+            
+
+            
+            
+            <!-- Submit Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-end">
+                <a href="{% url 'reviews:home' %}" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    Cancel
+                </a>
+                <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                    Submit Review
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center">
+        <svg class="h-5 w-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toast-message">Review submitted successfully!</span>
+        <button onclick="hideToast()" class="ml-4 text-green-200 hover:text-white">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<style>
+/* Enhanced Form Styles */
+select, input[type="text"], textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+select:focus, input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+select:hover, input[type="text"]:hover, textarea:hover {
+    border-color: #d1d5db;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Enhanced Checkbox */
+input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    border-color: #059669;
+    background-color: #059669;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 5.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.5l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+/* Enhanced Star Rating */
+.star-rating {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.star {
+    color: #d1d5db;
+    transition: all 0.2s ease-in-out;
+    font-size: 1.5rem;
+    user-select: none;
+}
+
+.star:hover {
+    color: #fbbf24;
+    transform: scale(1.1);
+}
+
+.star.filled {
+    color: #f59e0b;
+}
+
+.star.active {
+    color: #f59e0b;
+}
+
+.rating-row {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.rating-row:last-child {
+    border-bottom: none;
+}
+
+.rating-text {
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.rating-text.visible {
+    opacity: 1;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Loading state */
+.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading button {
+    position: relative;
+}
+
+.loading button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin: -0.5rem 0 0 -0.5rem;
+    border: 2px solid transparent;
+    border-top: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .star {
+        font-size: 1.25rem;
+    }
+    
+    .rating-text {
+        display: none;
+    }
+}
+
+/* Video Upload Styles */
+#video-upload-card {
+    transition: all 0.3s ease;
+}
+
+#video-preview {
+    background-color: #000;
+}
+
+/* File input styling */
+input[type="file"]::file-selector-button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+/* Drag and drop area (optional enhancement) */
+.drag-active {
+    border-color: #6366f1;
+    background-color: #f0f0ff;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ratingLabels = {
+        1: 'Poor',
+        2: 'Fair', 
+        3: 'Good',
+        4: 'Very Good',
+        5: 'Excellent'
+    };
+
+    // Video upload functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const verifiedCheckbox = document.querySelector('#{{ form.is_verified_purchase.id_for_label }}');
+    const videoUploadCard = document.getElementById('video-upload-card');
+    const videoInput = document.getElementById('review_video');
+    const videoFileName = document.getElementById('video-file-name');
+    const videoPreviewContainer = document.getElementById('video-preview-container');
+    const videoPreview = document.getElementById('video-preview');
+    const removeVideoBtn = document.getElementById('remove-video-btn');
+    
+    // Toggle video upload section based on verified purchase checkbox
+    if (verifiedCheckbox && videoUploadCard) {
+        verifiedCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                videoUploadCard.classList.remove('hidden');
+            } else {
+                videoUploadCard.classList.add('hidden');
+                // Clear any selected video if unchecked
+                if (videoInput) videoInput.value = '';
+                if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+                if (videoFileName) videoFileName.textContent = 'No file chosen';
+            }
+        });
+        
+        // Initialize state on page load
+        if (verifiedCheckbox.checked) {
+            videoUploadCard.classList.remove('hidden');
+        }
+    }
+    
+    // Handle video file selection
+    if (videoInput) {
+        videoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                // Check file size (client-side validation)
+                if (file.size > 50 * 1024 * 1024) { // 50MB
+                    showToast('Video file too large (max 50MB)', 'error');
+                    this.value = '';
+                    videoFileName.textContent = 'No file chosen';
+                    return;
+                }
+                
+                // Check file extension
+                const validExtensions = ['.mp4', '.mov', '.avi', '.webm'];
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (!validExtensions.includes('.' + ext)) {
+                    showToast('Unsupported video format', 'error');
+                    this.value = '';
+                    videoFileName.textContent = 'No file chosen';
+                    return;
+                }
+                
+                videoFileName.textContent = file.name;
+                
+                // Show preview
+                const videoURL = URL.createObjectURL(file);
+                videoPreview.src = videoURL;
+                videoPreviewContainer.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // Handle video removal
+    if (removeVideoBtn) {
+        removeVideoBtn.addEventListener('click', function() {
+            if (videoInput) videoInput.value = '';
+            if (videoFileName) videoFileName.textContent = 'No file chosen';
+            if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+            if (videoPreview) videoPreview.src = '';
+        });
+    }
+});
+    
+    // Initialize all star ratings
+    document.querySelectorAll('.star-rating').forEach(initializeStarRating);
+    
+    function initializeStarRating(ratingContainer) {
+        const stars = ratingContainer.querySelectorAll('.star');
+        const inputs = ratingContainer.querySelectorAll('input[type="radio"]');
+        const ratingText = ratingContainer.parentElement.querySelector('.rating-text');
+        
+        // Set initial state
+        updateStarDisplay(ratingContainer);
+        
+        // Add event listeners
+        stars.forEach((star, index) => {
+            const input = inputs[index];
+            
+            star.addEventListener('click', () => {
+                if (input) {
+                    input.checked = true;
+                    updateStarDisplay(ratingContainer);
+                    
+                    // Trigger change event for form validation
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+            
+            star.addEventListener('mouseenter', () => {
+                highlightStars(ratingContainer, index + 1);
+                if (ratingText) {
+                    ratingText.textContent = ratingLabels[index + 1] || '';
+                    ratingText.classList.add('visible');
+                }
+            });
+        });
+        
+        ratingContainer.addEventListener('mouseleave', () => {
+            updateStarDisplay(ratingContainer);
+            if (ratingText) {
+                const checkedInput = ratingContainer.querySelector('input[type="radio"]:checked');
+                if (checkedInput) {
+                    ratingText.textContent = ratingLabels[checkedInput.value] || '';
+                } else {
+                    ratingText.textContent = '';
+                    ratingText.classList.remove('visible');
+                }
+            }
+        });
+    }
+    
+    function updateStarDisplay(ratingContainer) {
+        const stars = ratingContainer.querySelectorAll('.star');
+        const checkedInput = ratingContainer.querySelector('input[type="radio"]:checked');
+        const ratingText = ratingContainer.parentElement.querySelector('.rating-text');
+        
+        stars.forEach((star, index) => {
+            star.classList.remove('filled', 'active');
+        });
+        
+        if (checkedInput) {
+            const rating = parseInt(checkedInput.value);
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('filled');
+                }
+            });
+            
+            if (ratingText) {
+                ratingText.textContent = ratingLabels[rating] || '';
+                ratingText.classList.add('visible');
+            }
+        } else {
+            if (ratingText) {
+                ratingText.textContent = '';
+                ratingText.classList.remove('visible');
+            }
+        }
+    }
+    
+    function highlightStars(ratingContainer, count) {
+        const stars = ratingContainer.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.classList.remove('filled', 'active');
+            if (index < count) {
+                star.classList.add('active');
+            }
+        });
+    }
+    
+    // Form submission handling
+    const form = document.getElementById('review-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            // Add loading state
+            form.classList.add('loading');
+            
+            // Validate required star ratings
+            const requiredRatings = ['overall_rating'];
+            let hasErrors = false;
+            
+            requiredRatings.forEach(ratingName => {
+                const ratingInput = form.querySelector(`input[name="${ratingName}"]:checked`);
+                if (!ratingInput) {
+                    hasErrors = true;
+                    // You can add custom error handling here
+                }
+            });
+            
+            if (hasErrors) {
+                e.preventDefault();
+                form.classList.remove('loading');
+                showToast('Please provide all required ratings', 'error');
+                return;
+            }
+        });
+    }
+    
+    // Check for success message in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        showToast('Review submitted successfully!', 'success');
+    }
+    
+    // Auto-hide form errors after 5 seconds
+    setTimeout(() => {
+        document.querySelectorAll('.text-red-600').forEach(error => {
+            error.style.transition = 'opacity 0.5s ease-out';
+            error.style.opacity = '0.7';
+        });
+    }, 5000);
+});
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+    
+    if (toast && toastMessage) {
+        // Update message and styling based on type
+        toastMessage.textContent = message;
+        
+        const toastContent = toast.querySelector('div');
+        toastContent.className = `px-6 py-4 rounded-lg shadow-lg flex items-center ${
+            type === 'success' 
+                ? 'bg-green-500 text-white' 
+                : 'bg-red-500 text-white'
+        }`;
+        
+        // Show toast
+        toast.style.transform = 'translateX(0)';
+        
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            hideToast();
+        }, 5000);
+    }
+}
+
+function hideToast() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.style.transform = 'translateX(100%)';
+    }
+}
+
+// Smooth scroll for form validation errors
+function scrollToError() {
+    const firstError = document.querySelector('.text-red-600');
+    if (firstError) {
+        firstError.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+}
+
+// Add some nice micro-interactions
+document.querySelectorAll('input, textarea, select').forEach(input => {
+    input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+    });
+    
+    input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+    });
+});
+
+// Form auto-save to prevent data loss (stores in memory only)
+let formData = {};
+const formInputs = document.querySelectorAll('input, textarea, select');
+
+formInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        formData[this.name] = this.value;
+    });
+    
+    input.addEventListener('change', function() {
+        formData[this.name] = this.value;
+    });
+});
+
+// Restore form data if page is refreshed
+window.addEventListener('beforeunload', function() {
+    // In a real application, you might want to save to sessionStorage
+    // but as per instructions, we're keeping it in memory only
+});
+
+// Add keyboard navigation for star ratings
+document.addEventListener('keydown', function(e) {
+    if (e.target.closest('.star-rating')) {
+        const ratingContainer = e.target.closest('.star-rating');
+        const inputs = ratingContainer.querySelectorAll('input[type="radio"]');
+        const currentIndex = Array.from(inputs).findIndex(input => input === document.activeElement);
+        
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prevIndex = Math.max(0, currentIndex - 1);
+            inputs[prevIndex].focus();
+            inputs[prevIndex].checked = true;
+            updateStarDisplay(ratingContainer);
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            const nextIndex = Math.min(inputs.length - 1, currentIndex + 1);
+            inputs[nextIndex].focus();
+            inputs[nextIndex].checked = true;
+            updateStarDisplay(ratingContainer);
+        }
+    }
+});
+</script>
+{% endblock %}
+
+
+<!-- <input type="file" name="review_video" class="form-control" aria-describedby="id_review_video_helptext" id="id_review_video"> -->

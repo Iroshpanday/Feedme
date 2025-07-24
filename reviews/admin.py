@@ -7,7 +7,6 @@ from .models import (
     SearchQuery, ProductView
 )
 
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'icon', 'product_count', 'is_active', 'created_at']
@@ -19,7 +18,6 @@ class CategoryAdmin(admin.ModelAdmin):
     def product_count(self, obj):
         return obj.product_count
     product_count.short_description = 'Products'
-
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
@@ -38,14 +36,21 @@ class BrandAdmin(admin.ModelAdmin):
         return "No Logo"
     logo_preview.short_description = 'Logo'
 
-
 class ReviewInline(admin.TabularInline):
     model = Review
     extra = 0
-    fields = ['user', 'title', 'rating', 'is_approved', 'created_at']
-    readonly_fields = ['created_at']
+    fields = ['user', 'title', 'rating', 'is_approved', 'created_at', 'review_video_preview']
+    readonly_fields = ['created_at', 'review_video_preview']
     can_delete = False
-
+    
+    def review_video_preview(self, obj):
+        if obj.review_video:
+            return format_html(
+                '<video width="100" height="60" controls><source src="{}" type="video/mp4">Your browser does not support the video tag.</video>',
+                obj.review_video.url
+            )
+        return "No Video"
+    review_video_preview.short_description = 'Video'
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -86,14 +91,15 @@ class ProductAdmin(admin.ModelAdmin):
     image_preview.short_description = 'Image'
     
     def average_rating(self, obj):
-        rating = obj.average_rating
-        if rating:
-            stars = '★' * int(rating) + '☆' * (5 - int(rating))
-            return format_html(
-                '<span style="color: #f59e0b;">{}</span> ({:.1f})',
-                stars, rating
-            )
-        return "No ratings"
+        # Update this to use overall_rating instead of rating in your model's calculation
+        rating = obj.average_rating  # Make sure this uses overall_rating in your model
+        if rating is None:
+            return "No ratings"
+        stars = '★' * int(rating) + '☆' * (5 - int(rating))
+        return format_html(
+            '<span style="color: #f59e0b;">{}</span> ({:.1f})',
+            stars, rating
+        )
     average_rating.short_description = 'Rating'
     
     def total_reviews(self, obj):
@@ -104,41 +110,72 @@ class ProductAdmin(admin.ModelAdmin):
         return "0 reviews"
     total_reviews.short_description = 'Reviews'
 
-
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = [
-        'title', 'product_link', 'user', 'rating_stars', 'is_approved', 
-        'is_verified_purchase', 'helpful_count', 'created_at'
+        'title', 'product_link', 'user', 'overall_rating_stars', 'is_approved', 
+        'is_verified_purchase', 'helpful_count', 'review_video_preview', 'created_at'
     ]
     list_filter = [
-        'rating', 'is_approved', 'is_verified_purchase', 'created_at', 
+        'overall_rating', 'is_approved', 'is_verified_purchase', 'created_at', 
         'product__category', 'product__brand'
     ]
+
     search_fields = ['title', 'content', 'user__username', 'product__name']
     list_editable = ['is_approved', 'is_verified_purchase']
     date_hierarchy = 'created_at'
     
     fieldsets = (
         ('Review Details', {
-            'fields': ('product', 'user', 'title', 'content', 'rating')
+            'fields': (
+                'product', 'user', 'title', 'content', 'rating',
+                'overall_rating', 'performance_rating', 'battery_rating',
+                'camera_rating', 'display_rating', 'value_rating'
+            )
+        }),
+        ('Feedback', {
+            'fields': ('likes', 'improvements', 'issues', 'recommendation'),
+            'classes': ('collapse',)
+        }),
+        ('Media', {
+            'fields': ('review_video', 'review_video_preview'),
+            'classes': ('collapse',)
         }),
         ('Status', {
             'fields': ('is_approved', 'is_verified_purchase', 'helpful_count')
         }),
     )
     
-    readonly_fields = ['helpful_count']
+    readonly_fields = ['helpful_count', 'review_video_preview']
     
     def product_link(self, obj):
         url = reverse('admin:reviews_product_change', args=[obj.product.id])
         return format_html('<a href="{}">{}</a>', url, obj.product.name)
     product_link.short_description = 'Product'
     
+    def overall_rating_stars(self, obj):
+        if obj.overall_rating is None:
+            return "No rating"
+        stars = '★' * obj.overall_rating + '☆' * (5 - obj.overall_rating)
+        return format_html('<span style="color: #f59e0b;">{}</span>', stars)
+    overall_rating_stars.short_description = 'Overall Rating'
+
+    # Keep the original rating_stars method if you still want to display it somewhere
     def rating_stars(self, obj):
+        if obj.rating is None:
+            return "No rating"
         stars = '★' * obj.rating + '☆' * (5 - obj.rating)
         return format_html('<span style="color: #f59e0b;">{}</span>', stars)
     rating_stars.short_description = 'Rating'
+    
+    def review_video_preview(self, obj):
+        if obj.review_video:
+            return format_html(
+                '<video width="320" height="240" controls><source src="{}" type="video/mp4">Your browser does not support the video tag.</video>',
+                obj.review_video.url
+            )
+        return "No Video"
+    review_video_preview.short_description = 'Video Preview'
     
     actions = ['approve_reviews', 'disapprove_reviews']
     
@@ -152,7 +189,6 @@ class ReviewAdmin(admin.ModelAdmin):
         self.message_user(request, f'{updated} reviews were disapproved.')
     disapprove_reviews.short_description = 'Disapprove selected reviews'
 
-
 @admin.register(ReviewHelpful)
 class ReviewHelpfulAdmin(admin.ModelAdmin):
     list_display = ['review_title', 'user', 'created_at']
@@ -162,7 +198,6 @@ class ReviewHelpfulAdmin(admin.ModelAdmin):
     def review_title(self, obj):
         return obj.review.title
     review_title.short_description = 'Review'
-
 
 @admin.register(SearchQuery)
 class SearchQueryAdmin(admin.ModelAdmin):
@@ -174,7 +209,6 @@ class SearchQueryAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
-
 
 @admin.register(ProductView)
 class ProductViewAdmin(admin.ModelAdmin):
@@ -190,7 +224,6 @@ class ProductViewAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
-
 
 # Customize admin site
 admin.site.site_header = 'FeedMe Administration'

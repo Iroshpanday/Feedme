@@ -1,743 +1,1388 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Experience - Product Review</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block content %}
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
-    <div class="container mx-auto px-4 max-w-4xl">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ title }}</h1>
-            <p class="text-gray-600">Share your experience and help others make informed decisions</p>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            padding: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .section-icon.blue { background: linear-gradient(45deg, #667eea, #764ba2); }
+        .section-icon.green { background: linear-gradient(45deg, #56ab2f, #a8e6cf); }
+        .section-icon.yellow { background: linear-gradient(45deg, #f093fb, #f5576c); }
+        .section-icon.purple { background: linear-gradient(45deg, #4facfe, #00f2fe); }
+        .section-icon.red { background: linear-gradient(45deg, #ff6b6b, #ee5a6f); }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .section-subtitle {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .required::after {
+            content: " *";
+            color: #e53e3e;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control.error {
+            border-color: #e53e3e;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* Star Rating System */
+        .rating-container {
+            margin: 20px 0;
+        }
+
+        .rating-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .rating-label {
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 80px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .detailed-ratings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .rating-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            border-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .rating-item label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        /* Video Upload Section */
+        .video-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .video-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-upload {
+            border: 2px dashed #cbd5e0;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-upload:hover,
+        .video-upload.dragover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+            transform: scale(1.02);
+        }
+
+        .video-upload-icon {
+            font-size: 3rem;
+            color: #a0aec0;
+            margin-bottom: 15px;
+        }
+
+        .video-upload-text {
+            color: #4a5568;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .video-upload-subtext {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .video-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .video-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .video-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .video-details i {
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .remove-video {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s ease;
+        }
+
+        .remove-video:hover {
+            background: #c53030;
+        }
+
+        video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+        }
+
+        /* Checkbox Styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .custom-checkbox input {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox input:checked + .checkmark {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-checkbox input:checked + .checkmark::after {
+            display: block;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: #2d3748;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            padding: 30px;
+            background: #f7fafc;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            margin-right: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            color: #718096;
+            border: 2px solid #e2e8f0;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            border-color: #cbd5e0;
+            color: #4a5568;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #e53e3e;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .detailed-ratings {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn, .cancel-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+        /* Auto-save indicator */
+        .auto-save {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4a5568;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .auto-save.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Share Your Experience</h1>
+            <p>Your review helps others make informed decisions and helps us improve our products.</p>
         </div>
-        
-        <form method="post" class="space-y-6" novalidate id="review-form">
+
+        <form class="form-card" id="reviewForm" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            
-            {% if form.non_field_errors %}
-            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                <div class="flex items-start">
-                    <svg class="h-5 w-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                    </svg>
+            <!-- Product Information Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon blue">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
                     <div>
-                        {% for error in form.non_field_errors %}
-                            <p class="text-sm text-red-700 font-medium">{{ error }}</p>
+                        <div class="section-title">Product Information</div>
+                        <div class="section-subtitle">Tell us which product you are reviewing</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label required">Select Product</label>
+                    <select class="form-control" name="{{ form.product.name }}" id="{{ form.product.id_for_label }}" required>
+                        {% for value, label in form.product.field.choices %}
+                            <option value="{{ value }}" {% if form.product.value == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
                         {% endfor %}
+                    </select>
+                    <div class="error-message" id="product-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Please select a product
                     </div>
                 </div>
             </div>
-            {% endif %}
-            
-            <!-- Product Selection Card -->
-            <!-- Product Selection Card -->
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-    <div class="flex items-center mb-4">
-        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
-        </div>
-        <h2 class="text-lg font-semibold text-gray-900">Select Product</h2>
-    </div>
-    
-    <label for="{{ form.product.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-        Mobile Phone <span class="text-red-500">*</span>
-    </label>
-    <select name="{{ form.product.name }}" id="{{ form.product.id_for_label }}" 
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-        {% for value, label in form.product.field.choices %}
-            <option value="{{ value }}" {% if form.product.value == value %}selected{% endif %}>
-                {{ label }}
-            </option>
-        {% endfor %}
-    </select>
-    {% if form.product.errors %}
-    <p class="mt-2 text-sm text-red-600 flex items-center">
-        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-        </svg>
-        {{ form.product.errors.0 }}
-    </p>
-    {% endif %}
-</div>
-            
-            <!-- Review Title Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                        </svg>
-                    </div>
-                    <h2 class="text-lg font-semibold text-gray-900">Review Title</h2>
-                </div>
-                
-                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                    Give your review a title <span class="text-red-500">*</span>
-                </label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                <p class="mt-2 text-sm text-red-600 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                    </svg>
-                    {{ form.title.errors.0 }}
-                </p>
-                {% endif %}
-            </div>
-            
-            <!-- Star Ratings Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
-                        <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+
+            <!-- Review Title Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon green">
+                        <i class="fas fa-edit"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-semibold text-gray-900">Rate This Phone</h2>
-                        <p class="text-sm text-gray-600">Click on the stars to rate each feature</p>
+                        <div class="section-title">Review Title</div>
+                        <div class="section-subtitle">Give your review a catchy title</div>
                     </div>
                 </div>
                 
-                <div class="space-y-6">
-                    <!-- Overall Satisfaction -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Overall Satisfaction</h3>
-                                <p class="text-sm text-gray-600">Your general experience with this phone</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="overall_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="overall_rating_{{ i }}" name="overall_rating" value="{{ i }}" 
-                                           {% if form.overall_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="overall_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.overall_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.overall_rating.errors.0 }}</p>
-                        {% endif %}
+                <div class="form-group">
+                    <label class="form-label required">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" 
+                           placeholder="Summarize your experience in one line..." 
+                           maxlength="100" required>
+                    <div class="error-message" id="title-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Please enter a review title (maximum 100 characters)
                     </div>
-                    
-                    <!-- Performance -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Performance</h3>
-                                <p class="text-sm text-gray-600">Speed, multitasking, and responsiveness</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="performance_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="performance_rating_{{ i }}" name="performance_rating" value="{{ i }}" 
-                                           {% if form.performance_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="performance_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.performance_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.performance_rating.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Battery Life -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Battery Life</h3>
-                                <p class="text-sm text-gray-600">How long the battery lasts during use</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="battery_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="battery_rating_{{ i }}" name="battery_rating" value="{{ i }}" 
-                                           {% if form.battery_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="battery_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.battery_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.battery_rating.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Camera Quality -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Camera Quality</h3>
-                                <p class="text-sm text-gray-600">Photo and video quality in various conditions</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="camera_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="camera_rating_{{ i }}" name="camera_rating" value="{{ i }}" 
-                                           {% if form.camera_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="camera_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.camera_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.camera_rating.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Display Quality -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Display Quality</h3>
-                                <p class="text-sm text-gray-600">Screen brightness, colors, and clarity</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="display_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="display_rating_{{ i }}" name="display_rating" value="{{ i }}" 
-                                           {% if form.display_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="display_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.display_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.display_rating.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Value for Money -->
-                    <div class="rating-row">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <h3 class="font-medium text-gray-900">Value for Money</h3>
-                                <p class="text-sm text-gray-600">Price compared to features and quality</p>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="star-rating" data-field="value_rating">
-                                    {% for i in "12345" %}
-                                    <input type="radio" id="value_rating_{{ i }}" name="value_rating" value="{{ i }}" 
-                                           {% if form.value_rating.value == i %}checked{% endif %} class="sr-only">
-                                    <label for="value_rating_{{ i }}" class="star cursor-pointer text-2xl transition-all duration-200 hover:scale-110">★</label>
-                                    {% endfor %}
-                                </div>
-                                <span class="rating-text text-sm text-gray-500 min-w-[80px]"></span>
-                            </div>
-                        </div>
-                        {% if form.value_rating.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.value_rating.errors.0 }}</p>
-                        {% endif %}
+                    <div style="text-align: right; font-size: 0.8rem; color: #718096; margin-top: 5px;">
+                        <span id="title-count">0</span>/100 characters
                     </div>
                 </div>
             </div>
-            
-            <!-- Feedback Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
-                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
+
+            <!-- Rating Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon yellow">
+                        <i class="fas fa-star"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-semibold text-gray-900">Your Detailed Feedback</h2>
-                        <p class="text-sm text-gray-600">Share your thoughts and experiences</p>
+                        <div class="section-title">Rate Your Experience</div>
+                        <div class="section-subtitle">Click the stars to rate different aspects</div>
                     </div>
                 </div>
-                
-                <div class="grid gap-6">
-                    <!-- What you like -->
-                    <div>
-                        <label for="{{ form.likes.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                            What do you like most about this mobile phone?
-                        </label>
-                        {{ form.likes }}
-                        {% if form.likes.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.likes.errors.0 }}</p>
-                        {% endif %}
+
+                <!-- Overall Rating -->
+                <div class="form-group">
+                    <label class="form-label required">Overall Rating</label>
+                    <div class="rating-input">
+                        <div class="stars" data-rating="overall">
+                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                        </div>
+                        <div class="rating-label" id="overall-label">Click to rate</div>
                     </div>
-                    
-                    <!-- Improvements -->
-                    <div>
-                        <label for="{{ form.improvements.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                            What improvements would you suggest?
-                        </label>
-                        {{ form.improvements }}
-                        {% if form.improvements.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.improvements.errors.0 }}</p>
-                        {% endif %}
+                    <input type="hidden" name="overall_rating" id="overall_rating" required>
+                    <div class="error-message" id="rating-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Please provide an overall rating
                     </div>
-                    
-                    <!-- Issues -->
-                    <div>
-                        <label for="{{ form.issues.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                            Any specific issues or problems?
-                        </label>
-                        {{ form.issues }}
-                        {% if form.issues.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.issues.errors.0 }}</p>
-                        {% endif %}
+                </div>
+
+                <!-- Detailed Ratings -->
+                <div class="detailed-ratings">
+                    <div class="rating-item">
+                        <label>Performance Rating</label>
+                        <div class="rating-input">
+                            <div class="stars" data-rating="performance">
+                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="performance_rating" id="performance_rating">
                     </div>
-                    
-                    <!-- Recommendation -->
-                    <div>
-                        <label for="{{ form.recommendation.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                            Would you recommend this phone? Why or why not?
-                        </label>
-                        {{ form.recommendation }}
-                        {% if form.recommendation.errors %}
-                        <p class="mt-2 text-sm text-red-600">{{ form.recommendation.errors.0 }}</p>
-                        {% endif %}
+
+                    <div class="rating-item">
+                        <label>Battery Life</label>
+                        <div class="rating-input">
+                            <div class="stars" data-rating="battery">
+                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="battery_rating" id="battery_rating">
+                    </div>
+
+                    <div class="rating-item">
+                        <label>Camera Quality</label>
+                        <div class="rating-input">
+                            <div class="stars" data-rating="camera">
+                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="camera_rating" id="camera_rating">
+                    </div>
+
+                    <div class="rating-item">
+                        <label>Display Quality</label>
+                        <div class="rating-input">
+                            <div class="stars" data-rating="display">
+                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="display_rating" id="display_rating">
+                    </div>
+
+                    <div class="rating-item">
+                        <label>Value for Money</label>
+                        <div class="rating-input">
+                            <div class="stars" data-rating="value">
+                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
+                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="value_rating" id="value_rating">
                     </div>
                 </div>
             </div>
-            
-            <!-- Verification -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex items-center">
-                    {{ form.is_verified_purchase }}
-                    <label for="{{ form.is_verified_purchase.id_for_label }}" class="ml-3 text-sm font-medium text-gray-700 flex items-center">
-                        <svg class="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                        </svg>
+
+            <!-- Detailed Review Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon purple">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <div>
+                        <div class="section-title">Your Detailed Review</div>
+                        <div class="section-subtitle">Share your thoughts and experiences in detail</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">Review Content</label>
+                    <textarea class="form-control" id="content" name="content" 
+                              placeholder="Tell us about your experience with this product. What did you like? What could be improved? How was the overall experience?" 
+                              rows="6" minlength="50" required></textarea>
+                    <div class="error-message" id="content-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Please write at least 50 characters for your review
+                    </div>
+                    <div style="text-align: right; font-size: 0.8rem; color: #718096; margin-top: 5px;">
+                        <span id="content-count">0</span> characters (minimum 50)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What You Liked</label>
+                    <textarea class="form-control" name="likes" 
+                              placeholder="What are the best features or aspects of this product?"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Areas for Improvement</label>
+                    <textarea class="form-control" name="improvements" 
+                              placeholder="What improvements would you suggest?"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Issues or Problems</label>
+                    <textarea class="form-control" name="issues" 
+                              placeholder="Did you encounter any specific issues or problems?"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Recommendation</label>
+                    <textarea class="form-control" name="recommendation" 
+                              placeholder="Would you recommend this product? Why or why not?"
+                              rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- Verification Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon red">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <div class="section-title">Verification & Video Review</div>
+                        <div class="section-subtitle">Verify your purchase and optionally add a video review</div>
+                    </div>
+                </div>
+
+                <div class="checkbox-container">
+                    <div class="custom-checkbox">
+                        <input type="checkbox" id="verified_purchase" name="is_verified_purchase" 
+                               {% if form.is_verified_purchase.value %}checked{% endif %}>
+                        <span class="checkmark"></span>
+                    </div>
+                    <label class="checkbox-label" for="verified_purchase">
                         I am a verified purchaser of this product
                     </label>
                 </div>
+
+                <!-- Video Upload Section -->
+                <div class="video-section" id="videoSection">
+                    <div class="form-group">
+                        <label class="form-label">Video Review (Optional)</label>
+                        <div class="video-upload" id="videoUpload">
+                            <input type="file" name="review_video" id="videoFile" accept="video/mp4,video/mov,video/avi,video/webm" style="display: none;">
+                            <div class="video-upload-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="video-upload-text">
+                                <strong>Click to browse</strong> or drag and drop your video here
+                            </div>
+                            <div class="video-upload-subtext">
+                                Supported formats: MP4, MOV, AVI, WEBM (Max 50MB)
+                            </div>
+                        </div>
+                        
+                        <div class="video-preview" id="videoPreview" style="display: none;">
+                            <div class="video-info">
+                                <div class="video-details">
+                                    <i class="fas fa-video"></i>
+                                    <div>
+                                        <div id="videoName"></div>
+                                        <div style="font-size: 0.8rem; color: #718096;" id="videoDetails"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="remove-video" id="removeVideo">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </div>
+                            <video controls id="videoPlayer"></video>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Submit Buttons -->
-            <div class="flex flex-col sm:flex-row gap-3 justify-end">
-                <a href="{% url 'reviews:home' %}" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                    Cancel
-                </a>
-                <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                    </svg>
-                    Submit Review
+
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Submit Review
+                </button>
+                <button type="button" class="cancel-btn" onclick="window.history.back()">
+                    <i class="fas fa-times"></i> Cancel
                 </button>
             </div>
         </form>
     </div>
-</div>
 
-<!-- Toast Notification -->
-<div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
-    <div class="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center">
-        <svg class="h-5 w-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
-        <span id="toast-message">Review submitted successfully!</span>
-        <button onclick="hideToast()" class="ml-4 text-green-200 hover:text-white">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
+    <!-- Auto-save indicator -->
+    <div class="auto-save" id="autoSave">
+        <i class="fas fa-save"></i> Draft saved
     </div>
-</div>
 
-<style>
-/* Enhanced Form Styles */
-select, input[type="text"], textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 0.5rem;
-    background-color: #fff;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-select:focus, input[type="text"]:focus, textarea:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    transform: translateY(-1px);
-}
-
-select:hover, input[type="text"]:hover, textarea:hover {
-    border-color: #d1d5db;
-}
-
-textarea {
-    min-height: 120px;
-    resize: vertical;
-    font-family: inherit;
-}
-
-/* Enhanced Checkbox */
-input[type="checkbox"] {
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 2px solid #d1d5db;
-    border-radius: 0.375rem;
-    background-color: #fff;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-input[type="checkbox"]:checked {
-    border-color: #059669;
-    background-color: #059669;
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 5.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.5l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-    background-size: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-input[type="checkbox"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-}
-
-/* Enhanced Star Rating */
-.star-rating {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-}
-
-.star {
-    color: #d1d5db;
-    transition: all 0.2s ease-in-out;
-    font-size: 1.5rem;
-    user-select: none;
-}
-
-.star:hover {
-    color: #fbbf24;
-    transform: scale(1.1);
-}
-
-.star.filled {
-    color: #f59e0b;
-}
-
-.star.active {
-    color: #f59e0b;
-}
-
-.rating-row {
-    padding: 1rem 0;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.rating-row:last-child {
-    border-bottom: none;
-}
-
-.rating-text {
-    font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-}
-
-.rating-text.visible {
-    opacity: 1;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-/* Loading state */
-.loading {
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.loading button {
-    position: relative;
-}
-
-.loading button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin: -0.5rem 0 0 -0.5rem;
-    border: 2px solid transparent;
-    border-top: 2px solid #ffffff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Responsive improvements */
-@media (max-width: 640px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    
-    .star {
-        font-size: 1.25rem;
-    }
-    
-    .rating-text {
-        display: none;
-    }
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const ratingLabels = {
-        1: 'Poor',
-        2: 'Fair', 
-        3: 'Good',
-        4: 'Very Good',
-        5: 'Excellent'
-    };
-    
-    // Initialize all star ratings
-    document.querySelectorAll('.star-rating').forEach(initializeStarRating);
-    
-    function initializeStarRating(ratingContainer) {
-        const stars = ratingContainer.querySelectorAll('.star');
-        const inputs = ratingContainer.querySelectorAll('input[type="radio"]');
-        const ratingText = ratingContainer.parentElement.querySelector('.rating-text');
+    <script>
+        // Form data storage for auto-save
+        let formData = {};
         
-        // Set initial state
-        updateStarDisplay(ratingContainer);
-        
-        // Add event listeners
-        stars.forEach((star, index) => {
-            const input = inputs[index];
-            
-            star.addEventListener('click', () => {
-                if (input) {
-                    input.checked = true;
-                    updateStarDisplay(ratingContainer);
-                    
-                    // Trigger change event for form validation
-                    input.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            });
-            
-            star.addEventListener('mouseenter', () => {
-                highlightStars(ratingContainer, index + 1);
-                if (ratingText) {
-                    ratingText.textContent = ratingLabels[index + 1] || '';
-                    ratingText.classList.add('visible');
-                }
-            });
+        // Rating labels
+        const ratingLabels = {
+            1: 'Poor',
+            2: 'Fair', 
+            3: 'Good',
+            4: 'Very Good',
+            5: 'Excellent'
+        };
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeStarRatings();
+            initializeVideoUpload();
+            initializeFormValidation();
+            initializeAutoSave();
+            initializeCharacterCounters();
         });
-        
-        ratingContainer.addEventListener('mouseleave', () => {
-            updateStarDisplay(ratingContainer);
-            if (ratingText) {
-                const checkedInput = ratingContainer.querySelector('input[type="radio"]:checked');
-                if (checkedInput) {
-                    ratingText.textContent = ratingLabels[checkedInput.value] || '';
-                } else {
-                    ratingText.textContent = '';
-                    ratingText.classList.remove('visible');
+
+        // Star Rating System
+        function initializeStarRatings() {
+            const starContainers = document.querySelectorAll('.stars');
+            
+            starContainers.forEach(container => {
+                const stars = container.querySelectorAll('.star');
+                const ratingType = container.dataset.rating;
+                
+                stars.forEach((star, index) => {
+                    // Click event
+                    star.addEventListener('click', function() {
+                        const value = parseInt(this.dataset.value);
+                        updateRating(container, value, ratingType);
+                    });
+                    
+                    // Hover events
+                    star.addEventListener('mouseenter', function() {
+                        const value = parseInt(this.dataset.value);
+                        highlightStars(container, value);
+                    });
+                });
+                
+                // Mouse leave event for container
+                container.addEventListener('mouseleave', function() {
+                    const currentRating = getCurrentRating(ratingType);
+                    highlightStars(container, currentRating);
+                });
+            });
+        }
+
+        function updateRating(container, value, ratingType) {
+            // Update hidden input
+            const input = document.getElementById(`${ratingType}_rating`);
+            if (input) {
+                input.value = value;
+            }
+            
+            // Update visual stars
+            highlightStars(container, value);
+            
+            // Update label for overall rating
+            if (ratingType === 'overall') {
+                const label = document.getElementById('overall-label');
+                if (label) {
+                    label.textContent = ratingLabels[value];
                 }
             }
-        });
-    }
-    
-    function updateStarDisplay(ratingContainer) {
-        const stars = ratingContainer.querySelectorAll('.star');
-        const checkedInput = ratingContainer.querySelector('input[type="radio"]:checked');
-        const ratingText = ratingContainer.parentElement.querySelector('.rating-text');
-        
-        stars.forEach((star, index) => {
-            star.classList.remove('filled', 'active');
-        });
-        
-        if (checkedInput) {
-            const rating = parseInt(checkedInput.value);
+            
+            // Save to form data
+            formData[`${ratingType}_rating`] = value;
+            showAutoSave();
+        }
+
+        function highlightStars(container, rating) {
+            const stars = container.querySelectorAll('.star');
             stars.forEach((star, index) => {
                 if (index < rating) {
-                    star.classList.add('filled');
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
                 }
             });
-            
-            if (ratingText) {
-                ratingText.textContent = ratingLabels[rating] || '';
-                ratingText.classList.add('visible');
-            }
-        } else {
-            if (ratingText) {
-                ratingText.textContent = '';
-                ratingText.classList.remove('visible');
-            }
         }
-    }
-    
-    function highlightStars(ratingContainer, count) {
-        const stars = ratingContainer.querySelectorAll('.star');
-        stars.forEach((star, index) => {
-            star.classList.remove('filled', 'active');
-            if (index < count) {
-                star.classList.add('active');
-            }
-        });
-    }
-    
-    // Form submission handling
-    const form = document.getElementById('review-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // Add loading state
-            form.classList.add('loading');
-            
-            // Validate required star ratings
-            const requiredRatings = ['overall_rating'];
-            let hasErrors = false;
-            
-            requiredRatings.forEach(ratingName => {
-                const ratingInput = form.querySelector(`input[name="${ratingName}"]:checked`);
-                if (!ratingInput) {
-                    hasErrors = true;
-                    // You can add custom error handling here
+
+        function getCurrentRating(ratingType) {
+            const input = document.getElementById(`${ratingType}_rating`);
+            return input ? parseInt(input.value) || 0 : 0;
+        }
+
+        // Video Upload System
+        function initializeVideoUpload() {
+            const checkbox = document.getElementById('verified_purchase');
+            const videoSection = document.getElementById('videoSection');
+            const videoUpload = document.getElementById('videoUpload');
+            const videoFile = document.getElementById('videoFile');
+            const videoPreview = document.getElementById('videoPreview');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const removeVideo = document.getElementById('removeVideo');
+
+            // Show/hide video section based on checkbox
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    videoSection.classList.add('show');
+                } else {
+                    videoSection.classList.remove('show');
+                    clearVideo();
                 }
             });
-            
-            if (hasErrors) {
+
+            // Click to browse
+            videoUpload.addEventListener('click', function() {
+                if (checkbox.checked) {
+                    videoFile.click();
+                }
+            });
+
+            // Drag and drop events
+            videoUpload.addEventListener('dragover', function(e) {
                 e.preventDefault();
-                form.classList.remove('loading');
-                showToast('Please provide all required ratings', 'error');
+                if (checkbox.checked) {
+                    this.classList.add('dragover');
+                }
+            });
+
+            videoUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            videoUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                if (checkbox.checked && e.dataTransfer.files.length > 0) {
+                    handleVideoFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            // File input change
+            videoFile.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleVideoFile(this.files[0]);
+                }
+            });
+
+            // Remove video
+            removeVideo.addEventListener('click', clearVideo);
+        }
+
+        function handleVideoFile(file) {
+            // Validate file type
+            const allowedTypes = ['video/mp4', 'video/mov', 'video/avi', 'video/webm'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('Please select a valid video file (MP4, MOV, AVI, WEBM)', 'error');
                 return;
             }
-        });
-    }
-    
-    // Check for success message in URL
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('success')) {
-        showToast('Review submitted successfully!', 'success');
-    }
-    
-    // Auto-hide form errors after 5 seconds
-    setTimeout(() => {
-        document.querySelectorAll('.text-red-600').forEach(error => {
-            error.style.transition = 'opacity 0.5s ease-out';
-            error.style.opacity = '0.7';
-        });
-    }, 5000);
-});
 
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toast-message');
-    
-    if (toast && toastMessage) {
-        // Update message and styling based on type
-        toastMessage.textContent = message;
-        
-        const toastContent = toast.querySelector('div');
-        toastContent.className = `px-6 py-4 rounded-lg shadow-lg flex items-center ${
-            type === 'success' 
-                ? 'bg-green-500 text-white' 
-                : 'bg-red-500 text-white'
-        }`;
-        
-        // Show toast
-        toast.style.transform = 'translateX(0)';
-        
-        // Auto hide after 5 seconds
-        setTimeout(() => {
-            hideToast();
-        }, 5000);
-    }
-}
+            // Validate file size (50MB)
+            const maxSize = 50 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showToast('Video file must be smaller than 50MB', 'error');
+                return;
+            }
 
-function hideToast() {
-    const toast = document.getElementById('toast');
-    if (toast) {
-        toast.style.transform = 'translateX(100%)';
-    }
-}
-
-// Smooth scroll for form validation errors
-function scrollToError() {
-    const firstError = document.querySelector('.text-red-600');
-    if (firstError) {
-        firstError.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-    }
-}
-
-// Add some nice micro-interactions
-document.querySelectorAll('input, textarea, select').forEach(input => {
-    input.addEventListener('focus', function() {
-        this.parentElement.classList.add('focused');
-    });
-    
-    input.addEventListener('blur', function() {
-        this.parentElement.classList.remove('focused');
-    });
-});
-
-// Form auto-save to prevent data loss (stores in memory only)
-let formData = {};
-const formInputs = document.querySelectorAll('input, textarea, select');
-
-formInputs.forEach(input => {
-    input.addEventListener('input', function() {
-        formData[this.name] = this.value;
-    });
-    
-    input.addEventListener('change', function() {
-        formData[this.name] = this.value;
-    });
-});
-
-// Restore form data if page is refreshed
-window.addEventListener('beforeunload', function() {
-    // In a real application, you might want to save to sessionStorage
-    // but as per instructions, we're keeping it in memory only
-});
-
-// Add keyboard navigation for star ratings
-document.addEventListener('keydown', function(e) {
-    if (e.target.closest('.star-rating')) {
-        const ratingContainer = e.target.closest('.star-rating');
-        const inputs = ratingContainer.querySelectorAll('input[type="radio"]');
-        const currentIndex = Array.from(inputs).findIndex(input => input === document.activeElement);
-        
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            const prevIndex = Math.max(0, currentIndex - 1);
-            inputs[prevIndex].focus();
-            inputs[prevIndex].checked = true;
-            updateStarDisplay(ratingContainer);
-        } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-            e.preventDefault();
-            const nextIndex = Math.min(inputs.length - 1, currentIndex + 1);
-            inputs[nextIndex].focus();
-            inputs[nextIndex].checked = true;
-            updateStarDisplay(ratingContainer);
+            // Show preview
+            displayVideoPreview(file);
         }
-    }
-});
-</script>
-{% endblock %}
+
+        function displayVideoPreview(file) {
+            const videoPreview = document.getElementById('videoPreview');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoName = document.getElementById('videoName');
+            const videoDetails = document.getElementById('videoDetails');
+
+            // Create object URL for video
+            const videoURL = URL.createObjectURL(file);
+            
+            // Update video details
+            videoName.textContent = file.name;
+            videoDetails.textContent = `${formatFileSize(file.size)} • ${file.type}`;
+            
+            // Set video source
+            videoPlayer.src = videoURL;
+            
+            // Show preview
+            videoPreview.style.display = 'block';
+            
+            showToast('Video uploaded successfully!', 'success');
+        }
+
+        function clearVideo() {
+            const videoFile = document.getElementById('videoFile');
+            const videoPreview = document.getElementById('videoPreview');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            videoFile.value = '';
+            videoPreview.style.display = 'none';
+            
+            if (videoPlayer.src) {
+                URL.revokeObjectURL(videoPlayer.src);
+                videoPlayer.src = '';
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Form Validation
+        function initializeFormValidation() {
+            const form = document.getElementById('reviewForm');
+            
+            form.addEventListener('submit', function(e) {
+                // Validate form before submission
+                if (!validateForm()) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Show loading state but allow form to submit normally
+                const submitBtn = document.getElementById('submitBtn');
+                const originalContent = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner"></span> Submitting Review...';
+                
+                // Ensure all rating data is included in form submission
+                ensureRatingDataInForm();
+                
+                // Let the form submit naturally to Django
+                return true;
+            });
+
+            // Real-time validation
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                field.addEventListener('input', function() {
+                    if (this.classList.contains('error')) {
+                        validateField(this);
+                    }
+                });
+            });
+        }
+
+        function validateForm() {
+            let isValid = true;
+            
+            // Validate product selection
+            const product = document.getElementById('{{ form.product.id_for_label }}') || document.querySelector('[name="{{ form.product.name }}"]');
+            if (!product || !product.value) {
+                showFieldError('product', 'Please select a product');
+                isValid = false;
+            } else {
+                hideFieldError('product');
+            }
+            
+            // Validate title
+            const title = document.getElementById('title');
+            if (!title.value.trim()) {
+                showFieldError('title', 'Please enter a review title');
+                isValid = false;
+            } else if (title.value.length > 100) {
+                showFieldError('title', 'Title must be 100 characters or less');
+                isValid = false;
+            } else {
+                hideFieldError('title');
+            }
+            
+            // Validate overall rating
+            const overallRating = document.getElementById('overall_rating');
+            if (!overallRating.value) {
+                showFieldError('rating', 'Please provide an overall rating');
+                isValid = false;
+            } else {
+                hideFieldError('rating');
+            }
+            
+            // Validate content
+            const content = document.getElementById('content');
+            if (!content.value.trim()) {
+                showFieldError('content', 'Please write your review');
+                isValid = false;
+            } else if (content.value.length < 50) {
+                showFieldError('content', 'Review must be at least 50 characters long');
+                isValid = false;
+            } else {
+                hideFieldError('content');
+            }
+            
+            return isValid;
+        }
+
+        function validateField(field) {
+            const fieldName = field.name || field.id;
+            
+            if (field.hasAttribute('required') && !field.value.trim()) {
+                showFieldError(fieldName, `${field.previousElementSibling.textContent.replace('*', '')} is required`);
+                return false;
+            }
+            
+            hideFieldError(fieldName);
+            return true;
+        }
+
+        function showFieldError(fieldName, message) {
+            const field = document.getElementById(fieldName) || document.querySelector(`[name="${fieldName}"]`);
+            const errorElement = document.getElementById(`${fieldName}-error`);
+            
+            if (field) {
+                field.classList.add('error');
+            }
+            
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'flex';
+            }
+        }
+
+        function hideFieldError(fieldName) {
+            const field = document.getElementById(fieldName) || document.querySelector(`[name="${fieldName}"]`);
+            const errorElement = document.getElementById(`${fieldName}-error`);
+            
+            if (field) {
+                field.classList.remove('error');
+            }
+            
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        // Ensure rating data is included in form submission
+        function ensureRatingDataInForm() {
+            const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+            
+            ratings.forEach(rating => {
+                const hiddenInput = document.getElementById(`${rating}_rating`);
+                if (!hiddenInput) {
+                    // Create hidden input if it doesn't exist
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = `${rating}_rating`;
+                    input.id = `${rating}_rating`;
+                    document.getElementById('reviewForm').appendChild(input);
+                }
+            });
+        }
+
+        // Form Submission (removed - now handled by Django naturally)
+        // The submitForm function is no longer needed as we let Django handle submission
+
+        // Auto-save functionality
+        function initializeAutoSave() {
+            // Load saved data
+            loadSavedData();
+            
+            // Save on input
+            const form = document.getElementById('reviewForm');
+            const inputs = form.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', debounce(saveFormData, 1000));
+            });
+        }
+
+        function saveFormData() {
+            const form = document.getElementById('reviewForm');
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Save ratings
+            const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+            ratings.forEach(rating => {
+                const input = document.getElementById(`${rating}_rating`);
+                if (input && input.value) {
+                    data[`${rating}_rating`] = input.value;
+                }
+            });
+            
+            // Note: Using memory storage instead of localStorage as per requirements
+            window.reviewFormData = data;
+            showAutoSave();
+        }
+
+        function loadSavedData() {
+            const data = window.reviewFormData;
+            if (!data) return;
+            
+            // Load form fields
+            Object.keys(data).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    element.value = data[key];
+                    
+                    // Trigger events for special handling
+                    if (element.type === 'checkbox') {
+                        element.checked = data[key] === 'on';
+                        element.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+            
+            // Load ratings
+            const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+            ratings.forEach(rating => {
+                const value = data[`${rating}_rating`];
+                if (value) {
+                    const container = document.querySelector(`[data-rating="${rating}"]`);
+                    if (container) {
+                        updateRating(container, parseInt(value), rating);
+                    }
+                }
+            });
+            
+            updateCharacterCounters();
+        }
+
+        function showAutoSave() {
+            const autoSave = document.getElementById('autoSave');
+            autoSave.classList.add('show');
+            
+            setTimeout(() => {
+                autoSave.classList.remove('show');
+            }, 2000);
+        }
+
+        // Character counters
+        function initializeCharacterCounters() {
+            const title = document.getElementById('title');
+            const content = document.getElementById('content');
+            const titleCounter = document.getElementById('title-count');
+            const contentCounter = document.getElementById('content-count');
+            
+            title.addEventListener('input', function() {
+                titleCounter.textContent = this.value.length;
+            });
+            
+            content.addEventListener('input', function() {
+                contentCounter.textContent = this.value.length;
+            });
+        }
+
+        function updateCharacterCounters() {
+            const title = document.getElementById('title');
+            const content = document.getElementById('content');
+            const titleCounter = document.getElementById('title-count');
+            const contentCounter = document.getElementById('content-count');
+            
+            if (title && titleCounter) {
+                titleCounter.textContent = title.value.length;
+            }
+            
+            if (content && contentCounter) {
+                contentCounter.textContent = content.value.length;
+            }
+        }
+
+        // Toast notifications
+        function showToast(message, type = 'success') {
+            // Remove existing toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Keyboard navigation for ratings
+        document.addEventListener('keydown', function(e) {
+            const focusedElement = document.activeElement;
+            
+            if (focusedElement && focusedElement.classList.contains('star')) {
+                const container = focusedElement.closest('.stars');
+                const stars = container.querySelectorAll('.star');
+                const currentIndex = Array.from(stars).indexOf(focusedElement);
+                
+                let newIndex = currentIndex;
+                
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        newIndex = Math.max(0, currentIndex - 1);
+                        break;
+                    case 'ArrowRight':
+                        newIndex = Math.min(stars.length - 1, currentIndex + 1);
+                        break;
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        focusedElement.click();
+                        return;
+                }
+                
+                if (newIndex !== currentIndex) {
+                    e.preventDefault();
+                    stars[newIndex].focus();
+                }
+            }
+        });
+
+        // Make stars focusable for accessibility
+        document.querySelectorAll('.star').forEach(star => {
+            star.setAttribute('tabindex', '0');
+            star.setAttribute('role', 'button');
+            star.setAttribute('aria-label', `${star.dataset.value} star${star.dataset.value !== '1' ? 's' : ''}`);
+        });
+    </script>
+</body>
+</html>

@@ -165,7 +165,8 @@ class Review(models.Model):
     content = models.TextField()
     rating = models.IntegerField(
         choices=RATING_CHOICES,
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+        validators=[MinValueValidator(1), MaxValueValidator(5)],null=True,  # Make it optional
+    blank=True
     )
     overall_rating = models.IntegerField(
         choices=RATING_CHOICES,
@@ -197,12 +198,12 @@ class Review(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         null=True, blank=True
     )
-    # review_video = models.FileField(
-    #     upload_to='review_videos/',
-    #     null=True,
-    #     blank=True,
-    #     help_text="Upload a video review (only available for verified purchases)"
-    # )
+    review_video = models.FileField(
+        upload_to='review_videos/%Y/%m/%d/',
+        null=True,
+        blank=True,
+        help_text="Upload a video review (only available for verified purchases)"
+    )
     
     # Add these new fields for open feedback
     likes = models.TextField(blank=True, help_text="What do you like most about this mobile phone?")
