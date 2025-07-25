@@ -1,576 +1,428 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}{{ product.brand.name }} {{ product.name }} - Reviews & Ratings{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .rating-bar {
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .rating-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #3b82f6);
+        transition: width 0.3s ease;
+    }
+
+    .star {
+        color: #fbbf24;
+    }
+
+    .star.empty {
+        color: #d1d5db;
+    }
+
+    .review-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .sidebar-sticky {
+        position: sticky;
+        top: 120px;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar-sticky {
+            position: static;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Upper Section: Image and Specifications -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <!-- Product Image - Left Half -->
-            <div class="relative group">
-                <div class="bg-white rounded-2xl shadow-xl p-8 h-full hover:shadow-2xl transition-all duration-300">
-                    {% if product.image %}
-                        <div class="relative overflow-hidden rounded-xl">
-                            <img src="{{ product.image.url }}" 
-                                 alt="{{ product.name }}" 
-                                 class="w-full h-96 object-contain hover:scale-105 transition-transform duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
-                    {% else %}
-                        <div class="flex flex-col items-center justify-center h-96 text-gray-400 bg-gray-100 rounded-xl">
-                            <div class="bg-gradient-to-br from-blue-100 to-purple-100 p-6 rounded-full mb-4">
-                                <i class="fas fa-mobile-alt text-4xl text-blue-500"></i>
-                            </div>
-                            <p class="text-lg font-medium">No image available</p>
-                        </div>
-                    {% endif %}
-                    
-                    <!-- Product Badge -->
-                    <div class="absolute top-4 right-4 flex flex-col gap-2">
-                        {% if product.is_featured %}
-                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                                <i class="fas fa-star mr-1"></i>Featured
-                            </span>
-                        {% endif %}
-                        {% if product.price %}
-                            <span class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                                {% if product.price > 30000 %}
-                                    Premium
-                                {% elif product.price > 15000 %}
-                                    Mid-range
-                                {% else %}
-                                    Budget
-                                {% endif %}
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Specifications - Right Half -->
-            <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
-                <!-- Product Header -->
-                <div class="mb-6">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-mobile-alt text-white text-xl"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                                {{ product.brand.name }} {{ product.name }}
-                            </h1>
-                            <p class="text-gray-500 text-sm">{{ product.category.name }}</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Rating -->
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg">
-                            <div class="flex text-white mr-2">
-                                {% for i in "12345" %}
-                                    {% if forloop.counter <= product.average_rating|floatformat:0 %}
-                                        <i class="fas fa-star text-sm"></i>
-                                    {% else %}
-                                        <i class="far fa-star text-sm"></i>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <span class="font-bold">{{ product.average_rating|floatformat:1 }}</span>
-                        </div>
-                        <span class="text-gray-600 font-medium">{{ product.total_reviews }} review{{ product.total_reviews|pluralize }}</span>
-                    </div>
-                </div>
-
-                <!-- Price -->
-                {% if product.price %}
-                <div class="mb-8 p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border border-blue-100">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h2 class="text-lg font-semibold text-gray-700 mb-1">Price</h2>
-                            <p class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                ₹{{ product.price|floatformat:0 }}
-                            </p>
-                        </div>
-                        <div class="text-right">
-                            <div class="bg-white px-4 py-2 rounded-lg shadow-md">
-                                <i class="fas fa-tag text-blue-500 mr-2"></i>
-                                <span class="font-semibold text-gray-700">
-                                    {% if product.price > 30000 %}
-                                        Premium Range
-                                    {% elif product.price > 15000 %}
-                                        Mid Range
-                                    {% else %}
-                                        Budget Friendly
-                                    {% endif %}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Product Header -->
+    <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div class="flex flex-col md:flex-row items-start gap-6">
+            <div class="product-logo flex-shrink-0">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover rounded-xl">
+                {% else %}
+                    {{ product.brand.name|first }}
                 {% endif %}
-
-                <!-- Key Specifications -->
-                <div class="mb-8">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i class="fas fa-cog text-blue-500 mr-3"></i>
-                        Key Specifications
-                    </h2>
-                    <div class="grid grid-cols-1 gap-4">
-                        {% for spec in specifications %}
-                            {% if spec.key in "Processor,RAM,Storage,Display,Refresh Rate,Camera,Battery,Operating System" %}
-                                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl hover:from-blue-50 hover:to-purple-50 transition-all duration-300 border border-gray-100">
-                                    <div class="flex items-center">
-                                        {% if spec.key == "Processor" %}
-                                            <i class="fas fa-microchip text-blue-500 mr-3"></i>
-                                        {% elif spec.key == "RAM" %}
-                                            <i class="fas fa-memory text-green-500 mr-3"></i>
-                                        {% elif spec.key == "Storage" %}
-                                            <i class="fas fa-hdd text-purple-500 mr-3"></i>
-                                        {% elif spec.key == "Display" %}
-                                            <i class="fas fa-tv text-red-500 mr-3"></i>
-                                        {% elif spec.key == "Camera" %}
-                                            <i class="fas fa-camera text-yellow-500 mr-3"></i>
-                                        {% elif spec.key == "Battery" %}
-                                            <i class="fas fa-battery-full text-green-600 mr-3"></i>
-                                        {% else %}
-                                            <i class="fas fa-info-circle text-gray-500 mr-3"></i>
-                                        {% endif %}
-                                        <span class="font-semibold text-gray-700">{{ spec.key }}</span>
-                                    </div>
-                                    <span class="text-gray-900 font-medium bg-white px-3 py-1 rounded-lg shadow-sm">{{ spec.value }}</span>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex gap-4">
-                    <button class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                        <i class="fas fa-shopping-cart mr-2"></i> Other Similar products
-                    </button>
-                    <button class="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                        <i class="fas fa-bolt mr-2"></i> Compare
-                    </button>
-                </div>
             </div>
-        </div>
-
-        <!-- Description Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 hover:shadow-2xl transition-all duration-300">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                <i class="fas fa-align-left text-blue-500 mr-3"></i>
-                Product Description
-            </h2>
-            <div class="prose max-w-none text-gray-700 leading-relaxed">
-                {{ product.description|linebreaks }}
-            </div>
-        </div>
-
-        <!-- Reviews Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300">
-            <h2 class="text-2xl font-bold mb-8 flex items-center">
-                <i class="fas fa-comments text-blue-500 mr-3"></i>
-                Customer Reviews
-            </h2>
-
-            <!-- Rating Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                <div class="text-center md:text-left">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Overall Rating</h3>
-                    <div class="flex items-center justify-center md:justify-start mb-4">
-                        <span class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mr-3">
-                            {{ product.average_rating|floatformat:1 }}
-                        </span>
-                        <div>
-                            <div class="flex text-yellow-400 mb-1">
-                                {% for i in "12345" %}
-                                    {% if forloop.counter <= product.average_rating|floatformat:0 %}
-                                        <i class="fas fa-star"></i>
-                                    {% else %}
-                                        <i class="far fa-star"></i>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <p class="text-gray-600 font-medium">{{ product.total_reviews }} review{{ product.total_reviews|pluralize }}</p>
+            
+            <div class="flex-1">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ product.brand.name }} {{ product.name }}</h1>
+                <div class="flex flex-wrap items-center gap-6 text-gray-600 mb-4">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-tag text-indigo-500"></i>
+                        {{ product.category.name }}
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-eye text-indigo-500"></i>
+                        {{ view_count }} views
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-calendar text-indigo-500"></i>
+                        Added {{ product.created_at|date:"M Y" }}
+                    </span>
+                </div>
+                
+                <!-- Rating Summary and Write Review Button -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-3 bg-green-500 text-white px-4 py-2 rounded-full font-semibold">
+                        <span class="text-xl">{{ average_rating|floatformat:1 }}</span>
+                        <div class="flex gap-1">
+                            {% for i in "12345" %}
+                                <i class="fas fa-star {% if average_rating >= i|add:0 %}text-yellow-300{% else %}text-gray-300{% endif %}"></i>
+                            {% endfor %}
                         </div>
+                        <span class="text-sm">Excellent</span>
                     </div>
+                    
+                    <a href="{% url 'reviews:add_review' %}" 
+                       class="gradient-bg text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2">
+                        <i class="fas fa-edit"></i>
+                        Write Review
+                    </a>
                 </div>
-
-                <!-- <div>
-                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Rating Breakdown</h3>
-                    {% for rating, count in rating_distribution.items reversed %}
-                        <div class="flex items-center mb-3">
-                            <span class="w-12 text-sm font-medium text-gray-600">{{ rating }} ★</span>
-                            <div class="flex items-center mb-3">
-    <span class="w-12 text-sm font-medium text-gray-600">{{ rating }} ★</span>
-    <div class="flex-1 bg-gray-200 rounded-full h-3 mx-3 overflow-hidden">
-        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all duration-500 ease-out" 
-             style="width: 80%;"></div>
+            </div>
+        </div>
     </div>
-    <span class="text-sm font-medium text-gray-600 w-8">{{ value.count }}</span>
-</div>
-                            
-                        </div>
-                    {% endfor %}
-                </div> -->
-            </div>
 
-            <!-- Review List -->
-            <div class="space-y-6">
-                {% for review in reviews %}
-                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center">
-                                <!-- User Avatar -->
-                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
-                                    <span class="text-white font-bold text-lg">{{ review.user.username|first|upper }}</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-lg text-gray-800">{{ review.user.username }}</h4>
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex text-yellow-400">
-                                            {% for i in "12345" %}
-                                                {% if forloop.counter <= review.rating %}
-                                                    <i class="fas fa-star text-sm"></i>
-                                                {% else %}
-                                                    <i class="far fa-star text-sm"></i>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        {% if review.is_verified_purchase %}
-                                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center">
-                                                <i class="fas fa-check-circle mr-1"></i> Verified Purchase
-                                            </span>
-                                        {% endif %}
-                                    </div>
-                                </div>
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Content (2/3 width) -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Tabs -->
+                <div class="flex bg-gray-50 border-b">
+                    <button class="tab-button flex-1 px-6 py-4 font-semibold text-gray-700 hover:text-indigo-600 border-b-2 border-indigo-600" 
+                            onclick="switchTab('reviews')" id="reviews-tab">
+                        Reviews ({{ total_reviews }})
+                    </button>
+                    <button class="tab-button flex-1 px-6 py-4 font-semibold text-gray-700 hover:text-indigo-600 border-b-2 border-transparent" 
+                            onclick="switchTab('details')" id="details-tab">
+                        Product Details
+                    </button>
+                    <button class="tab-button flex-1 px-6 py-4 font-semibold text-gray-700 hover:text-indigo-600 border-b-2 border-transparent" 
+                            onclick="switchTab('specs')" id="specs-tab">
+                        Specifications
+                    </button>
+                </div>
+
+                <!-- Reviews Tab Content -->
+                <div id="reviews-content" class="tab-content active p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
+                    
+                    {% for review in recent_reviews %}
+                    <div class="border-b border-gray-200 pb-6 mb-6 last:border-b-0">
+                        <div class="flex items-start gap-4 mb-4">
+                            <div class="review-avatar flex-shrink-0">
+                                {% if review.user_profile_picture %}
+                                    <img src="{{ review.user_profile_picture.url }}" alt="{{ review.user.username }}" class="w-full h-full object-cover rounded-full">
+                                {% else %}
+                                    {{ review.user.first_name|first|default:review.user.username|first }}
+                                {% endif %}
                             </div>
-                            <span class="text-gray-500 text-sm bg-white px-3 py-1 rounded-lg shadow-sm">
-                                {{ review.created_at|date:"M d, Y" }}
-                            </span>
-                        </div>
-                        
-                        <h5 class="font-bold text-xl text-gray-800 mb-3">{{ review.title }}</h5>
-                        <p class="text-gray-700 mb-4 leading-relaxed">{{ review.content }}</p>
-                        
-                        {% if review.likes %}
-                        <div class="bg-green-50 border border-green-200 p-4 rounded-lg mb-3">
-                            <p class="font-semibold text-green-800 mb-2 flex items-center">
-                                <i class="fas fa-thumbs-up mr-2"></i>What they liked:
-                            </p>
-                            <p class="text-green-700">{{ review.likes }}</p>
-                        </div>
-                        {% endif %}
-                        
-                        {% if review.issues %}
-                        <div class="bg-red-50 border border-red-200 p-4 rounded-lg mb-3">
-                            <p class="font-semibold text-red-800 mb-2 flex items-center">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>Issues mentioned:
-                            </p>
-                            <p class="text-red-700">{{ review.issues }}</p>
-                        </div>
-                        {% endif %}
-                        
-                        {% if user.is_authenticated %}
-                            <button class="bg-white hover:bg-blue-50 text-blue-600 border border-blue-200 font-medium py-2 px-4 rounded-lg transition-all duration-300 helpful-btn shadow-sm hover:shadow-md transform hover:-translate-y-0.5" 
-                                    data-review-id="{{ review.id }}"
-                                    data-url="{% url 'reviews:mark_helpful' review.id %}">
-                                <i class="far fa-thumbs-up mr-2"></i> 
-                                Helpful ({{ review.helpful_count }})
-                            </button>
-                        {% endif %}
-                    </div>
-                {% empty %}
-                    <div class="text-center py-12">
-                        <div class="bg-gradient-to-br from-blue-100 to-purple-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-comments text-3xl text-blue-500"></i>
-                        </div>
-                        <p class="text-gray-600 text-lg">No reviews yet. Be the first to review!</p>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <!-- Review Form -->
-            {% if user.is_authenticated %}
-                {% if not user_has_reviewed %}
-                    <div class="mt-10 pt-8 border-t border-gray-200">
-                        <h3 class="text-xl font-bold mb-6 flex items-center">
-                            <i class="fas fa-edit text-blue-500 mr-3"></i>
-                            Write a Review
-                        </h3>
-                        <form method="post" action="{% url 'reviews:add_review' %}" class="max-w-2xl">
-                            {% csrf_token %}
-                            {{ review_form.product }}
                             
-                            <div class="mb-6">
-                                <label class="block text-gray-700 text-sm font-bold mb-3">Your Overall Rating</label>
-                                <div class="flex text-gray-300 text-2xl rating-stars">
-                                    {% for i in "54321" %}
-                                        <input type="radio" name="rating" value="{{ forloop.counter }}" id="rating-{{ forloop.counter }}"
-                                               class="hidden" required>
-                                        <label for="rating-{{ forloop.counter }}" class="cursor-pointer hover:text-yellow-400 transition-colors duration-200">
-                                            <i class="fas fa-star"></i>
-                                        </label>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold text-gray-900">{{ review.user.first_name|default:review.user.username }}</h4>
+                                    <span class="text-sm text-gray-500">{{ review.created_at|date:"M d, Y" }}</span>
+                                </div>
+                                
+                                <div class="flex gap-1 mb-3">
+                                    {% for i in "12345" %}
+                                        <i class="fas fa-star star {% if review.overall_rating >= i|add:0 %}text-yellow-400{% else %}empty{% endif %}"></i>
                                     {% endfor %}
                                 </div>
+                                
+                                <h5 class="font-medium text-gray-900 mb-2">{{ review.title }}</h5>
+                                <p class="text-gray-700 mb-3">{{ review.content }}</p>
+                                
+                                {% if review.likes %}
+                                <div class="bg-green-50 p-3 rounded-lg mb-3">
+                                    <strong class="text-green-800">What they liked:</strong>
+                                    <p class="text-green-700 mt-1">{{ review.likes }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if review.improvements %}
+                                <div class="bg-yellow-50 p-3 rounded-lg mb-3">
+                                    <strong class="text-yellow-800">Suggested improvements:</strong>
+                                    <p class="text-yellow-700 mt-1">{{ review.improvements }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="flex gap-4 mt-4">
+                                    <button class="flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition-colors" 
+                                            onclick="markHelpful('{{ review.id }}')">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        Helpful ({{ review.helpful_count }})
+                                    </button>
+                                    <button class="flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition-colors">
+                                        <i class="fas fa-share"></i>
+                                        Share
+                                    </button>
+                                </div>
                             </div>
-                            
-                            <div class="mb-6">
-                                <label for="{{ review_form.title.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Review Title
-                                </label>
-                                <input type="text" name="title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" placeholder="Summarize your review...">
-                            </div>
-                            
-                            <div class="mb-6">
-                                <label for="{{ review_form.content.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">
-                                    Your Review
-                                </label>
-                                <textarea name="content" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" placeholder="Share your experience with this product..."></textarea>
-                            </div>
-                            
-                            <div class="mb-6">
-                                <label class="flex items-center">
-                                    {{ review_form.is_verified_purchase }}
-                                    <span class="ml-3 text-gray-700 font-medium">I purchased this product</span>
-                                </label>
-                            </div>
-                            
-                            <button type="submit" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                                <i class="fas fa-paper-plane mr-2"></i>
-                                Submit Review
-                            </button>
-                        </form>
-                    </div>
-                {% else %}
-                    <div class="mt-10 pt-8 border-t border-gray-200 text-center">
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                            <i class="fas fa-check-circle text-blue-500 text-2xl mb-2"></i>
-                            <p class="text-blue-800 font-medium">You've already submitted a review for this product.</p>
                         </div>
                     </div>
-                {% endif %}
-            {% else %}
-                <div class="mt-10 pt-8 border-t border-gray-200 text-center">
-                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                        <i class="fas fa-user-circle text-gray-400 text-3xl mb-3"></i>
-                        <p class="text-gray-700 mb-4 font-medium">Want to share your experience with this product?</p>
-                        <a href="{% url 'login' %}?next={{ request.path }}" 
-                           class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-                            <i class="fas fa-sign-in-alt mr-2"></i>
-                            Sign in to write a review
-                        </a>
+                    {% empty %}
+                    <div class="text-center py-12">
+                        <i class="fas fa-comments text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No reviews yet</h3>
+                        <p class="text-gray-500">Be the first to review this product!</p>
+                    </div>
+                    {% endfor %}
+                    
+                    {% if reviews.count > 6 %}
+                    <div class="text-center mt-8">
+                        <button class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700 transition-colors">
+                            Load More Reviews
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Product Details Tab Content -->
+                <div id="details-content" class="tab-content p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Details</h2>
+                    <div class="prose max-w-none">
+                        <p class="text-gray-700 leading-relaxed mb-6">{{ product.description }}</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-900">Brand:</span>
+                                <span class="text-gray-700 ml-2">{{ product.brand.name }}</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-900">Category:</span>
+                                <span class="text-gray-700 ml-2">{{ product.category.name }}</span>
+                            </div>
+                            {% if product.price %}
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-900">Price:</span>
+                                <span class="text-gray-700 ml-2">${{ product.price }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <span class="font-semibold text-gray-900">Added:</span>
+                                <span class="text-gray-700 ml-2">{{ product.created_at|date:"F d, Y" }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            {% endif %}
+
+                <!-- Specifications Tab Content -->
+                <div id="specs-content" class="tab-content p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Technical Specifications</h2>
+                    {% if specifications %}
+                    <div class="grid grid-cols-1 gap-3">
+                        {% for spec in specifications %}
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                            <span class="font-semibold text-gray-900">{{ spec.key|title }}:</span>
+                            <span class="text-gray-700">{{ spec.value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-12">
+                        <i class="fas fa-cog text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No specifications available</h3>
+                        <p class="text-gray-500">Specifications will be added soon.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar (1/3 width) -->
+        <div class="lg:col-span-1">
+            <div class="sidebar-sticky space-y-6">
+                <!-- Rating Summary -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-gray-900 mb-2">{{ average_rating|floatformat:1 }}</div>
+                        <div class="flex justify-center gap-1 mb-2">
+                            {% for i in "12345" %}
+                                <i class="fas fa-star star {% if average_rating >= i|add:0 %}text-yellow-400{% else %}empty{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                        <p class="text-gray-600">Based on {{ total_reviews }} review{{ total_reviews|pluralize }}</p>
+                    </div>
+
+                    <!-- Rating Breakdown -->
+                    <div class="space-y-3 mb-6">
+                        {% for rating, data in rating_distribution.items %}
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm font-medium text-gray-700 w-8">{{ rating }}<i class="fas fa-star text-xs ml-1"></i></span>
+                            <div class="flex-1 rating-bar">
+                                <div class="rating-fill" data-width="{{ data.percentage }}"></div>
+                            </div>
+                            <span class="text-sm text-gray-600 w-8">{{ data.count }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Aspect Ratings -->
+                    {% if aspect_ratings %}
+                    <div class="border-t pt-6">
+                        <h4 class="font-semibold text-gray-900 mb-4">Rating Breakdown</h4>
+                        <div class="space-y-3">
+                            {% for field, data in aspect_ratings.items %}
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">{{ data.label }}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-semibold text-indigo-600">{{ data.average }}</span>
+                                    <div class="flex gap-1">
+                                        {% for i in "12345" %}
+                                            <i class="fas fa-star text-xs {% if data.average >= i|add:0 %}text-yellow-400{% else %}text-gray-300{% endif %}"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Product Stats -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Product Stats</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl font-bold text-gray-900">{{ total_reviews }}</div>
+                            <div class="text-sm text-gray-600">Reviews</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl font-bold text-gray-900">{{ view_count }}</div>
+                            <div class="text-sm text-gray-600">Views</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Write Review Button (Mobile) -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <a href="{% url 'reviews:add_review_product' product.slug %}" 
+                       class="block w-full gradient-bg text-white text-center py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-edit mr-2"></i>Write a Review
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- CSRF Token for AJAX requests -->
+<form style="display: none;">
+    {% csrf_token %}
+</form>
+{% endblock %}
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Star rating interaction with smooth animations
-    const ratingContainer = document.querySelector('.rating-stars');
-    if (ratingContainer) {
-        const stars = ratingContainer.querySelectorAll('label');
-        const inputs = ratingContainer.querySelectorAll('input');
-        
-        stars.forEach((star, index) => {
-            star.addEventListener('mouseenter', function() {
-                highlightStars(5 - index);
-            });
-            
-            star.addEventListener('click', function() {
-                const rating = 5 - index;
-                inputs[index].checked = true;
-                highlightStars(rating, true);
-            });
+
+      document.querySelectorAll('.rating-fill').forEach(el => {
+    const width = el.dataset.width;
+    el.style.width = width + '%';
+  });
+
+    function switchTab(tabName) {
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
         });
         
-        ratingContainer.addEventListener('mouseleave', function() {
-            const checkedInput = ratingContainer.querySelector('input:checked');
-            if (checkedInput) {
-                const rating = parseInt(checkedInput.value);
-                highlightStars(rating, true);
-            } else {
-                resetStars();
-            }
+        // Remove active styles from all tab buttons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('border-indigo-600', 'text-indigo-600');
+            button.classList.add('border-transparent', 'text-gray-700');
         });
         
-        function highlightStars(count, permanent = false) {
-            stars.forEach((star, index) => {
-                const icon = star.querySelector('i');
-                if (index < count) {
-                    icon.style.color = '#f59e0b';
-                    icon.style.transform = 'scale(1.1)';
-                } else {
-                    icon.style.color = permanent ? '#d1d5db' : '#d1d5db';
-                    icon.style.transform = 'scale(1)';
-                }
-            });
-        }
+        // Show selected tab content
+        document.getElementById(tabName + '-content').classList.add('active');
         
-        function resetStars() {
-            stars.forEach(star => {
-                const icon = star.querySelector('i');
-                icon.style.color = '#d1d5db';
-                icon.style.transform = 'scale(1)';
-            });
-        }
+        // Add active styles to clicked button
+        const activeButton = document.getElementById(tabName + '-tab');
+        activeButton.classList.remove('border-transparent', 'text-gray-700');
+        activeButton.classList.add('border-indigo-600', 'text-indigo-600');
     }
 
-    // Helpful button AJAX with improved feedback
-    const helpfulButtons = document.querySelectorAll('.helpful-btn');
-    helpfulButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const reviewId = this.dataset.reviewId;
-            const url = this.dataset.url;
-            const originalText = this.innerHTML;
-            
-            // Show loading state
-            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-            this.disabled = true;
-            
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'added') {
-                    this.innerHTML = `<i class="fas fa-thumbs-up mr-2"></i>Helpful (${data.count})`;
-                    this.classList.add('bg-blue-500', 'text-white');
-                    this.classList.remove('bg-white', 'text-blue-600', 'border-blue-200');
-                } else if (data.status === 'removed') {
-                    this.innerHTML = `<i class="far fa-thumbs-up mr-2"></i>Helpful (${data.count})`;
-                    this.classList.remove('bg-blue-500', 'text-white');
-                    this.classList.add('bg-white', 'text-blue-600', 'border-blue-200');
-                }
-                this.disabled = false;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                this.innerHTML = originalText;
-                this.disabled = false;
-            });
-        });
-    });
-
-    // Add smooth scroll behavior for page sections
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Add loading animation for buttons
-    const actionButtons = document.querySelectorAll('button[class*="gradient"]');
-    actionButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (!this.disabled) {
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-                this.disabled = true;
+    function markHelpful(reviewId) {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        fetch(`/api/review/${reviewId}/helpful/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'added') {
+                const button = event.target.closest('button');
+                button.classList.add('text-indigo-600');
+                button.innerHTML = `<i class="fas fa-thumbs-up"></i> Helpful (${data.count})`;
                 
-                // Re-enable after 2 seconds (simulate processing)
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.disabled = false;
-                }, 2000);
+                // Show success toast
+                if (typeof Toastify !== 'undefined') {
+                    Toastify({
+                        text: "Thanks for your feedback!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }).showToast();
+                }
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
+    }
+
+    // Initialize first tab as active
+    document.addEventListener('DOMContentLoaded', function() {
+        switchTab('reviews');
     });
-});
 </script>
-
-<style>
-/* Custom animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.container > div {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.container > div:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.container > div:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.container > div:nth-child(4) {
-    animation-delay: 0.3s;
-}
-
-/* Smooth transitions for all interactive elements */
-* {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #2563eb, #7c3aed);
-}
-
-/* Rating stars hover effect */
-.rating-stars label {
-    transition: all 0.2s ease;
-}
-
-.rating-stars label:hover {
-    transform: scale(1.2);
-}
-
-/* Button pulse effect */
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-.helpful-btn:hover {
-    animation: pulse 2s infinite;
-}
-</style>
-{% endblock %}
 {% endblock %}

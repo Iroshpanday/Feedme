@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'reviews',
+    'mathfilters',
 
     'compressor',
     'rest_framework', 

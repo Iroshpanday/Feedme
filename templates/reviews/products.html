@@ -1,0 +1,1111 @@
+{% extends 'base.html' %}
+
+{% block title %}Products - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .navbar {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1rem 0;
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ff6b35;
+    }
+
+    .logo i {
+        margin-right: 0.5rem;
+        background: #ff6b35;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #ff6b35;
+    }
+
+    .user-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .btn-primary {
+        background: #ff6b35;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #e55a2b;
+        transform: translateY(-1px);
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .hero-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .search-box {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        outline: none;
+        color: #333;
+    }
+
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #ff6b35;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .search-btn:hover {
+        background: #e55a2b;
+    }
+
+    .filters-section {
+        background: white;
+        padding: 2rem 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .filters-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .filter-group {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .filter-select {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #ff6b35;
+    }
+
+    .results-info {
+        font-weight: 600;
+        color: #666;
+    }
+
+    .products-section {
+        padding: 3rem 0;
+    }
+
+    .products-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: #28a745;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        z-index: 2;
+    }
+
+    .product-badge.popular {
+        background: #ff6b35;
+    }
+
+    .product-badge.top-rated {
+        background: #ffc107;
+        color: #333;
+    }
+
+    .rating-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        z-index: 2;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .placeholder-icon {
+        font-size: 4rem;
+        color: #dee2e6;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #333;
+        line-height: 1.3;
+    }
+
+    .product-brand {
+        color: #ff6b35;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .product-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .review-count {
+        display: flex;
+        align-items: center;  /* Added missing property */
+        gap: 0.5rem;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .review-count i {
+        color: #ff6b35;
+    }
+
+    .rating-stars {
+        display: flex;
+        gap: 0.2rem;
+    }
+
+    .star {
+        color: #ffc107;
+        font-size: 0.9rem;
+    }
+
+    .star.empty {
+        color: #e9ecef;
+    }
+
+    .view-details-btn {
+        background: #ff6b35;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+
+    .view-details-btn:hover {
+        background: #e55a2b;
+        transform: translateY(-1px);
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #666;
+    }
+
+    .no-results i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        color: #dee2e6;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #ff6b35;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+    }
+
+    .page-btn {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e9ecef;
+        background: white;
+        color: #666;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+
+    .page-btn:hover, .page-btn.active {
+        background: #ff6b35;
+        color: white;
+        border-color: #ff6b35;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .nav-container {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .nav-links {
+            gap: 1rem;
+        }
+        
+        .filters-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .filter-group {
+            justify-content: center;
+        }
+        
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Navigation -->
+    <!-- <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-rss"></i>
+                FeedMe
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'reviews:home' %}">Home</a></li>
+                <li><a href="#" style="color: #ff6b35;">Products</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+            <div class="user-section">
+                {% if user.is_authenticated %}
+                    <span>Welcome, {{ user.first_name|default:user.username }}!</span>
+                    <a href="{% url 'reviews:dashboard' %}" class="btn btn-primary">Dashboard</a>
+                    <a href="{% url 'account_logout' %}" class="btn">Logout</a>
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="btn">Login</a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-primary">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav> -->
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <h1 class="hero-title">Discover Amazing Products</h1>
+            <p class="hero-subtitle">Browse through our comprehensive collection of reviewed products</p>
+            
+            <div class="search-container">
+                <form method="GET" action="{% url 'reviews:products' %}">
+                    <input 
+                        type="text" 
+                        name="q" 
+                        class="search-box" 
+                        placeholder="Search for products, brands, or categories..."
+                        value="{{ query|default:'' }}"
+                        id="searchInput"
+                    >
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select class="filter-select" id="brandFilter">
+                    <option value="">All Brands</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.slug }}" {% if selected_brand == brand.slug %}selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select class="filter-select" id="sortFilter">
+                    <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Newest First</option>
+                    <option value="rating" {% if selected_sort == 'rating' %}selected{% endif %}>Highest Rated</option>
+                    <option value="reviews" {% if selected_sort == 'reviews' %}selected{% endif %}>Most Reviewed</option>
+                    <option value="popular" {% if selected_sort == 'popular' %}selected{% endif %}>Most Popular</option>
+                </select>
+            </div>
+            
+            <div class="results-info">
+                <span id="resultsCount">{{ total_count }}</span> products found
+                {% if query %}for "{{ query }}"{% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="products-container">
+          <div class="products-grid" id="productsGrid">
+    {% for product in products %}
+        <div class="product-card"
+             data-slug="{{ product.slug }}"
+             data-is-business-user="{% if user.is_authenticated and user.profile.is_business_user %}true{% else %}false{% endif %}">
+
+            <!-- Product Badges -->
+            {% if product.is_featured %}
+                <div class="product-badge popular">Popular</div>
+            {% elif product.average_rating >= 4.5 %}
+                <div class="product-badge top-rated">Top Rated</div>
+            {% elif product.total_reviews >= 10 %}
+                <div class="product-badge">Reviewed</div>
+            {% endif %}
+
+            <!-- Rating Badge -->
+            {% if product.average_rating > 0 %}
+                <div class="rating-badge">
+                    <i class="fas fa-star"></i>
+                    {{ product.average_rating|floatformat:1 }}
+                </div>
+            {% endif %}
+
+            <!-- Product Image -->
+            <div class="product-image">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <i class="fas fa-mobile-alt placeholder-icon"></i>
+                {% endif %}
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <div class="product-brand">{{ product.brand.name }}</div>
+                <h3 class="product-name">{{ product.name }}</h3>
+
+                <div class="product-stats">
+                    <div class="review-count">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>{{ product.review_count }} review{{ product.review_count|pluralize }}</span>
+                    </div>
+                    <button class="view-details-btn">
+                        View Details
+                    </button>
+                </div>
+
+                {% if product.average_rating > 0 %}
+                    <div class="rating-stars" style="margin-top: 0.5rem;">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= product.average_rating %}
+                                <i class="fas fa-star star"></i>
+                            {% else %}
+                                <i class="fas fa-star star empty"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div class="no-results">
+            <i class="fas fa-search"></i>
+            <h3>No products found</h3>
+            <p>Try adjusting your search criteria or browse our categories.</p>
+        </div>
+    {% endfor %}
+</div>
+
+
+            <!-- Loading indicator -->
+            <div class="loading" id="loadingIndicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading products...</p>
+            </div>
+
+            <!-- Pagination -->
+            {% if products.has_other_pages %}
+                <div class="pagination">
+                    {% if products.has_previous %}
+                        <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="page-btn">First</a>
+                        <a href="?page={{ products.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="page-btn">Previous</a>
+                    {% endif %}
+                    
+                    <span class="page-btn active">{{ products.number }}</span>
+                    
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="page-btn">Next</a>
+                        <a href="?page={{ products.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="page-btn">Last</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.product-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+            const slug = this.dataset.slug;
+            const isBusinessUser = this.dataset.isBusinessUser === 'true';
+            handleProductClick(slug, isBusinessUser);
+        });
+    });
+});
+
+function handleProductClick(slug, isBusinessUser) {
+    // Your logic here
+    console.log("Clicked Product:", slug, "Business User:", isBusinessUser);
+    // Example: redirect or open modal
+    // window.location.href = `/products/${slug}/`;
+}
+    // Handle product card clicks with user type differentiation
+    function handleProductClick(slug, isBusinessUser) {
+        if (isBusinessUser) {
+            // TODO: Navigate to business product details page when created
+            // For now, we'll use the regular product detail page
+            // Later change this to: window.location.href = `/product/${slug}/business/`;
+            console.log('Business user clicked on product:', slug);
+            // Placeholder for business product details page
+            alert('Business product details page will be implemented soon!');
+            // For now, redirect to regular product page
+            window.location.href = `/product/${slug}/`;
+        } else {
+            // Normal user - go to regular product details page
+            window.location.href = `/product/${slug}/`;
+        }
+    }
+
+    // Filter functionality
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+        applyFilters();
+    });
+
+    document.getElementById('brandFilter').addEventListener('change', function() {
+        applyFilters();
+    });
+
+    document.getElementById('sortFilter').addEventListener('change', function() {
+        applyFilters();
+    });
+
+    function applyFilters() {
+        const category = document.getElementById('categoryFilter').value;
+        const brand = document.getElementById('brandFilter').value;
+        const sort = document.getElementById('sortFilter').value;
+        const query = document.getElementById('searchInput').value;
+
+        // Show loading indicator
+        document.getElementById('loadingIndicator').style.display = 'block';
+        
+        // Build URL with filters
+        let url = '{% url "reviews:products" %}?';
+        const params = new URLSearchParams();
+        
+        if (query) params.append('q', query);
+        if (category) params.append('category', category);
+        if (brand) params.append('brand', brand);
+        if (sort) params.append('sort', sort);
+        
+        url += params.toString();
+        
+        // Redirect to filtered results
+        window.location.href = url;
+    }
+
+    // Add loading state for product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function() {
+            this.style.opacity = '0.7';
+            this.style.pointerEvents = 'none';
+        });
+    });
+</script>
+
+<!-- Add the autocomplete JavaScript to your template -->
+<script>
+// Enhanced Search Autocomplete
+class ProductSearchAutocomplete {
+    constructor() {
+        this.searchInput = document.getElementById('searchInput');
+        this.suggestionsContainer = null;
+        this.currentFocus = -1;
+        this.searchTimeout = null;
+        
+        this.init();
+    }
+    
+    init() {
+        this.createSuggestionsContainer();
+        this.bindEvents();
+    }
+    
+    createSuggestionsContainer() {
+        this.suggestionsContainer = document.createElement('div');
+        this.suggestionsContainer.className = 'search-suggestions';
+        this.suggestionsContainer.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        `;
+        
+        this.searchInput.parentNode.style.position = 'relative';
+        this.searchInput.parentNode.appendChild(this.suggestionsContainer);
+    }
+    
+    bindEvents() {
+        // Input event for search
+        this.searchInput.addEventListener('input', (e) => {
+            clearTimeout(this.searchTimeout);
+            const query = e.target.value.trim();
+            
+            if (query.length >= 2) {
+                this.searchTimeout = setTimeout(() => {
+                    this.performSearch(query);
+                }, 300);
+            } else {
+                this.hideSuggestions();
+            }
+        });
+        
+        // Keyboard navigation
+        this.searchInput.addEventListener('keydown', (e) => {
+            const suggestions = this.suggestionsContainer.querySelectorAll('.suggestion-item');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                this.currentFocus++;
+                this.addActive(suggestions);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                this.currentFocus--;
+                this.addActive(suggestions);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (this.currentFocus > -1 && suggestions[this.currentFocus]) {
+                    suggestions[this.currentFocus].click();
+                } else {
+                    // Submit form if no suggestion selected
+                    this.searchInput.closest('form').submit();
+                }
+            } else if (e.key === 'Escape') {
+                this.hideSuggestions();
+                this.searchInput.blur();
+            }
+        });
+        
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!this.searchInput.contains(e.target) && !this.suggestionsContainer.contains(e.target)) {
+                this.hideSuggestions();
+            }
+        });
+        
+        // Show suggestions when focusing on input with existing value
+        this.searchInput.addEventListener('focus', (e) => {
+            if (e.target.value.trim().length >= 2) {
+                this.performSearch(e.target.value.trim());
+            }
+        });
+    }
+    
+    async performSearch(query) {
+        try {
+            const response = await fetch(`/api/product-autocomplete/?q=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            
+            if (data.suggestions && data.suggestions.length > 0) {
+                this.displaySuggestions(data.suggestions, query);
+            } else {
+                this.displayNoResults(query);
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            this.hideSuggestions();
+        }
+    }
+    
+    displaySuggestions(suggestions, query) {
+        this.currentFocus = -1;
+        let html = '<div class="suggestions-header">Search Results</div>';
+        
+        suggestions.forEach((suggestion, index) => {
+            const highlightedName = this.highlightMatch(suggestion.name, query);
+            
+            if (suggestion.type === 'product') {
+                html += `
+                    <div class="suggestion-item product-suggestion" data-url="${suggestion.url}">
+                        <div class="suggestion-image">
+                            ${suggestion.image ? 
+                                `<img src="${suggestion.image}" alt="${suggestion.name}" />` : 
+                                '<i class="fas fa-mobile-alt"></i>'
+                            }
+                        </div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-name">${highlightedName}</div>
+                            <div class="suggestion-meta">
+                                <span class="brand-name">${suggestion.brand}</span>
+                                ${suggestion.rating > 0 ? 
+                                    `<span class="rating">
+                                        <i class="fas fa-star"></i> ${suggestion.rating.toFixed(1)}
+                                    </span>` : ''
+                                }
+                                <span class="review-count">${suggestion.reviews} reviews</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                `;
+            } else if (suggestion.type === 'brand') {
+                html += `
+                    <div class="suggestion-item brand-suggestion" data-url="${suggestion.url}">
+                        <div class="suggestion-image">
+                            ${suggestion.image ? 
+                                `<img src="${suggestion.image}" alt="${suggestion.name}" />` : 
+                                '<i class="fas fa-tag"></i>'
+                            }
+                        </div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-name">${highlightedName}</div>
+                            <div class="suggestion-meta">Brand</div>
+                        </div>
+                        <div class="suggestion-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        
+        // Add "View all results" option
+        html += `
+            <div class="suggestion-item view-all" data-search="${query}">
+                <div class="suggestion-content">
+                    <div class="suggestion-name">
+                        <i class="fas fa-search"></i>
+                        View all results for "${query}"
+                    </div>
+                </div>
+                <div class="suggestion-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        `;
+        
+        this.suggestionsContainer.innerHTML = html;
+        this.showSuggestions();
+        this.bindSuggestionEvents();
+    }
+    
+    displayNoResults(query) {
+        const html = `
+            <div class="suggestions-header">No Results Found</div>
+            <div class="no-results-suggestion">
+                <i class="fas fa-search"></i>
+                <div>No products found for "${query}"</div>
+                <small>Try different keywords or browse categories</small>
+            </div>
+        `;
+        
+        this.suggestionsContainer.innerHTML = html;
+        this.showSuggestions();
+    }
+    
+    bindSuggestionEvents() {
+        const suggestionItems = this.suggestionsContainer.querySelectorAll('.suggestion-item');
+        
+        suggestionItems.forEach((item, index) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                if (item.classList.contains('view-all')) {
+                    // Search for all results
+                    const searchQuery = item.dataset.search;
+                    this.searchInput.value = searchQuery;
+                    this.searchInput.closest('form').submit();
+                } else {
+                    // Navigate to specific product/brand
+                    const url = item.dataset.url;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                }
+            });
+            
+            item.addEventListener('mouseenter', () => {
+                this.removeActive();
+                this.currentFocus = index;
+                this.addActive(suggestionItems);
+            });
+        });
+    }
+    
+    highlightMatch(text, query) {
+        // Fix the regex pattern by properly escaping the backslash
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    
+    addActive(suggestions) {
+        this.removeActive();
+        if (this.currentFocus >= suggestions.length) this.currentFocus = 0;
+        if (this.currentFocus < 0) this.currentFocus = suggestions.length - 1;
+        
+        if (suggestions[this.currentFocus]) {
+            suggestions[this.currentFocus].classList.add('active');
+        }
+    }
+    
+    removeActive() {
+        const suggestions = this.suggestionsContainer.querySelectorAll('.suggestion-item');
+        suggestions.forEach(item => item.classList.remove('active'));
+    }
+    
+    showSuggestions() {
+        this.suggestionsContainer.style.display = 'block';
+    }
+    
+    hideSuggestions() {
+        this.suggestionsContainer.style.display = 'none';
+        this.currentFocus = -1;
+    }
+}
+
+// CSS Styles for autocomplete (add to your stylesheet)
+const autocompleteStyles = `
+    .search-suggestions {
+        font-family: inherit;
+    }
+    
+    .suggestions-header {
+        padding: 0.75rem 1rem;
+        background: #f8f9fa;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #666;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .suggestion-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        border-bottom: 1px solid #f1f3f4;
+        transition: background-color 0.2s;
+    }
+    
+    .suggestion-item:hover,
+    .suggestion-item.active {
+        background-color: #f8f9fa;
+    }
+    
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+    
+    .suggestion-image {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    
+    .suggestion-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .suggestion-image i {
+        color: #666;
+        font-size: 1.2rem;
+    }
+    
+    .suggestion-content {
+        flex: 1;
+    }
+    
+    .suggestion-name {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: #333;
+    }
+    
+    .suggestion-name mark {
+        background: #fff3cd;
+        color: #856404;
+        padding: 0.1rem 0.2rem;
+        border-radius: 3px;
+    }
+    
+    .suggestion-meta {
+        font-size: 0.85rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .brand-name {
+        color: #ff6b35;
+        font-weight: 500;
+    }
+    
+    .rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: #ffc107;
+    }
+    
+    .rating i {
+        font-size: 0.8rem;
+    }
+    
+    .suggestion-arrow {
+        color: #ccc;
+        margin-left: 0.5rem;
+    }
+    
+    .view-all {
+        background: #f8f9fa;
+        font-weight: 500;
+        color: #ff6b35;
+    }
+    
+    .view-all:hover {
+        background: #e9ecef;
+    }
+    
+    .no-results-suggestion {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #666;
+    }
+    
+    .no-results-suggestion i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: #dee2e6;
+    }
+    
+    .no-results-suggestion small {
+        display: block;
+        margin-top: 0.5rem;
+        color: #999;
+    }
+`;
+
+// Add styles to head
+const styleElement = document.createElement('style');
+styleElement.textContent = autocompleteStyles;
+document.head.appendChild(styleElement);
+
+// Initialize autocomplete
+if (document.getElementById('searchInput')) {
+    new ProductSearchAutocomplete();
+}
+</script>
+{% endblock %}

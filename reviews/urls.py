@@ -35,5 +35,11 @@ urlpatterns = [
     path('dashboard/', login_required(views.dashboard_view), name='dashboard'),
     path('dashboard/user/', login_required(views.user_dashboard_view), name='user_dashboard'),
     path('dashboard/business/', login_required(views.business_dashboard_view), name='business_dashboard'),
+
+      path('products/', views.products_view, name='products'),
+    
+    # API endpoints
+    path('api/product-autocomplete/', views.product_autocomplete, name='product_autocomplete'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

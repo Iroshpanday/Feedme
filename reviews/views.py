@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -120,9 +121,11 @@ def search_view(request):
 def product_detail_view(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
     
+    # Increment view count
     product.view_count += 1
     product.save(update_fields=['view_count'])
     
+    # Track product view
     ProductView.objects.create(
         product=product,
         user=request.user if request.user.is_authenticated else None,
@@ -130,48 +133,129 @@ def product_detail_view(request, slug):
         user_agent=request.META.get('HTTP_USER_AGENT', '')
     )
     
+    # Get all approved reviews
     reviews = Review.objects.filter(
         product=product,
         is_approved=True
     ).select_related('user').order_by('-created_at')
     
+    # Calculate rating statistics using overall_rating
+    total_reviews = reviews.count()
     rating_distribution = {}
-    total_reviews = product.total_reviews
     
+    # Calculate rating distribution and percentages using overall_rating
     for i in range(1, 6):
-        count = reviews.filter(rating=i).count()
+        count = reviews.filter(overall_rating=i).count()
         percentage = (count / total_reviews * 100) if total_reviews > 0 else 0
         rating_distribution[i] = {
             'count': count,
             'percentage': percentage
         }
     
+    # Calculate average overall rating
+    overall_avg = reviews.exclude(overall_rating=None).aggregate(
+        avg=Avg('overall_rating')
+    )['avg'] or 0
+    
+    # Calculate average ratings for different aspects
+    aspect_ratings = {}
+    aspects = [
+        ('overall_rating', 'Overall'),
+        ('performance_rating', 'Performance'),
+        ('battery_rating', 'Battery Life'),
+        ('camera_rating', 'Camera Quality'),
+        ('display_rating', 'Display'),
+        ('value_rating', 'Value for Money')
+    ]
+    
+    for field, label in aspects:
+        reviews_with_rating = reviews.exclude(**{field: None})
+        if reviews_with_rating.exists():
+            avg = reviews_with_rating.aggregate(
+                avg=Avg(field)
+            )['avg']
+            aspect_ratings[field] = {
+                'label': label,
+                'average': round(avg, 1) if avg else 0,
+                'count': reviews_with_rating.count()
+            }
+    
+    # Get recent reviews (last 6)
+    recent_reviews = reviews[:6]
+    
+    # Check if user has already reviewed
     user_has_reviewed = False
+    user_review = None
     if request.user.is_authenticated:
-        user_has_reviewed = Review.objects.filter(
+        user_review = Review.objects.filter(
             product=product,
             user=request.user
-        ).exists()
+        ).first()
+        user_has_reviewed = user_review is not None
     
-    review_form = ReviewForm(user=request.user)
+    # Initialize review form
+    review_form = ReviewForm(user=request.user, instance=user_review)
     review_form.fields['product'].initial = product
     
+    # Get product specifications
     specifications = product.specifications.all()
+    
+    # Get related products (same category)
+    related_products = Product.objects.filter(
+        category=product.category,
+        is_active=True
+    ).exclude(id=product.id).annotate(
+        avg_rating=Avg('reviews__rating', filter=Q(reviews__is_approved=True)),
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True))
+    )[:4]
+    
+    # Calculate monthly review trends (last 6 months)
+    from django.utils import timezone
+    from datetime import timedelta
+    import calendar
+    
+    monthly_reviews = []
+    for i in range(6):
+        month_start = timezone.now().replace(day=1) - timedelta(days=30*i)
+        month_end = month_start + timedelta(days=32)
+        month_end = month_end.replace(day=1) - timedelta(days=1)
+        
+        count = reviews.filter(
+            created_at__gte=month_start,
+            created_at__lte=month_end
+        ).count()
+        
+        monthly_reviews.append({
+            'month': calendar.month_name[month_start.month][:3],
+            'year': month_start.year,
+            'count': count
+        })
+    
+    monthly_reviews.reverse()
+    
+    # Get review highlights (most helpful and recent)
+    helpful_reviews = reviews.filter(helpful_count__gt=0).order_by('-helpful_count')[:3]
     
     context = {
         'product': product,
         'reviews': reviews,
+        'recent_reviews': recent_reviews,
+        'helpful_reviews': helpful_reviews,
         'rating_distribution': rating_distribution,
-        'average_rating': product.average_rating,
+        'aspect_ratings': aspect_ratings,
+        'average_rating': overall_avg,
         'total_reviews': total_reviews,
         'user_has_reviewed': user_has_reviewed,
+        'user_review': user_review,
         'review_form': review_form,
         'review_submitted': 'review_submitted' in request.GET,
         'specifications': specifications,
+        'related_products': related_products,
+        'monthly_reviews': monthly_reviews,
+        'view_count': product.view_count,
     }
     
     return render(request, 'reviews/product_detail.html', context)
-
 def category_view(request, slug):
     category = get_object_or_404(Category, slug=slug, is_active=True)
     
@@ -242,7 +326,7 @@ def mark_review_helpful(request, review_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
-@require_POST
+@require_GET
 def autocomplete_search(request):
     query = request.GET.get('q', '').strip()
     suggestions = []
@@ -612,3 +696,145 @@ def business_dashboard_view(request):
         'is_business_user': True
     }
     return render(request, 'reviews/business_dashboard.html', context)
+
+#product view ko lagi
+
+from django.core.paginator import Paginator
+from django.db.models import Q, Avg, Count
+
+def products_view(request):
+    """
+    Display all products with search and filtering functionality
+    """
+    # Get search query
+    query = request.GET.get('q', '').strip()
+    
+    # Get filter parameters
+    category_slug = request.GET.get('category', '')
+    brand_slug = request.GET.get('brand', '')
+    sort_by = request.GET.get('sort', 'newest')
+    
+    # Start with all active products
+    products = Product.objects.filter(is_active=True).select_related('brand', 'category')
+    
+    # Apply search filter
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(brand__name__icontains=query) |
+            Q(category__name__icontains=query)
+        )
+        
+        # Log search query
+        SearchQuery.objects.create(
+            query=query,
+            user=request.user if request.user.is_authenticated else None,
+            results_count=products.count(),
+            ip_address=get_client_ip(request)
+        )
+    
+    # Apply category filter
+    if category_slug:
+        products = products.filter(category__slug=category_slug)
+    
+    # Apply brand filter
+    if brand_slug:
+        products = products.filter(brand__slug=brand_slug)
+    
+    # Annotate with ratings and review counts
+    products = products.annotate(
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True)),
+        recent_reviews=Count(
+            'reviews',
+            filter=Q(
+                reviews__created_at__gte=timezone.now() - timedelta(days=30),
+                reviews__is_approved=True
+            )
+        )
+    )
+    
+    # Apply sorting
+    if sort_by == 'rating':
+        products = products.order_by('-avg_rating', '-review_count')
+    elif sort_by == 'reviews':
+        products = products.order_by('-review_count', '-avg_rating')
+    elif sort_by == 'popular':
+        products = products.order_by('-recent_reviews', '-view_count', '-avg_rating')
+    else:  # newest
+        products = products.order_by('-created_at')
+    
+    # Pagination
+    paginator = Paginator(products, 12)  # Show 12 products per page
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
+    
+    # Get all categories and brands for filters
+    categories = Category.objects.filter(is_active=True).order_by('name')
+    brands = Brand.objects.filter(is_active=True).order_by('name')
+    
+    # Add additional properties for template
+    # for product in products_page:
+    #     product.total_reviews = product.review_count
+    #     product.average_rating = product.avg_rating or 0
+    
+    context = {
+        'products': products_page,
+        'categories': categories,
+        'brands': brands,
+        'query': query,
+        'selected_category': category_slug,
+        'selected_brand': brand_slug,
+        'selected_sort': sort_by,
+        'total_count': paginator.count,
+    }
+    
+    return render(request, 'reviews/products.html', context)
+
+
+# Add this autocomplete view for search suggestions
+@require_GET
+def product_autocomplete(request):
+    """
+    Provide autocomplete suggestions for product search
+    """
+    query = request.GET.get('q', '').strip()
+    suggestions = []
+    
+    if query and len(query) >= 2:
+        # Get product suggestions
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(brand__name__icontains=query),
+            is_active=True
+        ).select_related('brand').annotate(
+            avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
+            review_count=Count('reviews', filter=Q(reviews__is_approved=True))
+        )[:8]
+        
+        for product in products:
+            suggestions.append({
+                'type': 'product',
+                'name': f"{product.brand.name} {product.name}",
+                'url': f"/product/{product.slug}/",
+                'image': product.image.url if product.image else None,
+                'rating': product.avg_rating or 0,
+                'reviews': product.review_count,
+                'brand': product.brand.name,
+            })
+        
+        # Get brand suggestions
+        # brands = Brand.objects.filter(
+        #     name__icontains=query,
+        #     is_active=True
+        # )[:3]
+        
+        # for brand in brands:
+        #     suggestions.append({
+        #         'type': 'brand',
+        #         'name': brand.name,
+        #         'url': f"/brand/{brand.slug}/",
+        #         'image': brand.logo.url if brand.logo else None
+        #     })
+    
+    return JsonResponse({'suggestions': suggestions})

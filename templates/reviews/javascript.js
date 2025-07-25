@@ -1,208 +1,5 @@
-{% extends 'base.html' %}
+// Enhanced Search Autocomplete - Add this to your products page template
 
-{% block title %}FeedMe - Transforming Feedback Actionable Intelligence{% endblock %}
-
-{% block extra_css %}
-<style>
-    /* Search box styles to match products.html */
-    .search-container {
-        max-width: 600px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    .search-box {
-        width: 100%;
-        padding: 1rem 1.5rem;
-        border: none;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        outline: none;
-        color: #333;
-    }
-
-    .search-btn {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: #ff6b35;
-        color: white;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-
-    .search-btn:hover {
-        background: #e55a2b;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-<!-- Hero Section -->
-<section class="gradient-bg text-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Transforming Feedback<br>
-            <span class="text-orange-300">Actionable Intelligence</span>
-        </h1>
-        <p class="text-xl md:text-2xl mb-12 text-gray-200 max-w-3xl mx-auto">
-            Get powerful insights from customer reviews and feedback to drive your business forward
-        </p>
-        
-        <!-- Search Bar -->
-        <div class="search-container mb-12">
-            <form method="GET" action="{% url 'reviews:products' %}">
-                <input 
-                    type="text" 
-                    name="q" 
-                    class="search-box" 
-                    placeholder="Search for products, brands, or categories..."
-                    id="searchInput"
-                >
-                <button type="submit" class="search-btn">
-                    <i class="fas fa-search"></i> Search
-                </button>
-            </form>
-        </div>
-
-        <!-- Category Pills -->
-        <div class="flex flex-wrap justify-center gap-3 mb-8">
-            {% for category in categories %}
-            <a href="{% url 'reviews:category' category.slug %}" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-all">
-                {{ category.name }} ({{ category.product_count }})
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Search by Category Section -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Search by category</h2>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            {% for category in categories %}
-            <a href="{% url 'reviews:category' category.slug %}" class="bg-gray-50 hover:bg-orange-50 p-6 rounded-xl text-center transition-colors card-hover">
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="{{ category.icon }} text-orange-500 text-xl"></i>
-                </div>
-                <h3 class="font-semibold text-gray-900 mb-2">{{ category.name }}</h3>
-                <p class="text-sm text-gray-600">{{ category.product_count }} products</p>
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Top Reviewed Products -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Top reviewed products</h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {% for product in top_products %}
-            <a href="{% url 'reviews:product_detail' product.slug %}" class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover block">
-                <div class="aspect-square bg-gray-100 relative">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
-                    {% else %}
-                        <div class="w-full h-full flex items-center justify-center">
-                            <i class="fas fa-mobile-alt text-4xl text-gray-400"></i>
-                        </div>
-                    {% endif %}
-                    <div class="absolute top-4 right-4 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                        {{ product.average_rating|floatformat:1 }}★
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">{{ product.name }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ product.brand }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-orange-600 font-semibold">
-                            {% if product.price %}
-                                ${{ product.price }}
-                            {% else %}
-                                Price unavailable
-                            {% endif %}
-                        </span>
-                        <span class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            View Details
-                        </span>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Recently Popular Products -->
-<section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Recently popular products</h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {% for product in popular_products %}
-            <a href="{% url 'reviews:product_detail' product.slug %}" class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover block">
-                <div class="aspect-square bg-gray-100 relative">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
-                    {% else %}
-                        <div class="w-full h-full flex items-center justify-center">
-                            <i class="fas fa-mobile-alt text-4xl text-gray-400"></i>
-                        </div>
-                    {% endif %}
-                    <div class="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                        Popular
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="font-bold text-lg text-gray-900 mb-2">{{ product.name }}</h3>
-                    <p class="text-gray-600 text-sm mb-4">{{ product.brand }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-orange-600 font-semibold">
-                            {% if product.price %}
-                                ${{ product.price }}
-                            {% else %}
-                                Price unavailable
-                            {% endif %}
-                        </span>
-                        <span class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            View Details
-                        </span>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Call to Action -->
-<section class="py-16 bg-orange-500">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to unlock the power of feedback?
-        </h2>
-        <p class="text-xl text-orange-100 mb-8">
-            Join thousands of users and shape your future.
-        </p>
-        <a href="{% url 'account_signup' %}" class="bg-white text-orange-500 hover:bg-gray-100 px-8 py-4 rounded-xl font-bold text-lg transition-colors duration-200 inline-block">
-            Get Started
-        </a>
-    </div>
-</section>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-// Enhanced Search Autocomplete
 class ProductSearchAutocomplete {
     constructor() {
         this.searchInput = document.getElementById('searchInput');
@@ -431,10 +228,10 @@ class ProductSearchAutocomplete {
     }
     
     highlightMatch(text, query) {
-        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\            max-height: 400px;
+            ')})`, 'gi');
         return text.replace(regex, '<mark>$1</mark>');
     }
-
     
     addActive(suggestions) {
         this.removeActive();
@@ -461,7 +258,7 @@ class ProductSearchAutocomplete {
     }
 }
 
-// CSS Styles for autocomplete
+// CSS Styles for autocomplete (add to your stylesheet)
 const autocompleteStyles = `
     .search-suggestions {
         font-family: inherit;
@@ -592,14 +389,20 @@ const autocompleteStyles = `
     }
 `;
 
-// Add styles to head
-const styleElement = document.createElement('style');
-styleElement.textContent = autocompleteStyles;
-document.head.appendChild(styleElement);
+// Initialize autocomplete when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Add styles to head
+    const styleElement = document.createElement('style');
+    styleElement.textContent = autocompleteStyles;
+    document.head.appendChild(styleElement);
+    
+    // Initialize autocomplete
+    if (document.getElementById('searchInput')) {
+        new ProductSearchAutocomplete();
+    }
+});
 
-// Initialize autocomplete
-if (document.getElementById('searchInput')) {
-    new ProductSearchAutocomplete();
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ProductSearchAutocomplete;
 }
-</script>
-{% endblock %}

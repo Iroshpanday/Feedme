@@ -16,10 +16,10 @@
                 <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Home
                 </a>
-                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <!-- <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Reviews
-                </a>
-                <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                </a> -->
+                <a href="{% url 'reviews:products' %}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Products
                 </a>
                 <!-- <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -43,7 +43,7 @@
             <div class="hidden md:flex items-center space-x-4">
                 {% if user.is_authenticated %}
                     <div class="flex items-center space-x-4">
-                        <span class="text-gray-700">Welcome, {{ user.username }}</span>
+                        <span>Welcome, {{ user.first_name|default:user.username }}</span>
                         <a href="{% url 'reviews:dashboard' %}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">
                             Dashboard
                         </a>
@@ -78,7 +78,7 @@
                 <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
                     Reviews
                 </a>
-                <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
+                <a href="{% url 'reviews:products' %}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
                     Products
                 </a>
                 <a href="#" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
@@ -91,7 +91,7 @@
                 {% if user.is_authenticated %}
                     <div class="border-t border-gray-200 pt-2">
                         <div class="px-3 py-2 text-gray-700 text-base font-medium">
-                            Welcome, {{ user.username }}
+                            <span>Welcome, {{ user.first_name|default:user.username }}!</span>
                         </div>
                         <a href="{% url 'reviews:dashboard' %}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 rounded-md text-base font-medium">
                             Dashboard

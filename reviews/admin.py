@@ -7,6 +7,8 @@ from .models import (
     SearchQuery, ProductView
 )
 
+from .models import Specification  
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'icon', 'product_count', 'is_active', 'created_at']
@@ -36,10 +38,16 @@ class BrandAdmin(admin.ModelAdmin):
         return "No Logo"
     logo_preview.short_description = 'Logo'
 
+class SpecificationInline(admin.TabularInline):
+    model = Specification
+    extra = 1
+    fields = ['key', 'value', 'ram', 'processor', 'camera', 'display_quality']
+    can_delete = True    
+
 class ReviewInline(admin.TabularInline):
     model = Review
     extra = 0
-    fields = ['user', 'title', 'rating', 'is_approved', 'created_at', 'review_video_preview']
+    fields = ['user', 'title', 'overall_rating', 'is_approved', 'created_at', 'review_video_preview']  # ✅ Now uses 'overall_rating'
     readonly_fields = ['created_at', 'review_video_preview']
     can_delete = False
     
@@ -64,7 +72,8 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description', 'brand__name']
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ['is_active', 'is_featured', 'price']
-    inlines = [ReviewInline]
+    inlines = [ReviewInline, SpecificationInline]  # ✅ Combined into one line (no duplication)
+    autocomplete_fields = ['brand']  # Optional: Adds search for brands
     
     fieldsets = (
         ('Basic Information', {
@@ -80,7 +89,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ['view_count']
-    
+
     def image_preview(self, obj):
         if obj.image:
             return format_html(
@@ -91,17 +100,16 @@ class ProductAdmin(admin.ModelAdmin):
     image_preview.short_description = 'Image'
     
     def average_rating(self, obj):
-        # Update this to use overall_rating instead of rating in your model's calculation
-        rating = obj.average_rating  # Make sure this uses overall_rating in your model
+        rating = obj.average_rating
         if rating is None:
             return "No ratings"
         stars = '★' * int(rating) + '☆' * (5 - int(rating))
         return format_html(
-            '<span style="color: #f59e0b;">{}</span> ({:.1f})',
-            stars, rating
+            '<span style="color: #f59e0b;">{}</span> ({})',
+            stars,
+            "{:.1f}".format(float(rating))
         )
-    average_rating.short_description = 'Rating'
-    
+        
     def total_reviews(self, obj):
         count = obj.total_reviews
         if count > 0:
@@ -109,6 +117,8 @@ class ProductAdmin(admin.ModelAdmin):
             return format_html('<a href="{}">{} reviews</a>', url, count)
         return "0 reviews"
     total_reviews.short_description = 'Reviews'
+
+
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

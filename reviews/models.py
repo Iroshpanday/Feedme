@@ -183,10 +183,10 @@ class Product(models.Model):
 
     @property
     def average_rating(self):
-        """Calculate average rating"""
+        """Calculate average rating using overall_rating"""
         reviews = self.reviews.filter(is_approved=True)
         if reviews.exists():
-            return reviews.aggregate(models.Avg('rating'))['rating__avg']
+            return reviews.aggregate(models.Avg('overall_rating'))['overall_rating__avg']
         return 0
 
     @property
