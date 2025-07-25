@@ -74,10 +74,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'nepallover2075@gmail.com'  # Your Gmail address
-  # Generate an App Password in Google Account
-  # Move to environment variables
-EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')  # Never hardcode!
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+EMAIL_HOST_USER = os.getenv('GMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Product, Review, Brand, Specification, Category,SearchQuery,ProductView
+from .models import Product, Review, Brand, Specification, Category, SearchQuery, ProductView, UserProfile
 from .forms import ReviewForm, ProductForm, SpecificationFormSet
 import logging
 from django.utils.text import slugify
@@ -15,6 +15,28 @@ from django.utils import timezone
 from datetime import timedelta
 
 logger = logging.getLogger(__name__)
+
+
+from allauth.account.views import SignupView
+from .forms import UserTypeForm
+
+class CustomSignupView(SignupView):
+    form_class = UserTypeForm  # Your custom form
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'user_type_form' not in context:
+            context['user_type_form'] = UserTypeForm()
+        return context
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Save user type
+        UserProfile.objects.create(
+            user=self.user,
+            is_business_user=form.cleaned_data.get('is_business_user', False)
+        )
+        return response
 
 def home_view(request):
     """Home page view with dynamic content"""
@@ -537,3 +559,56 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse('reviews:product_detail', kwargs={'slug': self.object.product.slug})
+    
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+
+@login_required
+def dashboard_view(request):
+    """Main dashboard route that redirects to appropriate dashboard"""
+    if not hasattr(request.user, 'profile'):
+        # Create profile if it doesn't exist (for users who signed up before this feature)
+        from .models import UserProfile
+        UserProfile.objects.create(user=request.user)
+    
+    if request.user.profile.is_business_user:
+        return redirect('reviews:business_dashboard')
+    else:
+        return redirect('reviews:user_dashboard')
+
+@login_required
+def user_dashboard_view(request):
+    """Normal user dashboard"""
+    if request.user.profile.is_business_user:
+        # Business users shouldn't access this, redirect them
+        return redirect('reviews:business_dashboard')
+    
+    # Get user's reviews
+    reviews = request.user.reviews.select_related('product').order_by('-created_at')
+    
+    context = {
+        'reviews': reviews,
+        'is_business_user': False
+    }
+    return render(request, 'reviews/user_dashboard.html', context)
+
+@login_required
+def business_dashboard_view(request):
+    """Business user dashboard"""
+    if not request.user.profile.is_business_user:
+        # Normal users shouldn't access this
+        raise PermissionDenied("You don't have permission to access this page")
+    
+    # Get business-specific data
+    from .models import Product
+    products = Product.objects.filter(created_by=request.user).annotate(
+        review_count=Count('reviews'),
+        avg_rating=Avg('reviews__overall_rating')
+    )
+    
+    context = {
+        'products': products,
+        'is_business_user': True
+    }
+    return render(request, 'reviews/business_dashboard.html', context)

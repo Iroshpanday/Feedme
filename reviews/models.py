@@ -3,6 +3,66 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 import uuid
+from allauth.account.signals import user_signed_up
+from allauth.socialaccount.models import SocialAccount
+from django.dispatch import receiver
+
+
+
+from django.dispatch import receiver
+from allauth.account.signals import user_signed_up
+from allauth.socialaccount.models import SocialAccount
+import urllib.request
+
+
+
+from django.conf import settings
+import os
+from django.core.files import File
+from django.core.files.base import ContentFile
+from io import BytesIO
+import urllib.request
+from PIL import Image  # Make sure to install pillow: pip install pillow
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    profile_picture = models.ImageField(
+        upload_to='profile_pics/',
+        blank=True,
+        null=True,
+        default='profile_pics/default.png'  # Default image path
+    )
+    is_business_user = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+    def save(self, *args, **kwargs):
+        if not self.profile_picture:
+            self.profile_picture = 'profile_pics/default.png'
+        super().save(*args, **kwargs)
+
+
+@receiver(user_signed_up)
+def save_profile_picture(request, user, **kwargs):
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
+    social_account = SocialAccount.objects.filter(user=user, provider='google').first()
+    
+    if social_account:
+        picture_url = social_account.extra_data.get('picture')
+
+        if picture_url:
+            try:
+                result = urllib.request.urlretrieve(picture_url)
+                profile.profile_picture.save(
+                    f"google_{user.id}.jpg",
+                    File(open(result[0], 'rb'))  # ✅ Fixed: Closed parenthesis
+                )
+            except Exception as e:
+                print(f"Failed to download Google profile picture: {e}")
+    
+    profile.save()
 
 
 class Category(models.Model):
@@ -30,6 +90,9 @@ class Category(models.Model):
     @property
     def product_count_display(self):
         return self.products.filter(is_active=True).count()
+
+
+
 
 
 class Brand(models.Model):
@@ -210,6 +273,11 @@ class Review(models.Model):
     improvements = models.TextField(blank=True, help_text="What improvements would you suggest?")
     issues = models.TextField(blank=True, help_text="Any specific issues or problems?")
     recommendation = models.TextField(blank=True, help_text="Would you recommend this phone? Why or why not?")
+
+    # User profile picture for reviews
+
+    user_profile_picture = models.ImageField(upload_to='review_profile_pics/', blank=True, null=True)
+
     
     # Review metadata
     is_verified_purchase = models.BooleanField(default=False)
@@ -235,8 +303,12 @@ class Review(models.Model):
         # Auto-approve reviews from staff/superusers
         if self.user.is_staff or self.user.is_superuser:
             self.is_approved = True
+            
+        # Save profile picture from user's profile
+        if hasattr(self.user, 'profile') and self.user.profile.profile_picture:
+            self.user_profile_picture = self.user.profile.profile_picture
+            
         super().save(*args, **kwargs)
-
 
 class ReviewHelpful(models.Model):
     """Track which users found reviews helpful"""

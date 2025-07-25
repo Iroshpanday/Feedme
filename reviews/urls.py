@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
 
 app_name = 'reviews'
 
@@ -29,4 +30,10 @@ urlpatterns = [
     path('api/review/<uuid:review_id>/helpful/', views.mark_review_helpful, name='mark_helpful'),
     path('api/autocomplete/', views.autocomplete_search, name='autocomplete'),
     path('api/autocomplete-brands/', views.autocomplete_brands, name='autocomplete_brands'),
+
+
+    path('dashboard/', login_required(views.dashboard_view), name='dashboard'),
+    path('dashboard/user/', login_required(views.user_dashboard_view), name='user_dashboard'),
+    path('dashboard/business/', login_required(views.business_dashboard_view), name='business_dashboard'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

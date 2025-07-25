@@ -113,8 +113,9 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = [
-        'title', 'product_link', 'user', 'overall_rating_stars', 'is_approved', 
-        'is_verified_purchase', 'helpful_count', 'review_video_preview', 'created_at'
+        'title', 'product_link', 'user', 'user_profile_picture_display', 
+        'overall_rating_stars', 'is_approved', 'is_verified_purchase', 
+        'helpful_count', 'created_at'
     ]
     list_filter = [
         'overall_rating', 'is_approved', 'is_verified_purchase', 'created_at', 
@@ -147,6 +148,15 @@ class ReviewAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ['helpful_count', 'review_video_preview']
+
+    def user_profile_picture_display(self, obj):
+        if obj.user_profile_picture:
+            return format_html(
+                '<img src="{}" width="30" height="30" style="border-radius: 50%;" />',
+                obj.user_profile_picture.url
+            )
+        return "No Image"
+    user_profile_picture_display.short_description = 'Profile Picture'
     
     def product_link(self, obj):
         url = reverse('admin:reviews_product_change', args=[obj.product.id])

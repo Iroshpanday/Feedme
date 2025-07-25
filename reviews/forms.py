@@ -3,6 +3,24 @@ from .models import Product, Review, Brand, Category, Specification
 from django.forms import inlineformset_factory
 import os
 
+
+from django import forms
+from .models import UserProfile
+
+class UserTypeForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['is_business_user']
+        widgets = {
+            'is_business_user': forms.CheckboxInput(attrs={
+                'class': 'form-check-input',
+                'id': 'business-user-checkbox'
+            })
+        }
+        labels = {
+            'is_business_user': 'Register as a Business User'
+        }
+
 class ProductForm(forms.ModelForm):
     brand_name = forms.CharField(max_length=100, required=True, label='Brand Name')
     category = forms.ModelChoiceField(queryset=Category.objects.filter(is_active=True), required=True)
