@@ -51,6 +51,9 @@ urlpatterns = [
     #reviews edit
     path('review/<uuid:review_id>/edit/', views.edit_review_view, name='edit_review'),
 
+    #About us Page
+    path('about/', views.about_us, name='about-us'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

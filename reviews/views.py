@@ -1130,3 +1130,14 @@ def edit_review_view(request, review_id):
         'product': review.product
     }
     return render(request, 'reviews/review_form.html', context)
+
+# for ABOUTUS PAGE
+
+def about_us(request):
+    """View function for the About Us page"""
+    context = {
+        'title': 'About Us',
+        'page_description': 'Learn more about feedMe and our mission',
+        # Add any other context variables you need
+    }
+    return render(request, 'reviews/aboutus.html', context)

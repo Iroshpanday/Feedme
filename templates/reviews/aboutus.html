@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .feature-card {
+        transition: all 0.3s ease;
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .section-title {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .step-number {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+    .benefit-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .cta-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .stats-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        color: white;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient py-20">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                About <span class="text-yellow-300">feedMe</span>
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold mb-8 text-yellow-300">
+                Turn Noise into Action.
+            </h2>
+            <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
+                At feedMe, we believe every piece of customer feedback holds the key to growth. Our AI-powered platform transforms raw opinions into <strong>structured, visual insights</strong>, helping businesses listen smarter, act faster, and improve continuously.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Mission -->
+                <div class="feature-card">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-bullseye text-3xl mr-4 benefit-icon"></i>
+                        <h3 class="text-3xl font-bold section-title">Our Mission</h3>
+                    </div>
+                    <p class="text-gray-700 mb-6 text-lg">To redefine feedback intelligence by:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Automating sentiment analysis</strong> (categorizing feedback into positives, negatives, and actionable suggestions).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Guaranteeing authenticity</strong> with video reviews and verified responses.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Delivering dashboards that matter</strong>—no data headaches, just clear next steps.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700"><strong>Empowering teams</strong> to make customer-driven decisions with confidence.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Vision -->
+                <div class="feature-card">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-eye text-3xl mr-4 benefit-icon"></i>
+                        <h3 class="text-3xl font-bold section-title">Our Vision</h3>
+                    </div>
+                    <p class="text-gray-700 mb-6 text-lg">To be the <strong>global leader in feedback-driven growth</strong>, where:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Businesses stop guessing and start knowing.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Every customer voice fuels innovation.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3"></i>
+                            <span class="text-gray-700">Trust is built through transparency.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How feedMe Works -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 section-title">
+                How feedMe Works
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center feature-card">
+                    <div class="step-number mx-auto mb-6">1</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Capture</h3>
+                    <ul class="text-gray-600 space-y-2 text-left">
+                        <li>• Collect feedback from reviews, surveys, emails, and social media—all in one place.</li>
+                        <li>• <strong>Go beyond text</strong>: Support video/audio feedback for richer insights.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center feature-card">
+                    <div class="step-number mx-auto mb-6">2</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Analyze</h3>
+                    <ul class="text-gray-600 space-y-2 text-left">
+                        <li>• AI sorts feedback into themes (e.g., "pricing," "user experience").</li>
+                        <li>• Real-time sentiment tracking with <strong>trend alerts</strong>.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center feature-card">
+                    <div class="step-number mx-auto mb-6">3</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Visualize</h3>
+                    <ul class="text-gray-600 space-y-2 text-left">
+                        <li>• Custom dashboards highlight what's urgent (e.g., "20% complained about checkout delays").</li>
+                    </ul>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center feature-card">
+                    <div class="step-number mx-auto mb-6">4</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Act</h3>
+                    <ul class="text-gray-600 space-y-2 text-left">
+                        <li>• Export reports, assign tasks, and track improvements—directly from the platform.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why feedMe Section -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 section-title">
+                Why feedMe?
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Smarter Decisions -->
+                <div class="feature-card text-center">
+                    <i class="fas fa-brain text-4xl mb-4 benefit-icon"></i>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Smarter Decisions</h3>
+                    <p class="text-gray-600">AI identifies hidden patterns (e.g., "Negative reviews spike on weekends").</p>
+                </div>
+
+                <!-- No More Spreadsheets -->
+                <div class="feature-card text-center">
+                    <i class="fas fa-table text-4xl mb-4 benefit-icon"></i>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">No More Spreadsheets</h3>
+                    <p class="text-gray-600">Automated tagging and prioritization save 10+ hours/week.</p>
+                </div>
+
+                <!-- Fight Fake Feedback -->
+                <div class="feature-card text-center">
+                    <i class="fas fa-shield-alt text-4xl mb-4 benefit-icon"></i>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Fight Fake Feedback</h3>
+                    <p class="text-gray-600">Video verification and fraud detection ensure data credibility.</p>
+                </div>
+
+                <!-- Grows With You -->
+                <div class="feature-card text-center">
+                    <i class="fas fa-chart-line text-4xl mb-4 benefit-icon"></i>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Grows With You</h3>
+                    <p class="text-gray-600">Scales from startups to Fortune 500s.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-gradient py-20">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Join 5,000+ Businesses Trusting feedMe
+            </h2>
+            <p class="text-xl mb-12">
+                Ready to transform your feedback into actionable intelligence?
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Get Started
+                </button>
+                <button class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300">
+                    <i class="fas fa-phone mr-2"></i>
+                    Book a Demo
+                </button>
+                <button class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300">
+                    <i class="fas fa-book-open mr-2"></i>
+                    Case Studies
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-purple-600 mb-4">5,000+</div>
+                    <div class="text-xl text-gray-700 font-semibold">Businesses Trust Us</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-purple-600 mb-4">10+</div>
+                    <div class="text-xl text-gray-700 font-semibold">Hours Saved Weekly</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-purple-600 mb-4">99%</div>
+                    <div class="text-xl text-gray-700 font-semibold">Accuracy Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add animation on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+</script>
+{% endblock %}

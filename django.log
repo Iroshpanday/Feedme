@@ -1885,3 +1885,259 @@ Not Found: /media/products/rolwx_sPjBguy.webp
 "GET /dashboard/user/ HTTP/1.1" 200 97930
 Not Found: /media/products/rolwx_sPjBguy.webp
 "GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46733
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 97937
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /products/ HTTP/1.1" 200 59915
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10171
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10167
+"GET / HTTP/1.1" 200 46733
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /about
+"GET /about HTTP/1.1" 404 9890
+"GET / HTTP/1.1" 200 46733
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /about
+"GET /about HTTP/1.1" 404 9890
+C:\Users\Irosh\Desktop\Feedme\feedme\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /about HTTP/1.1" 301 0
+Internal Server Error: /about/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1143, in about_us
+    return render(request, 'your_app/aboutus.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: your_app/aboutus.html
+"GET /about/ HTTP/1.1" 500 94808
+Internal Server Error: /about/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1143, in about_us
+    return render(request, 'your_app/aboutus.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: your_app/aboutus.html
+"GET /about/ HTTP/1.1" 500 94808
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /about/ HTTP/1.1" 200 24779
+Internal Server Error: /about/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1143, in about_us
+    return render(request, 'reviews/aboutus.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 134, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 131, in get_parent
+    return self.find_template(parent, context)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 109, in find_template
+    template, origin = context.template.engine.find_template(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        template_name,
+        ^^^^^^^^^^^^^^
+        skip=history,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 8: 'static'. Did you forget to register or load this tag?
+"GET /about/ HTTP/1.1" 500 181767
+"GET /about/ HTTP/1.1" 200 24784
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /products/ HTTP/1.1" 200 59920
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+"GET /api/product-autocomplete/?q=sam HTTP/1.1" 200 545
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+"GET /api/product-autocomplete/?q=sams HTTP/1.1" 200 545
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+"GET /api/product-autocomplete/?q=samsung HTTP/1.1" 200 545
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /product/samsung-galaxy-s24-ultra/ HTTP/1.1" 200 34918
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['scXJpMHENXYowUKnzIv58xWXZ8Idt3UOeswN4zqXSdvk7DOv8JOXaVu3mlTYpYDP'], 'product': ['fc30e85d-89f7-467a-9794-b1683c1540b6'], 'title': ['it was good'], 'overall_rating': ['4'], 'performance_rating': ['5'], 'battery_rating': ['4'], 'camera_rating': ['4'], 'display_rating': ['4'], 'value_rating': ['4'], 'content': ['it wass good to use very smoothly running nfjvnjklzio'], 'likes': ['camera'], 'improvements': ['battery display'], 'issues': ['no'], 'recommendation': ['yes'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Updating existing review ID: c63b7b19-1159-415c-b031-60d01d88d016
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 40770
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+"GET /about/ HTTP/1.1" 200 24784
+"GET /product/add/ HTTP/1.1" 200 18084
+"GET /product/add/ HTTP/1.1" 200 18084
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 97924
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46738
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 9903
+"GET / HTTP/1.1" 200 46739
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /about/ HTTP/1.1" 200 24785
+"GET /about/ HTTP/1.1" 200 24785
+"GET / HTTP/1.1" 200 46739
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /about/ HTTP/1.1" 200 24785
+"GET /about/ HTTP/1.1" 200 24785

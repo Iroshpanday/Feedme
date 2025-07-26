@@ -18,6 +18,10 @@ django-filter
 Pillow
 django-extensions
 --save toastify-js
+django-compressor
+python-dotenv
+django-mathfilters
+PyJWT
 
 
 # Optional: Email backend dependencies (if needed for Gmail support)
