@@ -530,6 +530,15 @@
             opacity: 1;
         }
     </style>
+    {% if review %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set edit mode flag
+            window.isEditMode = true;
+            window.currentReviewId = '{{ review.id }}';
+        });
+    </script>
+{% endif %}
 </head>
 <body>
     <div class="container">
@@ -538,7 +547,8 @@
             <p>Your review helps others make informed decisions and helps us improve our products.</p>
         </div>
 
-        <form class="form-card" id="reviewForm" method="post" enctype="multipart/form-data">
+        <form class="form-card" id="reviewForm" method="post" enctype="multipart/form-data" 
+      action="{% if review %}{% url 'reviews:edit_review' review.id %}{% else %}{% url 'reviews:add_review' %}{% endif %}">
             {% csrf_token %}
             <!-- Product Information Section -->
             <div class="section">
@@ -555,12 +565,13 @@
                 <div class="form-group">
                     <label class="form-label required">Select Product</label>
                     <select class="form-control" name="{{ form.product.name }}" id="{{ form.product.id_for_label }}" required>
-                        {% for value, label in form.product.field.choices %}
-                            <option value="{{ value }}" {% if form.product.value == value %}selected{% endif %}>
-                                {{ label }}
-                            </option>
-                        {% endfor %}
-                    </select>
+    {% for product in form.product.field.queryset %}
+        <option value="{{ product.id }}" {% if form.product.value == product.id %}selected{% endif %}>
+            {{ product.brand.name }} {{ product.name }}
+        </option>
+    {% endfor %}
+</select>
+
                     <div class="error-message" id="product-error" style="display: none;">
                         <i class="fas fa-exclamation-circle"></i>
                         Please select a product
@@ -568,7 +579,7 @@
                 </div>
             </div>
 
-            <!-- Review Title Section -->
+            <!-- Review id="" Section -->
             <div class="section">
                 <div class="section-header">
                     <div class="section-icon green">
@@ -583,8 +594,9 @@
                 <div class="form-group">
                     <label class="form-label required">Title</label>
                     <input type="text" class="form-control" id="title" name="title" 
-                           placeholder="Summarize your experience in one line..." 
-                           maxlength="100" required>
+       value="{{ form.title.value|default_if_none:'' }}"
+       placeholder="Summarize your experience in one line..." 
+       maxlength="100" required>
                     <div class="error-message" id="title-error" style="display: none;">
                         <i class="fas fa-exclamation-circle"></i>
                         Please enter a review title (maximum 100 characters)
@@ -607,99 +619,91 @@
                     </div>
                 </div>
 
-                <!-- Overall Rating -->
-                <div class="form-group">
-                    <label class="form-label required">Overall Rating</label>
-                    <div class="rating-input">
-                        <div class="stars" data-rating="overall">
-                            <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                            <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                        </div>
-                        <div class="rating-label" id="overall-label">Click to rate</div>
-                    </div>
-                    <input type="hidden" name="overall_rating" id="overall_rating" required>
-                    <div class="error-message" id="rating-error" style="display: none;">
-                        <i class="fas fa-exclamation-circle"></i>
-                        Please provide an overall rating
-                    </div>
-                </div>
+<!-- Overall Rating Section -->
+<div class="form-group">
+    <label class="form-label required">Overall Rating</label>
+    <div class="rating-input">
+        <div class="stars" data-rating="overall">
+            {% for i in "12345" %}
+                <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+            {% endfor %}
+        </div>
+        <div class="rating-label" id="overall-label">Click to rate</div>
+    </div>
+    {{ form.overall_rating }}
+    <div class="error-message" id="rating-error" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        Please provide an overall rating
+    </div>
+</div>
 
-                <!-- Detailed Ratings -->
-                <div class="detailed-ratings">
-                    <div class="rating-item">
-                        <label>Performance Rating</label>
-                        <div class="rating-input">
-                            <div class="stars" data-rating="performance">
-                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="performance_rating" id="performance_rating">
-                    </div>
-
-                    <div class="rating-item">
-                        <label>Battery Life</label>
-                        <div class="rating-input">
-                            <div class="stars" data-rating="battery">
-                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="battery_rating" id="battery_rating">
-                    </div>
-
-                    <div class="rating-item">
-                        <label>Camera Quality</label>
-                        <div class="rating-input">
-                            <div class="stars" data-rating="camera">
-                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="camera_rating" id="camera_rating">
-                    </div>
-
-                    <div class="rating-item">
-                        <label>Display Quality</label>
-                        <div class="rating-input">
-                            <div class="stars" data-rating="display">
-                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="display_rating" id="display_rating">
-                    </div>
-
-                    <div class="rating-item">
-                        <label>Value for Money</label>
-                        <div class="rating-input">
-                            <div class="stars" data-rating="value">
-                                <span class="star" data-value="1"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="2"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="3"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="4"><i class="fas fa-star"></i></span>
-                                <span class="star" data-value="5"><i class="fas fa-star"></i></span>
-                            </div>
-                        </div>
-                        <input type="hidden" name="value_rating" id="value_rating">
-                    </div>
-                </div>
+<!-- Detailed Ratings Section -->
+<div class="detailed-ratings">
+    <!-- Performance Rating -->
+    <div class="rating-item">
+        <label>Performance Rating</label>
+        <div class="rating-input">
+            <div class="stars" data-rating="performance">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+                {% endfor %}
             </div>
+        </div>
+        {{ form.performance_rating }}
+    </div>
+
+    <!-- Battery Rating -->
+    <div class="rating-item">
+        <label>Battery Life</label>
+        <div class="rating-input">
+            <div class="stars" data-rating="battery">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+                {% endfor %}
+            </div>
+        </div>
+        {{ form.battery_rating }}
+    </div>
+
+    <!-- Camera Rating -->
+    <div class="rating-item">
+        <label>Camera Quality</label>
+        <div class="rating-input">
+            <div class="stars" data-rating="camera">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+                {% endfor %}
+            </div>
+        </div>
+        {{ form.camera_rating }}
+    </div>
+
+    <!-- Display Rating -->
+    <div class="rating-item">
+        <label>Display Quality</label>
+        <div class="rating-input">
+            <div class="stars" data-rating="display">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+                {% endfor %}
+            </div>
+        </div>
+        {{ form.display_rating }}
+    </div>
+
+    <!-- Value Rating -->
+    <div class="rating-item">
+        <label>Value for Money</label>
+        <div class="rating-input">
+            <div class="stars" data-rating="value">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ i }}"><i class="fas fa-star"></i></span>
+                {% endfor %}
+            </div>
+        </div>
+        {{ form.value_rating }}
+    </div>
+</div>
 
             <!-- Detailed Review Section -->
             <div class="section">
@@ -716,8 +720,8 @@
                 <div class="form-group">
                     <label class="form-label required">Review Content</label>
                     <textarea class="form-control" id="content" name="content" 
-                              placeholder="Tell us about your experience with this product. What did you like? What could be improved? How was the overall experience?" 
-                              rows="6" minlength="50" required></textarea>
+          placeholder="Tell us about your experience with this product..." 
+          rows="6" minlength="50" required>{{ form.content.value|default_if_none:'' }}</textarea>
                     <div class="error-message" id="content-error" style="display: none;">
                         <i class="fas fa-exclamation-circle"></i>
                         Please write at least 50 characters for your review
@@ -731,28 +735,28 @@
                     <label class="form-label">What You Liked</label>
                     <textarea class="form-control" name="likes" 
                               placeholder="What are the best features or aspects of this product?"
-                              rows="3"></textarea>
+                              rows="3">{{ form.likes.value|default_if_none:'' }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Areas for Improvement</label>
                     <textarea class="form-control" name="improvements" 
                               placeholder="What improvements would you suggest?"
-                              rows="3"></textarea>
+                              rows="3">{{ form.improvements.value|default_if_none:'' }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Issues or Problems</label>
                     <textarea class="form-control" name="issues" 
                               placeholder="Did you encounter any specific issues or problems?"
-                              rows="3"></textarea>
+                              rows="3">{{ form.issues.value|default_if_none:'' }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Recommendation</label>
                     <textarea class="form-control" name="recommendation" 
                               placeholder="Would you recommend this product? Why or why not?"
-                              rows="3"></textarea>
+                              rows="3">{{ form.recommendation.value|default_if_none:'' }}</textarea>
                 </div>
             </div>
 
@@ -818,7 +822,8 @@
             <!-- Submit Section -->
             <div class="submit-section">
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    <i class="fas fa-paper-plane"></i> Submit Review
+                    <i class="fas fa-paper-plane"></i> 
+                    {% if review %}Update Review{% else %}Submit Review{% endif %}
                 </button>
                 <button type="button" class="cancel-btn" onclick="window.history.back()">
                     <i class="fas fa-times"></i> Cancel
@@ -845,83 +850,142 @@
             5: 'Excellent'
         };
 
-        // Initialize the form
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeStarRatings();
-            initializeVideoUpload();
-            initializeFormValidation();
-            initializeAutoSave();
-            initializeCharacterCounters();
-        });
+ document.addEventListener('DOMContentLoaded', function() {
+    // 1. First initialize all rating fields from hidden inputs
+    initializeRatingsFromForm();
+    
+    // 2. Then set up the star rating interactions
+    initializeStarRatings();
+    
+    // 3. Then initialize other components
+    initializeVideoUpload();
+    initializeFormValidation();
+    initializeCharacterCounters();
+    
+    // Only load saved data if not in edit mode
+    if (!window.isEditMode) {
+        initializeAutoSave();
+    }
+});
 
-        // Star Rating System
-        function initializeStarRatings() {
-            const starContainers = document.querySelectorAll('.stars');
-            
-            starContainers.forEach(container => {
+// NEW FUNCTION: Initialize star ratings from form values
+function initializeRatingsFromForm() {
+    const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+    
+    ratings.forEach(rating => {
+        const input = document.getElementById(`id_${rating}_rating`);
+        if (input && input.value) {
+            const container = document.querySelector(`[data-rating="${rating}"]`);
+            if (container) {
+                // Highlight the appropriate stars
                 const stars = container.querySelectorAll('.star');
-                const ratingType = container.dataset.rating;
-                
                 stars.forEach((star, index) => {
-                    // Click event
-                    star.addEventListener('click', function() {
-                        const value = parseInt(this.dataset.value);
-                        updateRating(container, value, ratingType);
-                    });
-                    
-                    // Hover events
-                    star.addEventListener('mouseenter', function() {
-                        const value = parseInt(this.dataset.value);
-                        highlightStars(container, value);
-                    });
+                    if (index < parseInt(input.value)) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
                 });
                 
-                // Mouse leave event for container
-                container.addEventListener('mouseleave', function() {
-                    const currentRating = getCurrentRating(ratingType);
-                    highlightStars(container, currentRating);
-                });
-            });
-        }
-
-        function updateRating(container, value, ratingType) {
-            // Update hidden input
-            const input = document.getElementById(`${ratingType}_rating`);
-            if (input) {
-                input.value = value;
-            }
-            
-            // Update visual stars
-            highlightStars(container, value);
-            
-            // Update label for overall rating
-            if (ratingType === 'overall') {
-                const label = document.getElementById('overall-label');
-                if (label) {
-                    label.textContent = ratingLabels[value];
+                // Update the label for overall rating
+                if (rating === 'overall') {
+                    const label = document.getElementById('overall-label');
+                    if (label) {
+                        const ratingLabels = {
+                            1: 'Poor',
+                            2: 'Fair',
+                            3: 'Good',
+                            4: 'Very Good',
+                            5: 'Excellent'
+                        };
+                        label.textContent = ratingLabels[parseInt(input.value)] || 'Click to rate';
+                    }
                 }
             }
-            
-            // Save to form data
-            formData[`${ratingType}_rating`] = value;
-            showAutoSave();
         }
+    });
+}
 
-        function highlightStars(container, rating) {
-            const stars = container.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
+// MODIFIED FUNCTION: Star rating interaction
+function initializeStarRatings() {
+    const starContainers = document.querySelectorAll('.stars');
+    
+    starContainers.forEach(container => {
+        const stars = container.querySelectorAll('.star');
+        const ratingType = container.dataset.rating;
+        
+        stars.forEach((star, index) => {
+            // Click event
+            star.addEventListener('click', function() {
+                const value = parseInt(this.dataset.value);
+                updateRating(container, value, ratingType);
             });
-        }
+            
+            // Hover events
+            star.addEventListener('mouseenter', function() {
+                const value = parseInt(this.dataset.value);
+                highlightStars(container, value);
+            });
+        });
+        
+        // Mouse leave event for container
+        container.addEventListener('mouseleave', function() {
+            const currentRating = getCurrentRating(ratingType);
+            highlightStars(container, currentRating);
+        });
+    });
+}
 
-        function getCurrentRating(ratingType) {
-            const input = document.getElementById(`${ratingType}_rating`);
-            return input ? parseInt(input.value) || 0 : 0;
+// NEW/EXISTING FUNCTION: Update rating value
+function updateRating(container, value, ratingType) {
+    // Update visual stars
+    highlightStars(container, value);
+    
+    // Update hidden input
+    const input = document.getElementById(`id_${ratingType}_rating`);
+    if (input) {
+        input.value = value;
+    }
+    
+    // Update label for overall rating
+    if (ratingType === 'overall') {
+        const label = document.getElementById('overall-label');
+        if (label) {
+            const ratingLabels = {
+                1: 'Poor',
+                2: 'Fair', 
+                3: 'Good',
+                4: 'Very Good',
+                5: 'Excellent'
+            };
+            label.textContent = ratingLabels[value] || 'Click to rate';
         }
+    }
+    
+    // Save to form data if not in edit mode
+    if (!window.isEditMode) {
+        window.reviewFormData = window.reviewFormData || {};
+        window.reviewFormData[`${ratingType}_rating`] = value;
+        showAutoSave();
+    }
+}
+
+// Keep these existing functions unchanged
+function highlightStars(container, rating) {
+    const stars = container.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+}
+
+function getCurrentRating(ratingType) {
+    const input = document.getElementById(`id_${ratingType}_rating`);
+    return input ? parseInt(input.value) || 0 : 0;
+}
 
         // Video Upload System
         function initializeVideoUpload() {
@@ -981,6 +1045,24 @@
 
             // Remove video
             removeVideo.addEventListener('click', clearVideo);
+
+            // If editing and has video, show preview
+            if (window.isEditMode && '{{ form.review_video.value }}') {
+                const videoPreview = document.getElementById('videoPreview');
+                const videoPlayer = document.getElementById('videoPlayer');
+                const videoName = document.getElementById('videoName');
+                const videoDetails = document.getElementById('videoDetails');
+                
+                videoName.textContent = '{{ form.review_video.value }}';
+                videoDetails.textContent = 'Existing video';
+                videoPlayer.src = '{{ form.review_video.value.url }}';
+                videoPreview.style.display = 'block';
+                
+                // Show video section if verified purchase
+                if (checkbox.checked) {
+                    videoSection.classList.add('show');
+                }
+            }
         }
 
         function handleVideoFile(file) {
@@ -1047,29 +1129,29 @@
         }
 
         // Form Validation
-        function initializeFormValidation() {
-            const form = document.getElementById('reviewForm');
-            
-            form.addEventListener('submit', function(e) {
-                // Validate form before submission
-                if (!validateForm()) {
-                    e.preventDefault();
-                    return false;
-                }
-                
-                // Show loading state but allow form to submit normally
-                const submitBtn = document.getElementById('submitBtn');
-                const originalContent = submitBtn.innerHTML;
-                
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<span class="spinner"></span> Submitting Review...';
-                
-                // Ensure all rating data is included in form submission
-                ensureRatingDataInForm();
-                
-                // Let the form submit naturally to Django
-                return true;
-            });
+function initializeFormValidation() {
+    const form = document.getElementById('reviewForm');
+    
+    form.addEventListener('submit', function(e) {
+        // Validate form before submission
+        if (!validateForm()) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Show loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const originalContent = submitBtn.innerHTML;
+        
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> {% if review %}Updating{% else %}Submitting{% endif %} Review...';
+        
+        // Ensure all rating data is included in form submission
+        ensureRatingDataInForm();
+        
+        // Let the form submit naturally to Django
+        return true;
+    });
 
             // Real-time validation
             const requiredFields = form.querySelectorAll('[required]');
@@ -1174,30 +1256,43 @@
         }
 
         // Ensure rating data is included in form submission
-        function ensureRatingDataInForm() {
-            const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
-            
-            ratings.forEach(rating => {
-                const hiddenInput = document.getElementById(`${rating}_rating`);
-                if (!hiddenInput) {
-                    // Create hidden input if it doesn't exist
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = `${rating}_rating`;
-                    input.id = `${rating}_rating`;
-                    document.getElementById('reviewForm').appendChild(input);
-                }
-            });
+        // Ensure all rating inputs exist in the form
+function ensureRatingDataInForm() {
+    const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+    
+    ratings.forEach(rating => {
+        let hiddenInput = document.getElementById(`${rating}_rating`);
+        if (!hiddenInput) {
+            hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = `${rating}_rating`;
+            hiddenInput.id = `${rating}_rating`;
+            document.getElementById('reviewForm').appendChild(hiddenInput);
         }
+        
+        // Set the value from the stars
+        const stars = document.querySelector(`[data-rating="${rating}"]`);
+        if (stars) {
+            const activeStar = stars.querySelector('.star.active');
+            if (activeStar) {
+                hiddenInput.value = activeStar.dataset.value;
+            }
+        }
+    });
+}
 
         // Form Submission (removed - now handled by Django naturally)
         // The submitForm function is no longer needed as we let Django handle submission
 
         // Auto-save functionality
         function initializeAutoSave() {
-            // Load saved data
-            loadSavedData();
             
+
+            // If in edit mode, don't load from saved data
+                if (!window.isEditMode) {
+                    loadSavedData();
+                }
+                            
             // Save on input
             const form = document.getElementById('reviewForm');
             const inputs = form.querySelectorAll('input, textarea, select');
@@ -1208,27 +1303,29 @@
         }
 
         function saveFormData() {
-            const form = document.getElementById('reviewForm');
-            const formData = new FormData(form);
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-            
-            // Save ratings
-            const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
-            ratings.forEach(rating => {
-                const input = document.getElementById(`${rating}_rating`);
-                if (input && input.value) {
-                    data[`${rating}_rating`] = input.value;
-                }
-            });
-            
-            // Note: Using memory storage instead of localStorage as per requirements
-            window.reviewFormData = data;
-            showAutoSave();
+    const form = document.getElementById('reviewForm');
+    const formData = new FormData(form);
+    const data = {};
+    
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+    
+    // Save ratings
+    const ratings = ['overall', 'performance', 'battery', 'camera', 'display', 'value'];
+    ratings.forEach(rating => {
+        const input = document.getElementById(`${rating}_rating`);
+        if (input && input.value) {
+            data[`${rating}_rating`] = input.value;
         }
+    });
+    
+    // Only save to memory if not in edit mode
+    if (!window.isEditMode) {
+        window.reviewFormData = data;
+        showAutoSave();
+    }
+}
 
         function loadSavedData() {
             const data = window.reviewFormData;

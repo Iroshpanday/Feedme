@@ -1,11 +1,186 @@
 from django import forms
-from .models import Product, Review, Brand, Category, Specification
+from .models import Product, Review, Brand, Category, Specification, UserProfile
 from django.forms import inlineformset_factory
+from allauth.account.forms import SignupForm
 import os
 
 
 from django import forms
+from django.contrib.auth.models import User
 from .models import UserProfile
+
+class ProfileUpdateForm(forms.ModelForm):
+    """Form for updating user profile information"""
+    
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Enter username'
+            }),
+            'first_name': forms.TextInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Enter first name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Enter last name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Enter email address'
+            }),
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            raise forms.ValidationError("This username is already taken.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+            raise forms.ValidationError("This email is already registered.")
+        return email
+
+class UserProfileForm(forms.ModelForm):
+    """Form for updating UserProfile model"""
+    
+    class Meta:
+        model = UserProfile
+        fields = ['profile_picture', 'is_business_user']
+        widgets = {
+            'profile_picture': forms.FileInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'accept': 'image/*'
+            }),
+            'is_business_user': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }, choices=[
+                (False, 'Personal Account'),
+                (True, 'Business Account')
+            ])
+        }
+
+    def clean_profile_picture(self):
+        picture = self.cleaned_data.get('profile_picture')
+        if picture:
+            # Check file size (max 5MB)
+            if picture.size > 5 * 1024 * 1024:
+                raise forms.ValidationError("Image file too large (max 5MB)")
+            
+            # Check file type
+            allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+            if picture.content_type not in allowed_types:
+                raise forms.ValidationError("Invalid image format. Please use JPEG, PNG, GIF, or WebP.")
+        
+        return picture
+
+class ReviewEditForm(forms.ModelForm):
+    """Enhanced form for editing reviews"""
+    
+    class Meta:
+        model = Review
+        fields = [
+            'title', 'content', 'overall_rating', 'performance_rating',
+            'battery_rating', 'camera_rating', 'display_rating', 'value_rating',
+            'likes', 'improvements', 'issues', 'recommendation'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Enter review title'
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'rows': 4,
+                'placeholder': 'Write your detailed review...'
+            }),
+            'overall_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'performance_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'battery_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'camera_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'display_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'value_rating': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500'
+            }),
+            'likes': forms.Textarea(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'rows': 2,
+                'placeholder': 'What do you like most about this product?'
+            }),
+            'improvements': forms.Textarea(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'rows': 2,
+                'placeholder': 'What improvements would you suggest?'
+            }),
+            'issues': forms.Textarea(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'rows': 2,
+                'placeholder': 'Any specific issues or problems?'
+            }),
+            'recommendation': forms.Textarea(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+                'rows': 2,
+                'placeholder': 'Would you recommend this product? Why or why not?'
+            }),
+        }
+
+class CustomSignupForm(SignupForm):
+    """Custom signup form with business user checkbox"""
+    is_business_user = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(attrs={
+            'class': 'form-check-input',
+            'id': 'business-user-checkbox'
+        }),
+        label='I am signing up as a business user'
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add custom styling to existing fields
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': 'Enter your email address'
+        })
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': 'Choose a username'
+        })
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': 'Create a password'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': 'Confirm your password'
+        })
+
+    def save(self, request):
+        user = super().save(request)
+        # Create or update user profile with business user flag
+        profile, created = UserProfile.objects.get_or_create(
+            user=user,
+            defaults={'is_business_user': self.cleaned_data.get('is_business_user', False)}
+        )
+        if not created:
+            profile.is_business_user = self.cleaned_data.get('is_business_user', False)
+            profile.save()
+        return user
 
 class UserTypeForm(forms.ModelForm):
     class Meta:
@@ -39,7 +214,6 @@ class ProductForm(forms.ModelForm):
     def clean_brand_name(self):
         return self.cleaned_data['brand_name'].strip()
 
-
 class SpecificationForm(forms.ModelForm):
     class Meta:
         model = Specification
@@ -57,23 +231,14 @@ SpecificationFormSet = inlineformset_factory(
     can_delete=True
 )
 
-
-# forms.py
-from django import forms
-from .models import Review, Product
-import os
-
-from django import forms
-from .models import Review, Product
 import logging
-
 logger = logging.getLogger(__name__)
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = [
-            'product', 'title', 'content',  'overall_rating',
+            'product', 'title', 'content', 'overall_rating',
             'performance_rating', 'battery_rating', 'camera_rating',
             'display_rating', 'value_rating', 'likes', 'improvements',
             'issues', 'recommendation', 'review_video', 'is_verified_purchase'
@@ -82,13 +247,12 @@ class ReviewForm(forms.ModelForm):
             'product': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
-            'rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'overall_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'performance_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'battery_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'camera_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'display_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
-            'value_rating': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 5}),
+            'overall_rating': forms.HiddenInput(),
+            'performance_rating': forms.HiddenInput(),
+            'battery_rating': forms.HiddenInput(),
+            'camera_rating': forms.HiddenInput(),
+            'display_rating': forms.HiddenInput(),
+            'value_rating': forms.HiddenInput(),
             'likes': forms.Textarea(attrs={'class': 'form-control'}),
             'improvements': forms.Textarea(attrs={'class': 'form-control'}),
             'issues': forms.Textarea(attrs={'class': 'form-control'}),
@@ -97,37 +261,43 @@ class ReviewForm(forms.ModelForm):
             'is_verified_purchase': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
-    def __init__(self, *args, user=None, **kwargs):
-        super(ReviewForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, user=None, instance=None, **kwargs):
+        super(ReviewForm, self).__init__(*args, instance=instance, **kwargs)
         self.user = user
         if user:
-            products = Product.objects.filter(is_active=True)
-            logger.info(f"Product queryset for form: {products}")
-            self.fields['product'].queryset = products
-            if not products.exists():
-                # Fallback: Add a dummy product for debugging if none exist
-                from django.db import IntegrityError
-                try:
-                    from django.contrib.auth import get_user_model
-                    User = get_user_model()
-                    dummy_product, created = Product.objects.get_or_create(
-                        name="Debug Product",
-                        defaults={'is_active': True, 'created_by': user}
-                    )
-                    if created:
-                        logger.info(f"Created dummy product: {dummy_product}")
-                    self.fields['product'].queryset = Product.objects.filter(is_active=True)
-                except IntegrityError:
-                    logger.warning("Failed to create dummy product, using existing products")
+            self.fields['product'].queryset = Product.objects.filter(is_active=True)
             self.fields['product'].required = True
-        # self.fields['rating'].required = True
+        
+        # Make required fields explicit
         self.fields['title'].required = True
         self.fields['content'].required = True
+        self.fields['overall_rating'].required = True
+        
+        # Set initial values for all ratings when editing
+        if instance:
+            self.initial['overall_rating'] = instance.overall_rating or 0
+            self.initial['performance_rating'] = instance.performance_rating or 0
+            self.initial['battery_rating'] = instance.battery_rating or 0
+            self.initial['camera_rating'] = instance.camera_rating or 0
+            self.initial['display_rating'] = instance.display_rating or 0
+            self.initial['value_rating'] = instance.value_rating or 0
 
     def save(self, commit=True):
         review = super().save(commit=False)
         if self.user:
             review.user = self.user
+        
+        # Ensure all ratings are properly set
+        review.overall_rating = self.cleaned_data.get('overall_rating', 0)
+        review.performance_rating = self.cleaned_data.get('performance_rating', 0)
+        review.battery_rating = self.cleaned_data.get('battery_rating', 0)
+        review.camera_rating = self.cleaned_data.get('camera_rating', 0)
+        review.display_rating = self.cleaned_data.get('display_rating', 0)
+        review.value_rating = self.cleaned_data.get('value_rating', 0)
+        
+        if not self.cleaned_data.get('is_verified_purchase', False):
+            review.review_video = None
+        
         if commit:
             review.save()
         return review

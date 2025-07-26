@@ -40,6 +40,17 @@ urlpatterns = [
     
     # API endpoints
     path('api/product-autocomplete/', views.product_autocomplete, name='product_autocomplete'),
+
+    
+    # Dashboard AJAX endpoints
+    path('api/profile/update/', views.update_profile_ajax, name='update_profile_ajax'),
+    path('api/review/<uuid:review_id>/data/', views.get_review_data_ajax, name='get_review_data'),
+    path('api/review/<uuid:review_id>/update/', views.update_review_ajax, name='update_review_ajax'),
+    path('api/review/<uuid:review_id>/delete/', views.delete_review_ajax, name='delete_review_ajax'),
+
+    #reviews edit
+    path('review/<uuid:review_id>/edit/', views.edit_review_view, name='edit_review'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

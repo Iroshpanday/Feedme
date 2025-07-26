@@ -1,0 +1,1887 @@
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\feedme\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46745
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 9911
+"GET /media/products/Beverages.jpg HTTP/1.1" 304 0
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 9911
+"GET /dashboard/ HTTP/1.1" 302 0
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    raise TypeError
+TypeError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1075, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 722, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 854, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 901, in _resolve_lookup
+    current = getattr(current, bit)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\db\models\fields\files.py", line 69, in url
+    self._require_file()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\db\models\fields\files.py", line 44, in _require_file
+    raise ValueError(
+        "The '%s' attribute has no file associated with it." % self.field.name
+    )
+ValueError: The 'image' attribute has no file associated with it.
+"GET /dashboard/user/ HTTP/1.1" 500 243951
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 9731
+"GET / HTTP/1.1" 200 46745
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 9731
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 9911
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 9911
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 59257
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 9731
+"GET /media/profile_pics/default.png HTTP/1.1" 200 2162
+"GET /dashboard/user/?csrfmiddlewaretoken=mTkC2UHCZQnmhrFYlsYg296cyL3fY1CRGjOuL9kF7dcO8h1e9qYymBr27lzuiMNC HTTP/1.1" 200 59257
+"GET /products/ HTTP/1.1" 200 58924
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 9883
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 9911
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 9879
+"GET /dashboard/user/?csrfmiddlewaretoken=rWimg0EIEtkyIXiFu4TLaAh4bsAv68iZLmMeZfhLMQ90zNEVi2T3u2CUK26KqTtK HTTP/1.1" 200 59257
+"GET /dashboard/user/?csrfmiddlewaretoken=hamIGdGX5NO7Y9llY7eCWCUQR6DYDYpiBAQApsj0daDzPZHBM5eUg4fGqG9dXJA3 HTTP/1.1" 200 59257
+"GET /dashboard/user/?csrfmiddlewaretoken=hamIGdGX5NO7Y9llY7eCWCUQR6DYDYpiBAQApsj0daDzPZHBM5eUg4fGqG9dXJA3 HTTP/1.1" 200 21793
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /dashboard/user/ HTTP/1.1" 200 21793
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53883
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 12180
+"GET /review/fef5344c-ccbb-4aa9-ace8-f31179f8844a/edit/ HTTP/1.1" 200 54293
+- Broken pipe from ('127.0.0.1', 49384)
+"POST /review/fef5344c-ccbb-4aa9-ace8-f31179f8844a/edit/ HTTP/1.1" 302 0
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /admin/socialaccount/socialapp/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/socialaccount/socialapp/ HTTP/1.1" 200 4038
+"POST /admin/login/?next=/admin/socialaccount/socialapp/ HTTP/1.1" 302 0
+"GET /admin/socialaccount/socialapp/ HTTP/1.1" 200 16331
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/fef5344c-ccbb-4aa9-ace8-f31179f8844a/change/ HTTP/1.1" 200 35027
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+- Broken pipe from ('127.0.0.1', 60575)
+"GET /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 200 47384
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+- Broken pipe from ('127.0.0.1', 61447)
+"GET /admin/reviews/product/3042cc37-ae13-42f4-aa7e-a2ab871b2dbb/change/ HTTP/1.1" 200 44705
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+- Broken pipe from ('127.0.0.1', 61519)
+"GET /admin/reviews/review/fef5344c-ccbb-4aa9-ace8-f31179f8844a/change/ HTTP/1.1" 200 35027
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+- Broken pipe from ('127.0.0.1', 61611)
+"GET /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/ HTTP/1.1" 200 34445
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29297
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17120
+"GET /static/images/default_profile.png HTTP/1.1" 200 2162
+"GET /accounts/logout/ HTTP/1.1" 200 9367
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46197
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46728
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29299
+"GET /admin/reviews/product/3042cc37-ae13-42f4-aa7e-a2ab871b2dbb/change/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/reviews/product/3042cc37-ae13-42f4-aa7e-a2ab871b2dbb/change/ HTTP/1.1" 200 4015
+"POST /admin/login/?next=/admin/reviews/product/3042cc37-ae13-42f4-aa7e-a2ab871b2dbb/change/ HTTP/1.1" 302 0
+"GET /admin/reviews/product/3042cc37-ae13-42f4-aa7e-a2ab871b2dbb/change/ HTTP/1.1" 200 44705
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59475
+- Broken pipe from ('127.0.0.1', 61680)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29297
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29297
+"GET /product/apple-macbook-pro-16/ HTTP/1.1" 200 29297
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17120
+"GET / HTTP/1.1" 200 46726
+"GET /product/google-pixel-8-pro/ HTTP/1.1" 200 40648
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17120
+"GET /review/72f21cab-bd56-4e2f-b0fa-bb0b4a2f6c0b/edit/ HTTP/1.1" 200 54317
+- Broken pipe from ('127.0.0.1', 63453)
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53883
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['rcjq0W1rvGbmhLFgIbSrBXED9IGc28G3dsSuFJKKAWIiSuJohcbjDlcJwVRXY3p4'], 'product': ['c933d915-0d01-474f-aa84-6af755efd0e3'], 'title': ['15 pro ko review '], 'overall_rating': ['5'], 'performance_rating': ['5'], 'battery_rating': ['5'], 'camera_rating': ['5'], 'display_rating': ['5'], 'value_rating': ['4'], 'content': ['dami xa yar nsabfbbfls kjfgkjsng sgnkjsg gjksgnkjnfkgnkfnkgn'], 'likes': ['dami xa'], 'improvements': ['dami xa'], 'issues': ['dami xa'], 'recommendation': ['dami xa'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Updating existing review ID: 4c6837a4-0aef-4a55-9bb3-630771b90258
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/apple-iphone-15-pro/ HTTP/1.1" 200 32111
+"GET /product/apple-iphone-15-pro/ HTTP/1.1" 200 32111
+"GET /product/apple-iphone-15-pro/ HTTP/1.1" 200 32111
+"GET /admin/reviews/review/ HTTP/1.1" 200 59638
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59481
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59481
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53883
+"GET /dashboard/user/ HTTP/1.1" 200 17120
+"GET /review/72f21cab-bd56-4e2f-b0fa-bb0b4a2f6c0b/edit/ HTTP/1.1" 200 54317
+- Broken pipe from ('127.0.0.1', 49496)
+"POST /review/72f21cab-bd56-4e2f-b0fa-bb0b4a2f6c0b/edit/ HTTP/1.1" 302 0
+"GET /product/google-pixel-8-pro/ HTTP/1.1" 200 40526
+"GET /product/google-pixel-8-pro/ HTTP/1.1" 200 40526
+"GET /admin/reviews/review/ HTTP/1.1" 200 59644
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/72f21cab-bd56-4e2f-b0fa-bb0b4a2f6c0b/change/ HTTP/1.1" 200 35030
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59496
+- Broken pipe from ('127.0.0.1', 54458)
+"GET /product/google-pixel-8-pro/ HTTP/1.1" 200 40526
+"GET /product/add/ HTTP/1.1" 200 18079
+"GET /products/ HTTP/1.1" 200 57803
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10171
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10167
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 40737
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17128
+"GET /review/c63b7b19-1159-415c-b031-60d01d88d016/edit/ HTTP/1.1" 200 54317
+- Broken pipe from ('127.0.0.1', 55377)
+"GET /admin/reviews/review/c63b7b19-1159-415c-b031-60d01d88d016/change/ HTTP/1.1" 200 35023
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 55103)
+"POST /review/c63b7b19-1159-415c-b031-60d01d88d016/edit/ HTTP/1.1" 302 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 40678
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 40678
+"GET /admin/reviews/review/ HTTP/1.1" 200 59647
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/c63b7b19-1159-415c-b031-60d01d88d016/change/ HTTP/1.1" 200 35020
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 55376)
+"GET /admin/reviews/review/ HTTP/1.1" 200 59499
+"GET /admin/reviews/review/c63b7b19-1159-415c-b031-60d01d88d016/change/ HTTP/1.1" 200 35020
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 57053)
+"GET /admin/reviews/review/ HTTP/1.1" 200 59499
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 59499
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/ HTTP/1.1" 200 34445
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /product/add/ HTTP/1.1" 200 18079
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17162
+"GET /review/2a3e4306-7d91-4e9f-81b7-bd52f4ea4f81/edit/ HTTP/1.1" 200 54317
+- Broken pipe from ('127.0.0.1', 57653)
+"POST /review/2a3e4306-7d91-4e9f-81b7-bd52f4ea4f81/edit/ HTTP/1.1" 302 0
+"GET /product/dell-dell-xps-13/ HTTP/1.1" 200 40482
+"GET /admin/reviews/review/ HTTP/1.1" 200 59647
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/2a3e4306-7d91-4e9f-81b7-bd52f4ea4f81/change/ HTTP/1.1" 200 35002
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 58707)
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53883
+"GET /admin/reviews/review/ HTTP/1.1" 200 59499
+"GET /admin/reviews/review/?q=en HTTP/1.1" 200 26352
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['7LnQ6weVTLfDCuLMohtPvntVRH9LpRLCT1WULjXeY1MzddPUXiMHxL11eUkwlMuD'], 'product': ['71dc6ea5-158b-428c-b78e-0346da59cd63'], 'title': ['zen book'], 'overall_rating': ['1'], 'performance_rating': ['1'], 'battery_rating': ['1'], 'camera_rating': ['1'], 'display_rating': ['1'], 'value_rating': ['1'], 'content': [' bad zzenbook sbdlksaf bfbsa gbgbkjsgf asgafsgfadb fe'], 'likes': ['bad'], 'improvements': ['bad'], 'issues': ['bad'], 'recommendation': ['bad'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Review saved successfully! ID: f633ff46-86e2-41c5-b815-dc44a98b8299, Product: 71dc6ea5-158b-428c-b78e-0346da59cd63, User: 3, Data: {'product': <Product: Asus ZenBook Pro>, 'title': 'zen book', 'content': 'bad zzenbook sbdlksaf bfbsa gbgbkjsgf asgafsgfadb fe', 'overall_rating': 1, 'performance_rating': 1, 'battery_rating': 1, 'camera_rating': 1, 'display_rating': 1, 'value_rating': 1, 'likes': 'bad', 'improvements': 'bad', 'issues': 'bad', 'recommendation': 'bad', 'review_video': <TemporaryUploadedFile: video.mp4 (video/mp4)>, 'is_verified_purchase': True}
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43305
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 62094
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/f633ff46-86e2-41c5-b815-dc44a98b8299/change/?_changelist_filters=q%3D HTTP/1.1" 200 35068
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 64668)
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17211
+"GET /review/f633ff46-86e2-41c5-b815-dc44a98b8299/edit/ HTTP/1.1" 200 52767
+- Broken pipe from ('127.0.0.1', 59616)
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 9908
+"GET /media/review_videos/2025/07/26/video.mp4 HTTP/1.1" 200 48049652
+"POST /review/f633ff46-86e2-41c5-b815-dc44a98b8299/edit/ HTTP/1.1" 302 0
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43305
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43305
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 62092
+"GET /admin/reviews/review/?q=en HTTP/1.1" 200 27567
+"GET /admin/reviews/review/f633ff46-86e2-41c5-b815-dc44a98b8299/change/?_changelist_filters=q%3Den HTTP/1.1" 200 35074
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 59993)
+"GET /admin/reviews/review/f633ff46-86e2-41c5-b815-dc44a98b8299/change/?_changelist_filters=q%3Den HTTP/1.1" 200 35074
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17211
+"GET /review/f633ff46-86e2-41c5-b815-dc44a98b8299/edit/ HTTP/1.1" 200 52767
+- Broken pipe from ('127.0.0.1', 59992)
+- Broken pipe from ('127.0.0.1', 61282)
+"POST /review/f633ff46-86e2-41c5-b815-dc44a98b8299/edit/ HTTP/1.1" 302 0
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43317
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\forms.py changed, reloading.
+Watching for file changes with StatReloader
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43317
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43317
+"GET / HTTP/1.1" 200 46726
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/products/Beverages.jpg HTTP/1.1" 304 0
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['pqBshy1pA4nPyZps9Sdzv2zStSjkebK5bGawWlKIFkUL9ItAITwrxq7YQ5u5a6t6'], 'product': ['0936681c-2094-4d16-ba64-1f9603cdb8f5'], 'title': ['Bose review'], 'overall_rating': ['5'], 'performance_rating': ['5'], 'battery_rating': ['5'], 'camera_rating': ['5'], 'display_rating': ['5'], 'value_rating': ['5'], 'content': ['best xa babal xa nbadfhbdf jfhb sdfbhkblkgfb bgkbflk sbgvbgvb'], 'likes': ['babal xa'], 'improvements': ['baabl'], 'issues': ['babal'], 'recommendation': ['babal'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Updating existing review ID: 4d59e087-5aac-429a-9a5e-b41c614da7fb
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 34917
+"GET /admin/reviews/review/?q=en HTTP/1.1" 200 27830
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 61962
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 61962
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 61962
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 61962
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q= HTTP/1.1" 200 61962
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25297
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/4d59e087-5aac-429a-9a5e-b41c614da7fb/change/?_changelist_filters=q%3Dbos HTTP/1.1" 200 34621
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25297
+"POST /admin/reviews/review/?q=bos HTTP/1.1" 200 14622
+"GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+"POST /admin/reviews/review/?q=bos HTTP/1.1" 302 0
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 22014
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['tuscacNaFTv8QyPmk6H1Ukk5YixdkxOffK1gPZwtK924rhTuT70TWISblvIYgsxg'], 'product': ['0936681c-2094-4d16-ba64-1f9603cdb8f5'], 'title': ['Bose review'], 'overall_rating': ['5'], 'performance_rating': ['5'], 'battery_rating': ['5'], 'camera_rating': ['5'], 'display_rating': ['5'], 'value_rating': ['5'], 'content': ['best xa babal xa nbadfhbdf jfhb sdfbhkblkgfb bgkbflk sbgvbgvb'], 'likes': ['babal xa'], 'improvements': ['baabl'], 'issues': ['babal'], 'recommendation': ['babal'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Review saved successfully! ID: aab65b6a-8bf6-46ad-8211-0ec3d15b62f6, Product: 0936681c-2094-4d16-ba64-1f9603cdb8f5, User: 3, Data: {'product': <Product: Bose QuietComfort 45>, 'title': 'Bose review', 'content': 'best xa babal xa nbadfhbdf jfhb sdfbhkblkgfb bgkbflk sbgvbgvb', 'overall_rating': 5, 'performance_rating': 5, 'battery_rating': 5, 'camera_rating': 5, 'display_rating': 5, 'value_rating': 5, 'likes': 'babal xa', 'improvements': 'baabl', 'issues': 'babal', 'recommendation': 'babal', 'review_video': <TemporaryUploadedFile: video.mp4 (video/mp4)>, 'is_verified_purchase': True}
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43483
+"POST /api/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/helpful/ HTTP/1.1" 200 31
+"POST /api/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/helpful/ HTTP/1.1" 200 33
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17207
+"GET /dashboard/user/ HTTP/1.1" 200 17207
+"GET /review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/edit/ HTTP/1.1" 200 54021
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25490
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/product/0936681c-2094-4d16-ba64-1f9603cdb8f5/change/ HTTP/1.1" 200 48146
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /media/review_videos/2025/07/26/video_k2qbeB9.mp4 HTTP/1.1" 304 0
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25340
+- Broken pipe from ('127.0.0.1', 52705)
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/?_changelist_filters=q%3Dbos HTTP/1.1" 200 35136
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 63879)
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25340
+- Broken pipe from ('127.0.0.1', 52762)
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/?_changelist_filters=q%3Dbos HTTP/1.1" 200 35136
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 52917)
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25340
+"POST /review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/edit/ HTTP/1.1" 302 0
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43475
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25488
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/?_changelist_filters=q%3Dbos HTTP/1.1" 200 35167
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25340
+- Broken pipe from ('127.0.0.1', 53188)
+"GET /admin/reviews/review/?q=bos HTTP/1.1" 200 25340
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 17213
+"GET /review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/edit/ HTTP/1.1" 200 54052
+- Broken pipe from ('127.0.0.1', 53688)
+"POST /review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/edit/ HTTP/1.1" 302 0
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43451
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 21793
+"GET /dashboard/user/ HTTP/1.1" 200 84425
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43451
+"GET /products/ HTTP/1.1" 200 59915
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10171
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10167
+"GET /dashboard/user/ HTTP/1.1" 200 84425
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+"GET /products/ HTTP/1.1" 200 59915
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10171
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10167
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 84547
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+"GET /dashboard/user/ HTTP/1.1" 200 84561
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290958
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290958
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 291158
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 291156
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 291099
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 291099
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 291099
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 50743
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 50745
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 60789
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 60836
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"POST /api/profile/update/ HTTP/1.1" 200 260
+"POST /api/profile/update/ HTTP/1.1" 200 252
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+"POST /api/profile/update/ HTTP/1.1" 200 252
+"POST /api/profile/update/ HTTP/1.1" 200 252
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"POST /api/profile/update/ HTTP/1.1" 200 252
+"POST /api/profile/update/ HTTP/1.1" 200 252
+- Broken pipe from ('127.0.0.1', 54304)
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"POST /api/profile/update/ HTTP/1.1" 200 251
+"GET /dashboard/user/ HTTP/1.1" 302 0
+Internal Server Error: /dashboard/business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 963, in business_dashboard_view
+    return render(request, 'reviews/business_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'product_detail' not found. 'product_detail' is not a valid view function or pattern name.
+"GET /dashboard/business/ HTTP/1.1" 500 189803
+"GET /review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/edit/ HTTP/1.1" 200 54052
+- Broken pipe from ('127.0.0.1', 54686)
+"GET /dashboard/ HTTP/1.1" 302 0
+Internal Server Error: /dashboard/business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 963, in business_dashboard_view
+    return render(request, 'reviews/business_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'product_detail' not found. 'product_detail' is not a valid view function or pattern name.
+"GET /dashboard/business/ HTTP/1.1" 500 189811
+"GET /dashboard HTTP/1.1" 301 0
+"GET /dashboard/ HTTP/1.1" 302 0
+Internal Server Error: /dashboard/business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 963, in business_dashboard_view
+    return render(request, 'reviews/business_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 243, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'product_detail' not found. 'product_detail' is not a valid view function or pattern name.
+"GET /dashboard/business/ HTTP/1.1" 500 189631
+"GET /admin/auth/user/ HTTP/1.1" 200 20826
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 33606
+"GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+"GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+"GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+C:\Users\Irosh\Desktop\Feedme\reviews\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38289
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 21467
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+Forbidden (Permission denied): /dashboard/business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 950, in business_dashboard_view
+    raise PermissionDenied("You don't have permission to access this page")
+django.core.exceptions.PermissionDenied: You don't have permission to access this page
+"GET /dashboard/business/ HTTP/1.1" 403 135
+Forbidden (Permission denied): /dashboard/business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 950, in business_dashboard_view
+    raise PermissionDenied("You don't have permission to access this page")
+django.core.exceptions.PermissionDenied: You don't have permission to access this page
+"GET /dashboard/business/ HTTP/1.1" 403 135
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43451
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43451
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 61130
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /admin/reviews/review/ HTTP/1.1" 200 60715
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /media/profile_pics/default.png HTTP/1.1" 304 0
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35073
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 50759)
+C:\Users\Irosh\Desktop\Feedme\reviews\admin.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35073
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35073
+- Broken pipe from ('127.0.0.1', 53473)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35073
+- Broken pipe from ('127.0.0.1', 53488)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 60715
+- Broken pipe from ('127.0.0.1', 53499)
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35073
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 60715
+- Broken pipe from ('127.0.0.1', 53556)
+"GET /admin/reviews/review/f633ff46-86e2-41c5-b815-dc44a98b8299/change/ HTTP/1.1" 200 34995
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 60715
+- Broken pipe from ('127.0.0.1', 53603)
+"GET /admin/reviews/review/fef5344c-ccbb-4aa9-ace8-f31179f8844a/change/ HTTP/1.1" 200 35027
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 53652)
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 19020
+"GET /admin/reviews/review/ HTTP/1.1" 200 60701
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/aab65b6a-8bf6-46ad-8211-0ec3d15b62f6/change/ HTTP/1.1" 200 35064
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 60701
+- Broken pipe from ('127.0.0.1', 58500)
+"GET /dashboard/user/ HTTP/1.1" 200 61129
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61082
+"GET /dashboard/user/ HTTP/1.1" 200 61082
+"GET /dashboard/user/ HTTP/1.1" 200 51038
+"GET /dashboard/user/ HTTP/1.1" 200 51038
+"GET /dashboard/user/ HTTP/1.1" 200 51032
+"GET /dashboard/user/ HTTP/1.1" 200 51032
+"GET /dashboard/user/ HTTP/1.1" 200 51040
+"GET /dashboard/user/ HTTP/1.1" 200 51040
+"GET /dashboard/user/ HTTP/1.1" 200 51040
+"GET /dashboard/user/ HTTP/1.1" 200 51040
+"GET /dashboard/user/ HTTP/1.1" 200 51040
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290636
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290636
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290636
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290567
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290495
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'else'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 567, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 369: 'else', expected 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 290495
+"GET /dashboard/user/ HTTP/1.1" 200 54682
+"GET /dashboard/user/ HTTP/1.1" 200 61131
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61135
+"GET /dashboard/user/ HTTP/1.1" 200 61135
+"GET /dashboard/user/ HTTP/1.1" 200 61135
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /dashboard/user/ HTTP/1.1" 200 61194
+"GET /dashboard/user/ HTTP/1.1" 200 61180
+"GET /dashboard/user/ HTTP/1.1" 200 61180
+"GET /dashboard/user/ HTTP/1.1" 200 61180
+"GET /dashboard/user/ HTTP/1.1" 200 61135
+"GET /dashboard/user/ HTTP/1.1" 200 61135
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 54682
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /dashboard/user/ HTTP/1.1" 200 54683
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 61138
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/user/ HTTP/1.1" 200 61138
+"GET /dashboard/user/ HTTP/1.1" 200 61138
+"GET /dashboard/user/ HTTP/1.1" 200 61133
+"GET /dashboard/user/ HTTP/1.1" 200 94127
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/user/ HTTP/1.1" 200 94103
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/user/ HTTP/1.1" 200 92841
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/user/ HTTP/1.1" 200 93794
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /dashboard/user/ HTTP/1.1" 200 92843
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+"GET /dashboard/user/ HTTP/1.1" 200 93794
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/user/ HTTP/1.1" 200 92843
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+"GET /dashboard/user/ HTTP/1.1" 200 92843
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+"GET /dashboard/user/ HTTP/1.1" 200 93788
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+"GET /dashboard/user/ HTTP/1.1" 200 91396
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 10019
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+"GET /media/products/Beverages.jpg HTTP/1.1" 200 35271
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+Internal Server Error: /dashboard/user/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 781, in user_dashboard_view
+    return render(request, 'reviews/user_dashboard.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 577, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 843: 'endblock'. Did you forget to register or load this tag?
+"GET /dashboard/user/ HTTP/1.1" 500 222373
+"GET /dashboard/user/ HTTP/1.1" 200 92731
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199
+"GET /dashboard/user/ HTTP/1.1" 200 97930
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10199

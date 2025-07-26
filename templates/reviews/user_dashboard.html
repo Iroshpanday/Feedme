@@ -1,43 +1,953 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<div class="container">
-    <h2>Your Dashboard</h2>
+{% block title %}User Dashboard - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .dashboard-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #f1f5f9;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+    .stats-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+    }
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .badge-success { background: #10b981; color: white; }
+    .badge-warning { background: #f59e0b; color: white; }
+    .badge-info { background: #3b82f6; color: white; }
+    .badge-secondary { background: #6b7280; color: white; }
     
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Your Profile</h5>
-                    {% if user.profile.profile_picture %}
-    <img src="{{ user.profile.profile_picture.url }}" class="rounded-circle" width="100" height="100">
-{% else %}
-    <img src="{% static 'images/default_profile.png' %}" class="rounded-circle" width="100" height="100">
-{% endif %}
-                    <p class="mt-3">{{ user.username }}</p>
-                    <p>{{ user.email }}</p>
+    .star-rating { color: #fbbf24; }
+    .star-rating-empty { color: #d1d5db; }
+    
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .review-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+    .review-item:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+    }
+    
+    .action-btn {
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+        color: inherit;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .action-btn:hover {
+        background: rgba(59, 130, 246, 0.1);
+        border-color: #3b82f6;
+        text-decoration: none;
+    }
+    
+    .section-header {
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .empty-state {
+        padding: 3rem 1rem;
+        text-align: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 12px;
+        border: 2px dashed #cbd5e1;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .profile-edit-form input,
+    .profile-edit-form select,
+    .profile-edit-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        transition: border-color 0.2s ease;
+    }
+
+    .profile-edit-form input:focus,
+    .profile-edit-form select:focus,
+    .profile-edit-form textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .achievement-card {
+        transition: transform 0.2s ease;
+    }
+    .achievement-card:hover {
+        transform: scale(1.02);
+    }
+
+    .monthly-chart {
+        height: 200px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        padding: 1rem;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+
+    .chart-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 4px 4px 0 0;
+        min-height: 10px;
+        width: 30px;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .chart-bar:hover {
+        opacity: 0.8;
+        transform: translateY(-2px);
+    }
+
+    .chart-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        color: #6b7280;
+        white-space: nowrap;
+    }
+
+    /* Fixed sidebar positioning */
+    .sidebar-sticky {
+        position: sticky;
+        top: 2rem;
+        align-self: flex-start;
+    }
+
+    /* Ensure proper grid layout */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        .sidebar-sticky {
+            position: static;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="gradient-bg">
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" 
+                         alt="Profile Picture" 
+                         class="profile-picture">
+                {% else %}
+                    <div class="profile-picture bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-2xl font-bold">
+                        {{ user.first_name|first|default:user.username|first|upper }}
+                    </div>
+                {% endif %}
+                <div class="text-white">
+                    <h1 class="text-2xl md:text-3xl font-bold">
+                        Welcome back, {{ user.first_name|default:user.username }}!
+                    </h1>
+                    <p class="text-white opacity-90 text-sm md:text-base">
+                        <i class="fas fa-user mr-2"></i>
+                        {% if user.profile.is_business_user %}Business Account{% else %}Personal Account{% endif %}
+                    </p>
                 </div>
             </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="openProfileModal()" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg transition-all duration-200 text-sm">
+                    <i class="fas fa-edit mr-2"></i>Edit Profile
+                </button>
+                <a href="{% url 'reviews:add_review' %}" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg transition-all duration-200 text-sm">
+                    <i class="fas fa-plus mr-2"></i>New Review
+                </a>
+            </div>
         </div>
-        
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Your Reviews</h5>
-                    {% for review in reviews %}
-                    <div class="review-item mb-3">
-                        <h6>{{ review.product.name }}</h6>
-                        <div class="rating">Rating: {{ review.overall_rating }}/5</div>
-                        <p>{{ review.content|truncatechars:100 }}</p>
-                        <small class="text-muted">{{ review.created_at|date:"M d, Y" }}</small>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="dashboard-grid">
+        <!-- Main Content -->
+        <div class="space-y-6">
+            <!-- Profile Section -->
+            <div class="dashboard-card p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-user-circle text-blue-500 mr-3"></i>
+                        Profile Information
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Username</label>
+                        <p class="text-gray-800 font-semibold">{{ user.username }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                        <p class="text-gray-800">{{ user.email }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">First Name</label>
+                        <p class="text-gray-800">{{ user.first_name|default:"Not provided" }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Last Name</label>
+                        <p class="text-gray-800">{{ user.last_name|default:"Not provided" }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Account Type</label>
+                        <span class="badge {% if user.profile.is_business_user %}badge-warning{% else %}badge-info{% endif %}">
+                            <i class="fas {% if user.profile.is_business_user %}fa-briefcase{% else %}fa-user{% endif %} mr-1"></i>
+                            {% if user.profile.is_business_user %}Business Account{% else %}Personal Account{% endif %}
+                        </span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Member Since</label>
+                        <p class="text-gray-800">{{ user.date_joined|date:"F Y" }}</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <button onclick="openProfileModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-edit mr-2"></i>Edit Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="dashboard-card p-6">
+                <div class="section-header">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                            <i class="fas fa-star text-yellow-500 mr-3"></i>
+                            My Reviews (<span id="reviewCount">{{ total_reviews }}</span>)
+                        </h2>
+                        <select onchange="sortReviews(this.value)" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="rating_high">Highest Rating</option>
+                            <option value="rating_low">Lowest Rating</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if reviews %}
+                    <div class="space-y-4" id="reviewsList">
+                        {% for review in reviews %}
+                        <div class="review-item p-4 {% if forloop.counter > 4 %}hidden{% endif %}" data-date="{{ review.created_at|date:'Y-m-d' }}" data-rating="{{ review.overall_rating|default:review.rating }}" data-review-id="{{ review.id }}" data-index="{{ forloop.counter }}">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        {% if review.product.image %}
+                                            <img src="{{ review.product.image.url }}" 
+                                                 alt="{{ review.product.name }}" 
+                                                 class="w-12 h-12 rounded-lg object-cover">
+                                        {% else %}
+                                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold">
+                                                {{ review.product.name|first|upper }}
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <h3 class="font-semibold text-gray-800">
+                                                <a href="{% url 'reviews:product_detail' review.product.slug %}" class="hover:text-blue-600 transition-colors">
+                                                    {{ review.product.brand.name }} {{ review.product.name }}
+                                                </a>
+                                            </h3>
+                                            <p class="text-sm text-gray-600">{{ review.created_at|timesince }} ago</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4 mb-2">
+                                        <div class="flex items-center">
+                                            {% with rating=review.overall_rating|default:review.rating %}
+                                                {% for i in "12345" %}
+                                                    {% if forloop.counter <= rating %}
+                                                        <i class="fas fa-star star-rating"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-star star-rating-empty"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="ml-2 text-sm text-gray-600">{{ rating }}/5</span>
+                                            {% endwith %}
+                                        </div>
+                                        <span class="badge {% if review.is_approved %}badge-success{% else %}badge-warning{% endif %}">
+                                            {% if review.is_approved %}
+                                                <i class="fas fa-check mr-1"></i>Approved
+                                            {% else %}
+                                                <i class="fas fa-clock mr-1"></i>Pending
+                                            {% endif %}
+                                        </span>
+                                        {% if review.helpful_count > 0 %}
+                                            <span class="badge badge-secondary">
+                                                <i class="fas fa-thumbs-up mr-1"></i>{{ review.helpful_count }} helpful
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <h4 class="font-medium text-gray-800 mb-1">{{ review.title }}</h4>
+                                    <p class="text-gray-600 text-sm">
+                                        {{ review.content|truncatewords:25 }}
+                                        {% if review.content|wordcount > 25 %}
+                                            <a href="{% url 'reviews:product_detail' review.product.slug %}#review-{{ review.id }}" class="text-blue-500 hover:text-blue-700">...read more</a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                
+                                <div class="flex space-x-1 ml-4">
+                                    <a href="{% url 'reviews:edit_review' review.id %}" class="action-btn text-blue-500 hover:text-blue-700" title="Edit Review">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'reviews:product_detail' review.product.slug %}#review-{{ review.id }}" class="action-btn text-green-500 hover:text-green-700" title="View Review">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <button onclick="deleteReview('{{ review.id }}')" class="action-btn text-red-500 hover:text-red-700" title="Delete Review">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- See More/See Less Button -->
+                    {% if reviews|length > 4 %}
+                    <div class="mt-6 text-center">
+                        <button id="seeMoreBtn" onclick="toggleReviews()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors font-medium">
+                            <i class="fas fa-chevron-down mr-2"></i>
+                            See More Reviews (<span id="hiddenCount">{{ reviews|length|add:"-4" }}</span> more)
+                        </button>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-star text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2">No Reviews Yet</h3>
+                        <p class="text-gray-500 mb-4">Start sharing your product experiences!</p>
+                        <a href="{% url 'reviews:add_review' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors inline-block">
+                            <i class="fas fa-plus mr-2"></i>Write Your First Review
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-card p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-clock text-green-500 mr-3"></i>
+                        Recent Activity
+                    </h2>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                        <div class="bg-blue-100 p-2 rounded-full">
+                            <i class="fas fa-sign-in-alt text-blue-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Last login</p>
+                            <p class="text-xs text-gray-600">{{ user.last_login|timesince }} ago</p>
+                        </div>
+                    </div>
+
+                    {% for review in reviews|slice:":3" %}
+                    <div class="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                        <div class="bg-yellow-100 p-2 rounded-full">
+                            <i class="fas fa-star text-yellow-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">You reviewed {{ review.product.name }}</p>
+                            <p class="text-xs text-gray-600">{{ review.created_at|timesince }} ago</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% if total_helpful_votes > 0 %}
+                    <div class="flex items-center space-x-3 p-3 bg-white rounded-lg border border-gray-200">
+                        <div class="bg-green-100 p-2 rounded-full">
+                            <i class="fas fa-thumbs-up text-green-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Your reviews received {{ total_helpful_votes }} helpful votes</p>
+                            <p class="text-xs text-gray-600">Total count</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Monthly Activity Chart -->
+            {% if monthly_activity %}
+            <div class="dashboard-card p-6">
+                <div class="section-header">
+                    <h2 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-chart-line text-purple-500 mr-3"></i>
+                        Monthly Review Activity
+                    </h2>
+                </div>
+                
+                <div class="monthly-chart">
+                    {% for month in monthly_activity %}
+                        {% if month.reviews > 0 %}
+                            {% with height=month.reviews|floatformat:0|add:'0' %}
+                                <div class="chart-bar" style="height: {{ height }}px;" title="{{ month.month }} {{ month.year }}: {{ month.reviews }} reviews">
+                            {% endwith %}
+                        {% else %}
+                            <div class="chart-bar" style="height: 10px;" title="{{ month.month }} {{ month.year }}: {{ month.reviews }} reviews">
+                        {% endif %}
+                            <div class="chart-label">{{ month.month }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar-sticky space-y-6">
+            <!-- Statistics Card -->
+            <div class="dashboard-card stats-card p-6 text-white">
+                <h3 class="text-lg font-bold mb-4 flex items-center">
+                    <i class="fas fa-chart-bar mr-2"></i>
+                    Your Stats
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm opacity-90">Total Reviews</span>
+                        <span class="text-2xl font-bold">{{ total_reviews }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm opacity-90">Average Rating</span>
+                        <span class="text-2xl font-bold">{{ user_avg_rating|floatformat:1 }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm opacity-90">Helpful Votes</span>
+                        <span class="text-2xl font-bold">{{ total_helpful_votes }}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm opacity-90">Approved</span>
+                        <span class="text-2xl font-bold">{{ approved_reviews_count }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="dashboard-card p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+                    Achievements
+                </h3>
+                <div class="space-y-3">
+                    {% for achievement in achievements %}
+                    <div class="achievement-card flex items-center space-x-3 p-3 bg-{{ achievement.color }}-50 rounded-lg border border-{{ achievement.color }}-200">
+                        <i class="{{ achievement.icon }} text-{{ achievement.color }}-500 text-lg"></i>
+                        <div>
+                            <p class="font-semibold text-gray-800 text-sm">{{ achievement.title }}</p>
+                            <p class="text-xs text-gray-600">{{ achievement.description }}</p>
+                        </div>
                     </div>
                     {% empty %}
-                    <p>You haven't written any reviews yet.</p>
+                    <div class="text-center py-4">
+                        <i class="fas fa-medal text-4xl text-gray-300 mb-2"></i>
+                        <p class="text-gray-500 text-sm">Write your first review to unlock achievements!</p>
+                    </div>
                     {% endfor %}
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-card p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-bolt text-purple-500 mr-2"></i>
+                    Quick Actions
+                </h3>
+                <div class="space-y-3">
+                    <a href="{% url 'reviews:add_review' %}" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg transition-colors text-sm font-medium block text-center">
+                        <i class="fas fa-plus mr-2"></i>Write New Review
+                    </a>
+                    <a href="{% url 'reviews:products' %}" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg transition-colors text-sm font-medium block text-center">
+                        <i class="fas fa-search mr-2"></i>Browse Products
+                    </a>
+                    {% if not user.profile.is_business_user %}
+                    <button onclick="upgradeToBusiness()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-lg transition-colors text-sm font-medium">
+                        <i class="fas fa-briefcase mr-2"></i>Upgrade to Business
+                    </button>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Profile Edit Modal -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-gray-800">Edit Profile</h2>
+            <button onclick="closeProfileModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <form id="profileForm" class="profile-edit-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" name="username" value="{{ user.username }}" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" value="{{ user.email }}" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <input type="text" name="first_name" value="{{ user.first_name }}">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <input type="text" name="last_name" value="{{ user.last_name }}">
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+                <input type="file" name="profile_picture" accept="image/*" class="border-2 border-dashed border-gray-300 p-4 text-center">
+                {% if user.profile.profile_picture %}
+                    <div class="mt-2">
+                        <img src="{{ user.profile.profile_picture.url }}" alt="Current profile picture" class="w-20 h-20 rounded-full object-cover">
+                        <p class="text-xs text-gray-500 mt-1">Current profile picture</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mt-4">
+                <label class="flex items-center">
+                    <input type="checkbox" name="is_business_user" {% if user.profile.is_business_user %}checked{% endif %} class="mr-2">
+                    <span class="text-sm font-medium text-gray-700">Business Account</span>
+                </label>
+            </div>
+            
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="closeProfileModal()" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Profile Modal Functions
+function openProfileModal() {
+    document.getElementById('profileModal').style.display = 'block';
+}
+function closeProfileModal() {
+    document.getElementById('profileModal').style.display = 'none';
+}
+window.onclick = function(event) {
+    const modal = document.getElementById('profileModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Toast Notification Function
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 transform transition-all duration-300 translate-x-full`;
+
+    switch(type) {
+        case 'success': toast.classList.add('bg-green-500'); break;
+        case 'error': toast.classList.add('bg-red-500'); break;
+        case 'warning': toast.classList.add('bg-yellow-500'); break;
+        default: toast.classList.add('bg-blue-500');
+    }
+
+    toast.innerHTML = `
+        <div class="flex items-center space-x-2">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.remove('translate-x-full'), 100);
+    setTimeout(() => {
+        toast.classList.add('translate-x-full');
+        setTimeout(() => document.body.removeChild(toast), 300);
+    }, 3000);
+}
+
+// Form Validation
+function validateProfileForm() {
+    const form = document.getElementById('profileForm');
+    if (!form) return false;
+    const username = form.username.value.trim();
+    const email = form.email.value.trim();
+
+    if (!username) {
+        showToast('Username is required', 'error');
+        return false;
+    }
+    if (!email || !email.includes('@')) {
+        showToast('Valid email is required', 'error');
+        return false;
+    }
+    return true;
+}
+
+// Show Loading Spinner
+function showLoading(element) {
+    const originalText = element.innerHTML;
+    element.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+    element.disabled = true;
+    return function hideLoading() {
+        element.innerHTML = originalText;
+        element.disabled = false;
+    };
+}
+
+// Handle profile form only if it exists
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('profileForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateProfileForm()) return;
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            const hideLoading = showLoading(submitButton);
+            const formData = new FormData(this);
+
+            fetch('{% url "reviews:update_profile_ajax" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideLoading();
+                if (data.success) {
+                    showToast('Profile updated successfully!', 'success');
+                    closeProfileModal();
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast('Error updating profile: ' + (data.error || 'Unknown error'), 'error');
+                }
+            })
+            .catch(error => {
+                hideLoading();
+                console.error('Error:', error);
+                showToast('An error occurred while updating profile', 'error');
+            });
+        });
+    }
+
+    // Tooltips for action buttons
+    const actionButtons = document.querySelectorAll('.action-btn');
+    actionButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            const title = this.getAttribute('title');
+            if (title) {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'absolute bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-10';
+                tooltip.textContent = title;
+                tooltip.style.bottom = '100%';
+                tooltip.style.left = '50%';
+                tooltip.style.transform = 'translateX(-50%)';
+                tooltip.style.marginBottom = '5px';
+                tooltip.style.whiteSpace = 'nowrap';
+                this.style.position = 'relative';
+                this.appendChild(tooltip);
+            }
+        });
+        button.addEventListener('mouseleave', function() {
+            const tooltip = this.querySelector('.absolute');
+            if (tooltip) this.removeChild(tooltip);
+        });
+    });
+
+    // Animate chart bars
+    const chartBars = document.querySelectorAll('.chart-bar');
+    chartBars.forEach((bar, index) => {
+        bar.style.transform = 'scaleY(0)';
+        bar.style.transformOrigin = 'bottom';
+        bar.style.transition = 'transform 0.6s ease';
+        setTimeout(() => bar.style.transform = 'scaleY(1)', index * 100 + 100);
+    });
+});
+
+// Toggle Reviews (Show More/Show Less)
+function toggleReviews() {
+    const hiddenReviews = document.querySelectorAll('.review-item.hidden');
+    const seeMoreBtn = document.getElementById('seeMoreBtn');
+    const reviewCount = document.getElementById('reviewCount');
+    const hiddenCount = document.getElementById('hiddenCount');
+    
+    if (hiddenReviews.length > 0) {
+        // Show all reviews
+        hiddenReviews.forEach(review => {
+            review.classList.remove('hidden');
+            review.style.opacity = '0';
+            review.style.transform = 'translateY(20px)';
+            review.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                review.style.opacity = '1';
+                review.style.transform = 'translateY(0)';
+            }, 50);
+        });
+        
+        seeMoreBtn.innerHTML = '<i class="fas fa-chevron-up mr-2"></i>Show Less Reviews';
+        seeMoreBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        seeMoreBtn.classList.add('bg-gray-500', 'hover:bg-gray-600');
+    } else {
+        // Hide reviews beyond first 4
+        const allReviews = document.querySelectorAll('.review-item');
+        const totalReviews = allReviews.length;
+        
+        allReviews.forEach((review, index) => {
+            if (index >= 4) {
+                review.style.opacity = '1';
+                review.style.transform = 'translateY(0)';
+                review.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    review.style.opacity = '0';
+                    review.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        review.classList.add('hidden');
+                        review.style.opacity = '';
+                        review.style.transform = '';
+                    }, 300);
+                }, 50);
+            }
+        });
+        
+        const hiddenCountNum = totalReviews - 4;
+        hiddenCount.textContent = hiddenCountNum;
+        seeMoreBtn.innerHTML = `<i class="fas fa-chevron-down mr-2"></i>See More Reviews (${hiddenCountNum} more)`;
+        seeMoreBtn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+        seeMoreBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+    }
+}
+
+// Sorting reviews (updated to maintain show/hide state)
+function sortReviews(sortBy) {
+    const reviewsList = document.getElementById('reviewsList');
+    const reviews = Array.from(reviewsList.children);
+    const seeMoreBtn = document.getElementById('seeMoreBtn');
+    const hiddenCount = document.getElementById('hiddenCount');
+    const isExpanded = document.querySelectorAll('.review-item.hidden').length === 0;
+    
+    reviews.sort((a, b) => {
+        switch(sortBy) {
+            case 'oldest': return new Date(a.dataset.date) - new Date(b.dataset.date);
+            case 'rating_high': return parseInt(b.dataset.rating) - parseInt(a.dataset.rating);
+            case 'rating_low': return parseInt(a.dataset.rating) - parseInt(b.dataset.rating);
+            default: return new Date(b.dataset.date) - new Date(a.dataset.date);
+        }
+    });
+    
+    // Clear and re-append sorted reviews
+    reviewsList.innerHTML = '';
+    reviews.forEach((review, index) => {
+        review.setAttribute('data-index', index + 1);
+        
+        if (!isExpanded && index >= 4) {
+            review.classList.add('hidden');
+        } else {
+            review.classList.remove('hidden');
+        }
+        
+        reviewsList.appendChild(review);
+    });
+    
+    // Update button text if collapsed
+    if (!isExpanded && reviews.length > 4) {
+        const hiddenCountNum = reviews.length - 4;
+        hiddenCount.textContent = hiddenCountNum;
+        seeMoreBtn.innerHTML = `<i class="fas fa-chevron-down mr-2"></i>See More Reviews (${hiddenCountNum} more)`;
+    }
+}
+
+// Delete Review
+function deleteReview(reviewId) {
+    if (!confirm('Are you sure you want to delete this review? This action cannot be undone.')) return;
+
+    fetch(`/api/review/${reviewId}/delete/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast(data.message, 'success');
+            const reviewElement = document.querySelector(`[data-review-id="${reviewId}"]`);
+            if (reviewElement) {
+                reviewElement.remove();
+                
+                // Update review count
+                const reviewCountElement = document.getElementById('reviewCount');
+                const currentCount = parseInt(reviewCountElement.textContent);
+                reviewCountElement.textContent = currentCount - 1;
+                
+                // Update see more button if needed
+                const remainingReviews = document.querySelectorAll('.review-item').length;
+                const seeMoreBtn = document.getElementById('seeMoreBtn');
+                const hiddenCount = document.getElementById('hiddenCount');
+                
+                if (remainingReviews <= 4 && seeMoreBtn) {
+                    seeMoreBtn.style.display = 'none';
+                } else if (seeMoreBtn && hiddenCount) {
+                    const visibleReviews = document.querySelectorAll('.review-item:not(.hidden)').length;
+                    const hiddenReviews = remainingReviews - visibleReviews;
+                    if (hiddenReviews > 0) {
+                        hiddenCount.textContent = hiddenReviews;
+                        seeMoreBtn.innerHTML = `<i class="fas fa-chevron-down mr-2"></i>See More Reviews (${hiddenReviews} more)`;
+                    }
+                }
+            }
+        } else {
+            showToast('Error deleting review: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('An error occurred while deleting the review', 'error');
+    });
+}
+
+// Upgrade to Business Account
+function upgradeToBusiness() {
+    if (!confirm('Would you like to upgrade to a business account?')) return;
+
+    const formData = new FormData();
+    formData.append('is_business_user', 'true');
+
+    fetch('{% url "reviews:update_profile_ajax" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('Successfully upgraded to business account!', 'success');
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            showToast('Error upgrading account: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('An error occurred while upgrading account', 'error');
+    });
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Close modal with Escape, open with Ctrl+E
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeProfileModal();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+        e.preventDefault();
+        openProfileModal();
+    }
+});
+</script>
+
 {% endblock %}
+

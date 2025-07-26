@@ -1,13 +1,42 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import (
     Category, Brand, Product, Review, ReviewHelpful, 
-    SearchQuery, ProductView
+    SearchQuery, ProductView, UserProfile
 )
-
 from .models import Specification  
+
+# Add UserProfile inline
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Profile'
+    fk_name = 'user'
+    fields = ('profile_picture', 'is_business_user')
+
+# Customize User Admin
+class CustomUserAdmin(UserAdmin):
+    inlines = (UserProfileInline,)
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_business_user')
+    list_select_related = ('profile', )
+
+    def is_business_user(self, instance):
+        return instance.profile.is_business_user
+    is_business_user.short_description = 'Business User'
+    is_business_user.boolean = True
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super().get_inline_instances(request, obj)
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -118,8 +147,6 @@ class ProductAdmin(admin.ModelAdmin):
         return "0 reviews"
     total_reviews.short_description = 'Reviews'
 
-
-
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = [
@@ -174,13 +201,14 @@ class ReviewAdmin(admin.ModelAdmin):
     product_link.short_description = 'Product'
     
     def overall_rating_stars(self, obj):
-        if obj.overall_rating is None:
+        # Use overall_rating instead of rating
+        rating = obj.overall_rating
+        if rating is None:
             return "No rating"
-        stars = '★' * obj.overall_rating + '☆' * (5 - obj.overall_rating)
+        stars = '★' * rating + '☆' * (5 - rating)
         return format_html('<span style="color: #f59e0b;">{}</span>', stars)
     overall_rating_stars.short_description = 'Overall Rating'
 
-    # Keep the original rating_stars method if you still want to display it somewhere
     def rating_stars(self, obj):
         if obj.rating is None:
             return "No rating"

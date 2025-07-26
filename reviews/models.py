@@ -297,7 +297,9 @@ class Review(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.name} ({self.rating}★)"
+        
+        rating = self.overall_rating if self.overall_rating is not None else self.rating
+        return f"{self.user.username} - {self.product.name} ({rating}★)" if rating else f"{self.user.username} - {self.product.name} (No rating)"
      
     def save(self, *args, **kwargs):
         # Auto-approve reviews from staff/superusers

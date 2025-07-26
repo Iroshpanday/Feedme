@@ -661,22 +661,287 @@ def dashboard_view(request):
     else:
         return redirect('reviews:user_dashboard')
 
+# Add these imports to your existing views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+import json
+from PIL import Image
+import os
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+# Update your existing user_dashboard_view
 @login_required
 def user_dashboard_view(request):
-    """Normal user dashboard"""
-    if request.user.profile.is_business_user:
-        # Business users shouldn't access this, redirect them
+    """Enhanced user dashboard with more features"""
+    if hasattr(request.user, 'profile') and request.user.profile.is_business_user:
         return redirect('reviews:business_dashboard')
     
-    # Get user's reviews
-    reviews = request.user.reviews.select_related('product').order_by('-created_at')
+    # Create profile if it doesn't exist
+    if not hasattr(request.user, 'profile'):
+        UserProfile.objects.create(user=request.user)
+    
+    # Get user's reviews with additional stats
+    reviews = request.user.reviews.select_related('product', 'product__brand', 'product__category').order_by('-created_at')
+    
+    # Calculate user statistics
+    total_reviews = reviews.count()
+    approved_reviews = reviews.filter(is_approved=True)
+    total_helpful_votes = sum(review.helpful_count for review in reviews)
+    
+    # Calculate average rating given by user
+    user_avg_rating = 0
+    if approved_reviews.exists():
+        rating_sum = 0
+        rating_count = 0
+        for review in approved_reviews:
+            rating = review.overall_rating or review.rating
+            if rating:
+                rating_sum += rating
+                rating_count += 1
+        user_avg_rating = round(rating_sum / rating_count, 1) if rating_count > 0 else 0
+    
+    # Get recent product views (last 10)
+    recent_views = ProductView.objects.filter(
+        user=request.user
+    ).select_related('product', 'product__brand').order_by('-created_at')[:10]
+    
+    # Achievement calculations
+    achievements = []
+    if total_reviews >= 1:
+        achievements.append({
+            'title': 'First Review',
+            'description': 'You wrote your first review!',
+            'icon': 'fas fa-medal',
+            'color': 'yellow'
+        })
+    if total_reviews >= 5:
+        achievements.append({
+            'title': 'Review Explorer',
+            'description': '5 reviews completed!',
+            'icon': 'fas fa-star',
+            'color': 'blue'
+        })
+    if total_reviews >= 10:
+        achievements.append({
+            'title': 'Review Master',
+            'description': '10 reviews completed!',
+            'icon': 'fas fa-crown',
+            'color': 'purple'
+        })
+    if total_helpful_votes >= 10:
+        achievements.append({
+            'title': 'Helpful Reviewer',
+            'description': 'Your reviews helped 10+ people!',
+            'icon': 'fas fa-thumbs-up',
+            'color': 'green'
+        })
+    
+    # Monthly activity for the last 6 months
+    from datetime import datetime, timedelta
+    import calendar
+    
+    monthly_activity = []
+    for i in range(6):
+        month_start = datetime.now().replace(day=1) - timedelta(days=30*i)
+        month_end = month_start + timedelta(days=32)
+        month_end = month_end.replace(day=1) - timedelta(days=1)
+        
+        month_reviews = reviews.filter(
+            created_at__gte=month_start,
+            created_at__lte=month_end
+        ).count()
+        
+        monthly_activity.append({
+            'month': calendar.month_name[month_start.month][:3],
+            'year': month_start.year,
+            'reviews': month_reviews
+        })
+    
+    monthly_activity.reverse()
     
     context = {
-        'reviews': reviews,
-        'is_business_user': False
+        'reviews': reviews[:10],  # Latest 10 reviews for display
+        'all_reviews': reviews,  # All reviews for JS processing
+        'total_reviews': total_reviews,
+        'approved_reviews_count': approved_reviews.count(),
+        'pending_reviews_count': reviews.filter(is_approved=False).count(),
+        'total_helpful_votes': total_helpful_votes,
+        'user_avg_rating': user_avg_rating,
+        'recent_views': recent_views,
+        'achievements': achievements,
+        'monthly_activity': monthly_activity,
+        'is_business_user': False,
+        'profile': request.user.profile
     }
+    
     return render(request, 'reviews/user_dashboard.html', context)
 
+# Add new AJAX views for dashboard functionality
+@login_required
+@csrf_exempt
+def update_profile_ajax(request):
+    """Handle profile updates via AJAX"""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid method'}, status=405)
+    
+    try:
+        user = request.user
+        profile = user.profile
+        
+        # Update user data
+        user.username = request.POST.get('username', user.username)
+        user.email = request.POST.get('email', user.email)
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        
+        # Update profile data
+        is_business_user = request.POST.get('is_business_user', 'false').lower() == 'true'
+        profile.is_business_user = is_business_user
+        
+        # Handle profile picture upload
+        if request.FILES.get('profile_picture'):
+            profile_pic = request.FILES['profile_picture']
+            
+            # Validate image
+            try:
+                img = Image.open(profile_pic)
+                img.verify()
+            except Exception:
+                return JsonResponse({'error': 'Invalid image file'}, status=400)
+            
+            # Reset file pointer
+            profile_pic.seek(0)
+            
+            # Save the image
+            profile.profile_picture = profile_pic
+        
+        user.save()
+        profile.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Profile updated successfully!',
+            'data': {
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'is_business_user': profile.is_business_user,
+                'profile_picture_url': profile.profile_picture.url if profile.profile_picture else None
+            }
+        })
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def get_review_data_ajax(request, review_id):
+    """Get review data for editing"""
+    try:
+        review = get_object_or_404(Review, id=review_id, user=request.user)
+        
+        data = {
+            'id': str(review.id),
+            'title': review.title,
+            'content': review.content,
+            'overall_rating': review.overall_rating,
+            'performance_rating': review.performance_rating,
+            'battery_rating': review.battery_rating,
+            'camera_rating': review.camera_rating,
+            'display_rating': review.display_rating,
+            'value_rating': review.value_rating,
+            'likes': review.likes,
+            'improvements': review.improvements,
+            'issues': review.issues,
+            'recommendation': review.recommendation,
+            'product': {
+                'id': str(review.product.id),
+                'name': review.product.name,
+                'brand': review.product.brand.name
+            }
+        }
+        
+        return JsonResponse({'success': True, 'data': data})
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+@csrf_exempt
+def update_review_ajax(request, review_id):
+    """Update review via AJAX"""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid method'}, status=405)
+    
+    try:
+        review = get_object_or_404(Review, id=review_id, user=request.user)
+        
+        # Update review data
+        review.title = request.POST.get('title', review.title)
+        review.content = request.POST.get('content', review.content)
+        
+        # Update ratings
+        ratings = ['overall_rating', 'performance_rating', 'battery_rating', 
+                  'camera_rating', 'display_rating', 'value_rating']
+        
+        for rating in ratings:
+            value = request.POST.get(rating)
+            if value and value.isdigit():
+                setattr(review, rating, int(value))
+        
+        # Update open feedback fields
+        review.likes = request.POST.get('likes', review.likes)
+        review.improvements = request.POST.get('improvements', review.improvements)
+        review.issues = request.POST.get('issues', review.issues)
+        review.recommendation = request.POST.get('recommendation', review.recommendation)
+        
+        # Reset approval status for updated reviews
+        review.is_approved = request.user.is_staff
+        
+        review.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Review updated successfully!',
+            'review_id': str(review.id)
+        })
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def delete_review_ajax(request, review_id):
+    """Delete review via AJAX"""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid method'}, status=405)
+    
+    try:
+        review = get_object_or_404(Review, id=review_id, user=request.user)
+        product_name = review.product.name
+        review.delete()
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Review for {product_name} deleted successfully!'
+        })
+        
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+# Add new URL patterns to your urls.py
+"""
+Add these to your urlpatterns in urls.py:
+
+    # Dashboard AJAX endpoints
+    path('api/profile/update/', views.update_profile_ajax, name='update_profile_ajax'),
+    path('api/review/<uuid:review_id>/data/', views.get_review_data_ajax, name='get_review_data'),
+    path('api/review/<uuid:review_id>/update/', views.update_review_ajax, name='update_review_ajax'),
+    path('api/review/<uuid:review_id>/delete/', views.delete_review_ajax, name='delete_review_ajax'),
+"""
 @login_required
 def business_dashboard_view(request):
     """Business user dashboard"""
@@ -838,3 +1103,30 @@ def product_autocomplete(request):
         #     })
     
     return JsonResponse({'suggestions': suggestions})
+
+
+# this is for reviewedit functionality
+@login_required
+def edit_review_view(request, review_id):
+    """View for editing an existing review"""
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES, user=request.user, instance=review)
+        if form.is_valid():
+            updated_review = form.save(commit=False)
+            updated_review.is_approved = False  # Reset approval status when edited
+            updated_review.save()
+            
+            messages.success(request, 'Your review has been updated successfully!')
+            return redirect('reviews:product_detail', slug=review.product.slug)
+    else:
+        form = ReviewForm(user=request.user, instance=review)
+    
+    context = {
+        'form': form,
+        'title': 'Edit Your Review',
+        'review': review,
+        'product': review.product
+    }
+    return render(request, 'reviews/review_form.html', context)
