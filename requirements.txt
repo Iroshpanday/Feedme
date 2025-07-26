@@ -22,7 +22,7 @@ django-compressor
 python-dotenv
 django-mathfilters
 PyJWT
-
+textblob
 
 # Optional: Email backend dependencies (if needed for Gmail support)
 # You may not need to explicitly install smtplib, it's built-in

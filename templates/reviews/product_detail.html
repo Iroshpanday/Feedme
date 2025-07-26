@@ -219,7 +219,44 @@
                         </button>
                     </div>
                     {% endif %}
+
+                                    <!-- AI Summary Card -->
+                 
+
+
+                    <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-6 mt-8">
+    <h3 class="text-lg font-bold text-indigo-800 mb-4">AI Review Insights</h3>
+    
+    {% if ai_summary %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Pros -->
+            <div class="bg-green-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-green-800 mb-2">👍 Strengths</h4>
+                <p class="text-green-700">{{ ai_summary.pros }}</p>
+            </div>
+            
+            <!-- Cons -->
+            <div class="bg-red-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-red-800 mb-2">👎 Weaknesses</h4>
+                <p class="text-red-700">{{ ai_summary.cons }}</p>
+            </div>
+        </div>
+        
+        <!-- Overall -->
+        <div class="mt-4 bg-blue-50 p-4 rounded-lg">
+            <h4 class="font-semibold text-blue-800 mb-2">🔍 Overall</h4>
+            <p class="text-blue-700">{{ ai_summary.overall }}</p>
+        </div>
+    {% else %}
+        <p class="text-gray-600">Not enough detailed reviews to generate summary</p>
+    {% endif %}
+</div>
+
+
                 </div>
+
+
+
 
                 <!-- Product Details Tab Content -->
                 <div id="details-content" class="tab-content p-8">

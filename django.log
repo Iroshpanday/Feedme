@@ -2141,3 +2141,493 @@ Not Found: /media/products/rolwx_sPjBguy.webp
 "GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
 "GET /about/ HTTP/1.1" 200 24785
 "GET /about/ HTTP/1.1" 200 24785
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/add/ HTTP/1.1" 200 18085
+"GET /products/ HTTP/1.1" 200 59921
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 40771
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 200 169173
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+AI summarization failed: 'str' object has no attribute 'content'
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 41408
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /accounts/logout/ HTTP/1.1" 200 9645
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46210
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"POST /accounts/login/ HTTP/1.1" 200 9202
+"POST /accounts/login/ HTTP/1.1" 200 9203
+"GET /accounts/signup/ HTTP/1.1" 200 10851
+"POST /accounts/signup/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46739
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+"GET /products/ HTTP/1.1" 200 59921
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['Llrq1QEZWJeqKsE7quBkV3zpDJh3bMPnsMFpuXlkJtWOtKjcGyGr6r7kt752kFqV'], 'product': ['fc30e85d-89f7-467a-9794-b1683c1540b6'], 'title': ['iphone battery drain  issue'], 'overall_rating': ['4'], 'performance_rating': ['4'], 'battery_rating': ['3'], 'camera_rating': ['5'], 'display_rating': [''], 'value_rating': ['4'], 'content': [' Its performance & display is quite good but the major problem in battery. Battery drain much faster . Its battry wont remain even for 1 days.'], 'likes': ['I like its Camera quality & display , also performance  is quite good than android'], 'improvements': [' please Iphone improve you battery, increase battery capacity & make sure it long last at least a whole day'], 'issues': [' Major issue I face is on battery. Battery problem should be fixed first'], 'recommendation': [' I recommend this product for camera,performance & display'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Review saved successfully! ID: 07ba5195-3fbc-4f3d-8a87-83afefa518ac, Product: fc30e85d-89f7-467a-9794-b1683c1540b6, User: 8, Data: {'product': <Product: Iphone iphone 12 pro>, 'title': 'iphone battery drain  issue', 'content': 'Its performance & display is quite good but the major problem in battery. Battery drain much faster . Its battry wont remain even for 1 days.', 'overall_rating': 4, 'performance_rating': 4, 'battery_rating': 3, 'camera_rating': 5, 'display_rating': None, 'value_rating': 4, 'likes': 'I like its Camera quality & display , also performance  is quite good than android', 'improvements': 'please Iphone improve you battery, increase battery capacity & make sure it long last at least a whole day', 'issues': 'Major issue I face is on battery. Battery problem should be fixed first', 'recommendation': 'I recommend this product for camera,performance & display', 'review_video': <TemporaryUploadedFile: video.mp4 (video/mp4)>, 'is_verified_purchase': True}
+"POST /review/add/ HTTP/1.1" 302 0
+AI summarization failed: 'dict' object has no attribute 'content'
+AI summarization failed: 'str' object has no attribute 'content'
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 45535
+"GET /media/profile_pics/default.png HTTP/1.1" 304 0
+"GET /accounts/logout/ HTTP/1.1" 200 9996
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46210
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"POST /accounts/login/ HTTP/1.1" 200 9203
+"GET /accounts/signup/ HTTP/1.1" 200 10851
+"POST /accounts/signup/ HTTP/1.1" 200 11127
+"POST /accounts/signup/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46741
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+"GET / HTTP/1.1" 200 46741
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['si5ZgkN0MqeczN1wwzFjK8KLx5hCkDWpYwrPp5fdb0JL3YdDEAQn5G6b5Lg0C7Dq'], 'product': ['fc30e85d-89f7-467a-9794-b1683c1540b6'], 'title': ['Iphone 12 Battey drain'], 'overall_rating': ['3'], 'performance_rating': ['4'], 'battery_rating': ['3'], 'camera_rating': ['5'], 'display_rating': ['4'], 'value_rating': ['4'], 'content': ['The iPhone 12 generally offers a strong user experience with its impressive performance, vibrant display, and capable camera system. However, the notable battery drain issue can be a significant drawback for daily use.'], 'likes': ['Performance: The iPhone 12, powered by the A14 Bionic chip, delivers excellent and consistent performance. Apps launch quickly, multitasking is smooth, and even demanding games run without a hitch. It handles everyday tasks and more intensive activities with ease, maintaining a fluid and responsive user experience.\r\n\r\nDisplay: The 6.1-inch Super Retina XDR OLED display is a major highlight. Colors are vibrant and accurate, blacks are deep, and the contrast is superb. Viewing content, Browse, and gaming are a pleasure on this sharp and bright screen. The Ceramic Shield front cover also adds a welcome layer of durability.\r\n\r\nCamera: The dual 12MP camera system (Wide and Ultra Wide) is very good. Photos are consistently sharp, with good detail, accurate colors, and impressive dynamic range. Night mode works exceptionally well, significantly improving low-light photography. Video recording, including Dolby Vision HDR, is also excellent, making it a reliable tool for capturing moments.'], 'improvements': ['Battery Life: The most significant area for improvement is the battery life. The iPhone 12 suffers from noticeable battery drain, particularly with moderate to heavy usage, especially when utilizing 5G connectivity. It often struggles to last a full day without needing a charge, which can be inconvenient for users on the go. Optimized battery management and a larger battery capacity would greatly enhance the user experience.'], 'issues': ['Battery Drain: As mentioned, the primary issue encountered is the rapid battery drain. This necessitates frequent charging, and without careful management (like disabling 5G or using Low Power Mode), the phone may not comfortably last through a typical day.'], 'recommendation': ['I would recommend the iPhone 12 to users who prioritize top-tier performance, a beautiful display, and a highly capable camera in a sleek package. However, potential buyers should be aware of and prepared for the battery drain issue, which might require changes in usage habits or carrying a portable charger. If battery longevity is a critical factor for you, consider newer iPhone models or be prepared to manage the battery actively.'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Review saved successfully! ID: 2e4f400d-7458-4722-87c9-ca5428c2fda3, Product: fc30e85d-89f7-467a-9794-b1683c1540b6, User: 9, Data: {'product': <Product: Iphone iphone 12 pro>, 'title': 'Iphone 12 Battey drain', 'content': 'The iPhone 12 generally offers a strong user experience with its impressive performance, vibrant display, and capable camera system. However, the notable battery drain issue can be a significant drawback for daily use.', 'overall_rating': 3, 'performance_rating': 4, 'battery_rating': 3, 'camera_rating': 5, 'display_rating': 4, 'value_rating': 4, 'likes': 'Performance: The iPhone 12, powered by the A14 Bionic chip, delivers excellent and consistent performance. Apps launch quickly, multitasking is smooth, and even demanding games run without a hitch. It handles everyday tasks and more intensive activities with ease, maintaining a fluid and responsive user experience.\r\n\r\nDisplay: The 6.1-inch Super Retina XDR OLED display is a major highlight. Colors are vibrant and accurate, blacks are deep, and the contrast is superb. Viewing content, Browse, and gaming are a pleasure on this sharp and bright screen. The Ceramic Shield front cover also adds a welcome layer of durability.\r\n\r\nCamera: The dual 12MP camera system (Wide and Ultra Wide) is very good. Photos are consistently sharp, with good detail, accurate colors, and impressive dynamic range. Night mode works exceptionally well, significantly improving low-light photography. Video recording, including Dolby Vision HDR, is also excellent, making it a reliable tool for capturing moments.', 'improvements': 'Battery Life: The most significant area for improvement is the battery life. The iPhone 12 suffers from noticeable battery drain, particularly with moderate to heavy usage, especially when utilizing 5G connectivity. It often struggles to last a full day without needing a charge, which can be inconvenient for users on the go. Optimized battery management and a larger battery capacity would greatly enhance the user experience.', 'issues': 'Battery Drain: As mentioned, the primary issue encountered is the rapid battery drain. This necessitates frequent charging, and without careful management (like disabling 5G or using Low Power Mode), the phone may not comfortably last through a typical day.', 'recommendation': 'I would recommend the iPhone 12 to users who prioritize top-tier performance, a beautiful display, and a highly capable camera in a sleek package. However, potential buyers should be aware of and prepared for the battery drain issue, which might require changes in usage habits or carrying a portable charger. If battery longevity is a critical factor for you, consider newer iPhone models or be prepared to manage the battery actively.', 'review_video': <TemporaryUploadedFile: video.mp4 (video/mp4)>, 'is_verified_purchase': True}
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 50888
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51718
+"GET /media/products/Beverages.jpg HTTP/1.1" 304 0
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51718
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 53642
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51738
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 52578
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51738
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\feedme\settings.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46741
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+"GET / HTTP/1.1" 200 46741
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+Watching for file changes with StatReloader
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 49486
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Forbidden (Permission denied): /product/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 129, in check_perms
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+"GET /product/add/ HTTP/1.1" 403 135
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53434
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+"GET /products/ HTTP/1.1" 200 59924
+Not Found: /media/products/rolwx.webp
+"GET /media/products/rolwx.webp HTTP/1.1" 404 10162
+Not Found: /media/products/rolwx_sPjBguy.webp
+"GET /media/products/rolwx_sPjBguy.webp HTTP/1.1" 404 10194
+Not Found: /media/products/iphone.webp
+"GET /media/products/iphone.webp HTTP/1.1" 404 10166
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+"GET /products/?sort=reviews HTTP/1.1" 200 60954
+Internal Server Error: /product/bose-quietcomfort-45/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 356, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 40, in generate_ai_summary
+    if not reviews.exists():
+           ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'exists'
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 500 96093
+Internal Server Error: /product/asus-zenbook-pro/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 356, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 40, in generate_ai_summary
+    if not reviews.exists():
+           ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'exists'
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 500 96020
+Internal Server Error: /product/samsung-galaxy-s24-ultra/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 356, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 40, in generate_ai_summary
+    if not reviews.exists():
+           ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'exists'
+"GET /product/samsung-galaxy-s24-ultra/ HTTP/1.1" 500 93903
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+Internal Server Error: /product/oneplus-oneplus-12/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 356, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 40, in generate_ai_summary
+    if not reviews.exists():
+           ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'exists'
+"GET /product/oneplus-oneplus-12/ HTTP/1.1" 500 93759
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /product/oneplus-oneplus-12/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 358, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 51, in generate_ai_summary
+    reviews = Review.objects.filter(id__in=[r.id for r in reviews])
+                                            ^^^^
+AttributeError: 'str' object has no attribute 'id'
+"GET /product/oneplus-oneplus-12/ HTTP/1.1" 500 94105
+Internal Server Error: /product/oneplus-oneplus-12/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 358, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 51, in generate_ai_summary
+    reviews = Review.objects.filter(id__in=[r.id for r in reviews])
+                                            ^^^^
+AttributeError: 'str' object has no attribute 'id'
+"GET /product/oneplus-oneplus-12/ HTTP/1.1" 500 94107
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51738
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /product/bose-quietcomfort-45/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 356, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 40, in generate_ai_summary
+    if not reviews.exists():
+           ^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'exists'
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 500 96095
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /product/bose-quietcomfort-45/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 361, in product_detail_view
+    context['ai_summary'] = generate_ai_summary(demo_reviews)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 46, in generate_ai_summary
+    product_id = reviews[0].product.id if isinstance(reviews, list) else reviews.first().product.id
+                 ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'product'
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 500 96558
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+No valid reviews with product association found
+"GET /product/bose-quietcomfort-45/ HTTP/1.1" 200 43800
+No valid reviews with product association found
+"GET /product/asus-zenbook-pro/ HTTP/1.1" 200 43666
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51193
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51509
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51533
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51533

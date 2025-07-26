@@ -24,6 +24,8 @@ from io import BytesIO
 import urllib.request
 from PIL import Image  # Make sure to install pillow: pip install pillow
 
+from django.core.cache import cache
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
     profile_picture = models.ImageField(
@@ -311,6 +313,7 @@ class Review(models.Model):
             self.user_profile_picture = self.user.profile.profile_picture
             
         super().save(*args, **kwargs)
+        cache.delete(f"ai_summary_{self.product.id}")  
 
 class ReviewHelpful(models.Model):
     """Track which users found reviews helpful"""

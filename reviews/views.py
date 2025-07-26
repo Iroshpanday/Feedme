@@ -14,6 +14,9 @@ from django.utils.text import slugify
 from django.db.models import Avg, Count, Q
 from django.utils import timezone
 from datetime import timedelta
+from transformers import pipeline
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +24,103 @@ logger = logging.getLogger(__name__)
 from allauth.account.views import SignupView
 from .forms import UserTypeForm
 
+
+from django.core.cache import cache
+from transformers import pipeline
+import logging
+from django.utils import timezone
+
+logger = logging.getLogger(__name__)
+
+def generate_ai_summary(reviews):
+    """
+    Generates and caches AI summaries including pros, cons, and overall assessment.
+    Returns: {'pros': str, 'cons': str, 'overall': str} or None if failed
+    """
+    if not reviews:
+        return None
+
+    try:
+        # Safely get product_id from first valid review
+        product_id = None
+        for review in reviews:
+            if hasattr(review, 'product') and hasattr(review.product, 'id'):
+                product_id = review.product.id
+                break
+        
+        if not product_id:
+            logger.warning("No valid reviews with product association found")
+            return None
+
+        cache_key = f"ai_summary_v3_{product_id}"  # Changed version to v3
+
+        # Return cached summary if available
+        if cached := cache.get(cache_key):
+            logger.debug(f"Using cached summary for product {product_id}")
+            return cached
+
+        # Initialize summarizer
+        summarizer = pipeline(
+            "summarization",
+            model="sshleifer/distilbart-cnn-12-6",
+            framework="pt"
+        )
+
+        # Prepare review text safely
+        review_content = []
+        for r in reviews[:10]:  # Only process first 10 reviews
+            if isinstance(r, str):
+                content = r[:200].strip()
+            elif hasattr(r, 'content'):
+                content = r.content[:200].strip()
+            else:
+                continue
+            
+            if content:
+                review_content.append(content)
+
+        combined_text = " ".join(review_content)
+
+        if not combined_text:
+            return None
+
+        # Generate different aspects with specific prompts
+        def generate_aspect(text, prompt_prefix):
+            try:
+                result = summarizer(
+                    f"{prompt_prefix}: {text}",
+                    max_length=100,
+                    min_length=30,
+                    truncation=True,
+                    do_sample=False
+                )
+                return result[0]['summary_text']
+            except:
+                return ""
+
+        # Generate all three aspects
+        pros = generate_aspect(combined_text, "List the positive aspects")
+        cons = generate_aspect(combined_text, "List the negative aspects")
+        overall = generate_aspect(combined_text, "Provide an overall assessment")
+
+        # Structure results
+        result = {
+            'pros': pros if pros else "No significant positive aspects mentioned",
+            'cons': cons if cons else "No significant negative aspects mentioned",
+            'overall': overall if overall else "Mixed reviews overall",
+            'generated_at': str(timezone.now())
+        }
+
+        # Cache for 6 hours
+        cache.set(cache_key, result, 60 * 60 * 6)
+        logger.info(f"Generated new AI summary for product {product_id}")
+
+        return result
+
+    except Exception as e:
+        logger.error(f"AI summary failed: {str(e)}")
+        return None
+    
 class CustomSignupView(SignupView):
     form_class = UserTypeForm  # Your custom form
     
@@ -117,6 +217,7 @@ def search_view(request):
     }
     
     return render(request, 'reviews/search_results.html', context)
+
 
 def product_detail_view(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
@@ -254,6 +355,37 @@ def product_detail_view(request, slug):
         'monthly_reviews': monthly_reviews,
         'view_count': product.view_count,
     }
+
+        # --- DEMO MODE (temporary override) ---
+    DEMO_MODE = False  # Set to False later to disable
+
+    if DEMO_MODE and reviews.count() < 4:
+        demo_reviews = [
+            {"content": "The battery life is outstanding - lasts 2 full days with heavy use."},
+            {"content": "Camera takes great photos in daylight but struggles in low light."},
+            {"content": "Performance is super smooth, no lag even with 20+ apps open."},
+            {"content": "The AMOLED display is vibrant and perfect for watching videos."},
+            {"content": "Feels premium but is overpriced compared to competitors."}
+        ]
+        context['ai_summary'] = generate_ai_summary(demo_reviews)
+        context['is_demo'] = True  # Flag for template
+    else:
+        context['ai_summary'] = generate_ai_summary(reviews) if reviews.count() > 3 else None
+        context['is_demo'] = False
+
+
+    # DEMO ONLY - Simulate realistic reviews if you have fewer than 4
+    if reviews.count() < 4:
+        demo_reviews = [
+            "Battery life is excellent, easily lasts 2 days.",
+            "The camera takes sharp photos but struggles in low light.",
+            "Very fast performance with no lag during multitasking.",
+            "Display colors are vibrant and brightness is perfect.",
+        ]
+        context['ai_summary'] = generate_ai_summary(demo_reviews)
+
+    # Generate AI summary (only if >3 reviews exist)
+    context['ai_summary'] = generate_ai_summary(reviews) if reviews.count() > 3 else None
     
     return render(request, 'reviews/product_detail.html', context)
 def category_view(request, slug):
