@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     
     # Local apps
     'myapp',
-    'reviews',
+    'reviews.apps.ReviewsConfig',
+
 ]
 
 AUTHENTICATION_BACKENDS = [

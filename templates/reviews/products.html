@@ -637,27 +637,12 @@
 });
 
 function handleProductClick(slug, isBusinessUser) {
-    // Your logic here
-    console.log("Clicked Product:", slug, "Business User:", isBusinessUser);
-    // Example: redirect or open modal
-    // window.location.href = `/products/${slug}/`;
-}
-    // Handle product card clicks with user type differentiation
-    function handleProductClick(slug, isBusinessUser) {
-        if (isBusinessUser) {
-            // TODO: Navigate to business product details page when created
-            // For now, we'll use the regular product detail page
-            // Later change this to: window.location.href = `/product/${slug}/business/`;
-            console.log('Business user clicked on product:', slug);
-            // Placeholder for business product details page
-            alert('Business product details page will be implemented soon!');
-            // For now, redirect to regular product page
-            window.location.href = `/product/${slug}/`;
-        } else {
-            // Normal user - go to regular product details page
-            window.location.href = `/product/${slug}/`;
-        }
+    if (isBusinessUser) {
+        window.location.href = `/product/${slug}/Business/`;
+    } else {
+        window.location.href = `/product/${slug}/`;
     }
+}
 
     // Filter functionality
     document.getElementById('categoryFilter').addEventListener('change', function() {

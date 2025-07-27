@@ -4864,3 +4864,1238 @@ No valid reviews with product association found
 "GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
 "GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
 "GET /business/analytics/ HTTP/1.1" 200 51021
+"GET /products/ HTTP/1.1" 200 60324
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 51859
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 52302
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45142
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /accounts/logout/ HTTP/1.1" 200 9458
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46065
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"GET /accounts/signup/ HTTP/1.1" 200 10851
+"POST /accounts/signup/ HTTP/1.1" 200 11373
+- Broken pipe from ('127.0.0.1', 50234)
+"POST /accounts/signup/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46592
+"GET /product/add/ HTTP/1.1" 200 37038
+"GET /products/ HTTP/1.1" 200 60333
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53822
+Received POST data: <QueryDict: {'csrfmiddlewaretoken': ['hqfl1dMGL7e1KgwgZWhJQKmTcrmcCAl0FSYgWdJQ1lBuMXolMBqWFmIqSVEqh1D3'], 'product': ['06f0c90d-b638-4b72-bf15-5802b5a72651'], 'title': ['Iphone battery issue report'], 'overall_rating': ['2'], 'performance_rating': ['2'], 'battery_rating': ['2'], 'camera_rating': ['2'], 'display_rating': ['2'], 'value_rating': [''], 'content': ["The iPhone 12, overall, presents a compelling package with several strong points, but it's significantly let down by its battery performance.\r\n\r\nFrom a performance standpoint, the A14 Bionic chip is undeniably powerful. The phone handles daily tasks, demanding applications, and even graphics-intensive games with remarkable smoothness and speed. There's no noticeable lag or stutter, making the user experience fluid and responsive across the board. Apple continues to deliver top-tier processing power, and the iPhone 12 is no exception.\r\n\r\nThe camera system on the iPhone 12 is also quite impressive for its segment. The dual-camera setup, featuring a wide and ultrawide lens, consistently produces sharp, vibrant, and well-exposed photos in various lighting conditions. Night Mode is a standout feature, significantly improving low-light photography and capturing surprising detail. Video recording, especially with Dolby Vision HDR, is excellent, offering a high level of detail and dynamic range. While it lacks a dedicated telephoto lens, the overall photographic capabilities are more than satisfactory for most users.\r\n\r\nThe design of the iPhone 12 is another highlight. The return to the flat-edged aesthetic, reminiscent of the iPhone 4 and 5, gives the phone a premium and distinct feel. It's comfortable to hold and the build quality, with the Ceramic Shield front cover, feels robust. The 6.1-inch Super Retina XDR OLED display is bright, colorful, and sharp, offering an excellent viewing experience for media consumption and general use.\r\n\r\nHowever, the major problem that overshadows these positive aspects is the battery life. Despite the phone's strong performance and excellent display, the battery struggles to keep up. Even with moderate usage, including social media Browse, some streaming, and occasional calls, the battery drains far too quickly. It frequently requires a midday top-up to last until evening, which is inconvenient and frustrating. This feels like a significant regression compared to some previous iPhone models and is a constant source of concern, especially when you're out and about without access to a charger. Optimized charging settings and attempts to limit background activity offer only minor improvements; the underlying issue of insufficient battery capacity for modern smartphone usage remains."], 'likes': ['The iPhone 12 generally delivers a solid user experience. The performance is excellent, with the A14 Bionic chip handling all tasks and apps smoothly without any noticeable lag. The camera system, while not having a telephoto lens, takes impressive photos and videos in various lighting conditions, especially with the improved low-light capabilities and Dolby Vision HDR recording. The design is a welcome return to the flat-edged aesthetic of older iPhones, making it feel premium and comfortable to hold. The OLED display is vibrant and sharp, a significant upgrade from previous LCD models. Overall, the core functionalities and aesthetics of the phone are quite good.'], 'improvements': ["While the performance, camera, and design are strong points, there's a significant area for improvement: the battery life."], 'issues': ['The major problem with the iPhone 12 is its battery. Despite moderate usage, the battery consistently drains too quickly, often struggling to last a full day without needing a charge. This is a noticeable step down from previous iPhone models and can be quite frustrating, especially when relying on the phone for extended periods away from a charger. Even with optimized settings like reduced 5G usage and background app refresh, the battery life remains a persistent concern. It feels like a significant compromise for an otherwise capable device.'], 'recommendation': ['I would recommend the iPhone 12 for users who prioritize performance, camera quality, and a sleek design, and who are not heavily dependent on all-day battery life or are willing to carry a portable charger. However, for anyone who needs their phone to consistently last a full day on a single charge with typical usage, the battery performance is a major drawback and might lead to disappointment. If battery life is a top priority, looking at newer iPhone models or considering a larger "Pro Max" variant with a bigger battery would be advisable.'], 'is_verified_purchase': ['on']}>, Files: <MultiValueDict: {'review_video': [<TemporaryUploadedFile: video.mp4 (video/mp4)>]}>, Initial form: {}
+Review saved successfully! ID: 2274f00f-1460-477d-82f4-c70e498c73e1, Product: 06f0c90d-b638-4b72-bf15-5802b5a72651, User: 11, Data: {'product': <Product: Iphone Iphone 45 pro max>, 'title': 'Iphone battery issue report', 'content': "The iPhone 12, overall, presents a compelling package with several strong points, but it's significantly let down by its battery performance.\r\n\r\nFrom a performance standpoint, the A14 Bionic chip is undeniably powerful. The phone handles daily tasks, demanding applications, and even graphics-intensive games with remarkable smoothness and speed. There's no noticeable lag or stutter, making the user experience fluid and responsive across the board. Apple continues to deliver top-tier processing power, and the iPhone 12 is no exception.\r\n\r\nThe camera system on the iPhone 12 is also quite impressive for its segment. The dual-camera setup, featuring a wide and ultrawide lens, consistently produces sharp, vibrant, and well-exposed photos in various lighting conditions. Night Mode is a standout feature, significantly improving low-light photography and capturing surprising detail. Video recording, especially with Dolby Vision HDR, is excellent, offering a high level of detail and dynamic range. While it lacks a dedicated telephoto lens, the overall photographic capabilities are more than satisfactory for most users.\r\n\r\nThe design of the iPhone 12 is another highlight. The return to the flat-edged aesthetic, reminiscent of the iPhone 4 and 5, gives the phone a premium and distinct feel. It's comfortable to hold and the build quality, with the Ceramic Shield front cover, feels robust. The 6.1-inch Super Retina XDR OLED display is bright, colorful, and sharp, offering an excellent viewing experience for media consumption and general use.\r\n\r\nHowever, the major problem that overshadows these positive aspects is the battery life. Despite the phone's strong performance and excellent display, the battery struggles to keep up. Even with moderate usage, including social media Browse, some streaming, and occasional calls, the battery drains far too quickly. It frequently requires a midday top-up to last until evening, which is inconvenient and frustrating. This feels like a significant regression compared to some previous iPhone models and is a constant source of concern, especially when you're out and about without access to a charger. Optimized charging settings and attempts to limit background activity offer only minor improvements; the underlying issue of insufficient battery capacity for modern smartphone usage remains.", 'overall_rating': 2, 'performance_rating': 2, 'battery_rating': 2, 'camera_rating': 2, 'display_rating': 2, 'value_rating': None, 'likes': 'The iPhone 12 generally delivers a solid user experience. The performance is excellent, with the A14 Bionic chip handling all tasks and apps smoothly without any noticeable lag. The camera system, while not having a telephoto lens, takes impressive photos and videos in various lighting conditions, especially with the improved low-light capabilities and Dolby Vision HDR recording. The design is a welcome return to the flat-edged aesthetic of older iPhones, making it feel premium and comfortable to hold. The OLED display is vibrant and sharp, a significant upgrade from previous LCD models. Overall, the core functionalities and aesthetics of the phone are quite good.', 'improvements': "While the performance, camera, and design are strong points, there's a significant area for improvement: the battery life.", 'issues': 'The major problem with the iPhone 12 is its battery. Despite moderate usage, the battery consistently drains too quickly, often struggling to last a full day without needing a charge. This is a noticeable step down from previous iPhone models and can be quite frustrating, especially when relying on the phone for extended periods away from a charger. Even with optimized settings like reduced 5G usage and background app refresh, the battery life remains a persistent concern. It feels like a significant compromise for an otherwise capable device.', 'recommendation': 'I would recommend the iPhone 12 for users who prioritize performance, camera quality, and a sleek design, and who are not heavily dependent on all-day battery life or are willing to carry a portable charger. However, for anyone who needs their phone to consistently last a full day on a single charge with typical usage, the battery performance is a major drawback and might lead to disappointment. If battery life is a top priority, looking at newer iPhone models or considering a larger "Pro Max" variant with a bigger battery would be advisable.', 'review_video': <TemporaryUploadedFile: video.mp4 (video/mp4)>, 'is_verified_purchase': True}
+"POST /review/add/ HTTP/1.1" 302 0
+"GET /product/iphone-iphone-45-pro-max/ HTTP/1.1" 200 40337
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/ HTTP/1.1" 200 4085
+"POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+"GET /admin/ HTTP/1.1" 200 19344
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /admin/reviews/review/ HTTP/1.1" 200 64855
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 200 62505
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 56059)
+"POST /admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 302 0
+"GET /admin/reviews/product/ HTTP/1.1" 200 45767
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 64847
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /products/ HTTP/1.1" 200 61368
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 52302
+"GET /admin/reviews/review/ HTTP/1.1" 200 64847
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 200 62485
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/ HTTP/1.1" 200 64847
+- Broken pipe from ('127.0.0.1', 56540)
+"GET /accounts/logout/ HTTP/1.1" 200 9458
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46065
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46592
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 49475
+"GET /review/2274f00f-1460-477d-82f4-c70e498c73e1/edit/ HTTP/1.1" 200 58592
+"POST /review/2274f00f-1460-477d-82f4-c70e498c73e1/edit/ HTTP/1.1" 200 58584
+- Broken pipe from ('127.0.0.1', 57005)
+"POST /review/2274f00f-1460-477d-82f4-c70e498c73e1/edit/ HTTP/1.1" 200 58584
+- Broken pipe from ('127.0.0.1', 57548)
+- Broken pipe from ('127.0.0.1', 57623)
+"GET / HTTP/1.1" 200 46592
+- Broken pipe from ('127.0.0.1', 57701)
+"GET /products/ HTTP/1.1" 200 61377
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 200 4016
+- Broken pipe from ('127.0.0.1', 57801)
+"POST /admin/login/?next=/admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 302 0
+"GET /admin/reviews/product/06f0c90d-b638-4b72-bf15-5802b5a72651/change/ HTTP/1.1" 200 62485
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 58381)
+"GET /admin/reviews/product/ HTTP/1.1" 200 45515
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 200 73740
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 302 0
+"GET /admin/reviews/product/ HTTP/1.1" 200 45779
+- Broken pipe from ('127.0.0.1', 58956)
+- Broken pipe from ('127.0.0.1', 58955)
+- Broken pipe from ('127.0.0.1', 58943)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45161
+"GET /accounts/logout/ HTTP/1.1" 200 9458
+"POST /accounts/logout/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46081
+"GET /accounts/login/ HTTP/1.1" 200 8943
+"POST /accounts/login/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 46608
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/user/ HTTP/1.1" 200 49475
+"GET /review/2274f00f-1460-477d-82f4-c70e498c73e1/edit/ HTTP/1.1" 200 58596
+"POST /review/2274f00f-1460-477d-82f4-c70e498c73e1/edit/ HTTP/1.1" 200 58588
+- Broken pipe from ('127.0.0.1', 59209)
+"GET /admin/reviews/product/ HTTP/1.1" 302 0
+"GET /admin/login/?next=/admin/reviews/product/ HTTP/1.1" 200 3928
+- Broken pipe from ('127.0.0.1', 59927)
+- Broken pipe from ('127.0.0.1', 60032)
+"POST /admin/login/?next=/admin/reviews/product/ HTTP/1.1" 302 0
+"GET /admin/reviews/product/ HTTP/1.1" 200 45523
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /admin/reviews/review/ HTTP/1.1" 200 64879
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/2274f00f-1460-477d-82f4-c70e498c73e1/change/ HTTP/1.1" 200 39651
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/review/2274f00f-1460-477d-82f4-c70e498c73e1/change/ HTTP/1.1" 302 0
+"GET /admin/reviews/review/ HTTP/1.1" 200 65148
+- Broken pipe from ('127.0.0.1', 60151)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET / HTTP/1.1" 200 46610
+"GET /products/ HTTP/1.1" 200 60324
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59026
+"GET /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 200 77568
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+- Broken pipe from ('127.0.0.1', 60488)
+- Broken pipe from ('127.0.0.1', 61817)
+- Broken pipe from ('127.0.0.1', 61818)
+- Broken pipe from ('127.0.0.1', 61819)
+"GET /admin/reviews/review/ HTTP/1.1" 200 64887
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/product/ HTTP/1.1" 200 45430
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 200 77568
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/auth/user/2/change/?_to_field=id&_popup=1 HTTP/1.1" 200 26808
+"GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+"GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+"GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+"GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15845
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+"GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+"GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+"GET /admin/reviews/review/ HTTP/1.1" 200 64887
+- Broken pipe from ('127.0.0.1', 62933)
+- Broken pipe from ('127.0.0.1', 62814)
+- Broken pipe from ('127.0.0.1', 62932)
+- Broken pipe from ('127.0.0.1', 62934)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35390
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/?_changelist_filters=q%3Diphone HTTP/1.1" 200 35000
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/?_changelist_filters=q%3Diphone HTTP/1.1" 302 0
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35663
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59780
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53822
+"GET /admin/reviews/product/fc30e85d-89f7-467a-9794-b1683c1540b6/change/ HTTP/1.1" 200 77578
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35400
+- Broken pipe from ('127.0.0.1', 61498)
+- Broken pipe from ('127.0.0.1', 61496)
+- Broken pipe from ('127.0.0.1', 61497)
+- Broken pipe from ('127.0.0.1', 61491)
+"GET /admin/reviews/review/2e4f400d-7458-4722-87c9-ca5428c2fda3/change/?_changelist_filters=q%3Diphone HTTP/1.1" 200 37846
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/review/2e4f400d-7458-4722-87c9-ca5428c2fda3/change/?_changelist_filters=q%3Diphone HTTP/1.1" 302 0
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35663
+- Broken pipe from ('127.0.0.1', 61586)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/2274f00f-1460-477d-82f4-c70e498c73e1/change/?_changelist_filters=q%3Diphone HTTP/1.1" 200 39766
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/review/2274f00f-1460-477d-82f4-c70e498c73e1/change/?_changelist_filters=q%3Diphone HTTP/1.1" 302 0
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35661
+- Broken pipe from ('127.0.0.1', 61730)
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/?_changelist_filters=q%3Diphone HTTP/1.1" 200 35179
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/reviews/review/faa5feb4-a947-4dc2-bc91-50685e26ac28/change/?_changelist_filters=q%3Diphone HTTP/1.1" 302 0
+"GET /admin/reviews/review/?q=iphone HTTP/1.1" 200 35663
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59778
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /product/iphone-iphone-12-pro/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 454, in product_detail_view
+    return render(request, 'reviews/product_detail.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 299, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 962, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 1531, in do_with
+    extra_context = token_kwargs(remaining_bits, parser, support_legacy=True)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1127, in token_kwargs
+    kwargs[key] = parser.compile_filter(value)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 682, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse some characters: sentiment_analysis.aspects.values|()||dictsort:"average_rating"|first
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 500 345848
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 97311
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 60324
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /products/ HTTP/1.1" 200 60324
+No valid reviews with product association found
+"GET /product/iphone-iphone-45-pro-max/ HTTP/1.1" 200 27687
+"GET /products/ HTTP/1.1" 200 60324
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46610
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 60324
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+No valid reviews with product association found
+"GET /product/iphone-iphone-45-pro-max/ HTTP/1.1" 200 27687
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /products/ HTTP/1.1" 200 60327
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /products/ HTTP/1.1" 200 60327
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+No valid reviews with product association found
+"GET /product/iphone-iphone-45-pro-max/ HTTP/1.1" 200 27687
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /products/ HTTP/1.1" 200 60327
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+No valid reviews with product association found
+"GET /product/iphone-iphone-45-pro-max/ HTTP/1.1" 200 27687
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /products/ HTTP/1.1" 200 60335
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /products/ HTTP/1.1" 200 60335
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+Not Found: /product/iphone-iphone-45-pro-max/Business
+"GET /product/iphone-iphone-45-pro-max/Business HTTP/1.1" 404 11687
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /products/ HTTP/1.1" 200 60335
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46610
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 11708
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 200 567854
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46610
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59435
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+"GET /product/iphone-iphone-45-pro-max/Business/ HTTP/1.1" 200 15194
+"GET /product/iphone-iphone-45-pro-max/Business/ HTTP/1.1" 200 15194
+Watching for file changes with StatReloader
+"GET /products/ HTTP/1.1" 200 59435
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1913, in business_product_detail
+    keywords = extract_keywords(review.content)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1897, in extract_keywords
+    processed = preprocess_text(text)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1880, in preprocess_text
+    tokens = word_tokenize(text)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 131206
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1913, in business_product_detail
+    keywords = extract_keywords(review.content)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1897, in extract_keywords
+    processed = preprocess_text(text)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1880, in preprocess_text
+    tokens = word_tokenize(text)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 131206
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+"GET /products/ HTTP/1.1" 200 59435
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128590
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in business_product_detail
+    processed = preprocess_text(text)
+                   ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1900, in extract_keywords
+    stop_words = set(stopwords.words('english'))
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1883, in preprocess_text
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 128727
+C:\Users\Irosh\Desktop\Feedme\reviews\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\apps.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\nltk_setup.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\feedme\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46610
+"GET /products/ HTTP/1.1" 200 59435
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1932, in business_product_detail
+    keywords = extract_keywords(review.content)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in extract_keywords
+    processed = preprocess_text(text)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1899, in preprocess_text
+    tokens = word_tokenize(text)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 131244
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1932, in business_product_detail
+    keywords = extract_keywords(review.content)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1916, in extract_keywords
+    processed = preprocess_text(text)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1899, in preprocess_text
+    tokens = word_tokenize(text)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 142, in word_tokenize
+    sentences = [text] if preserve_line else sent_tokenize(text, language)
+                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 119, in sent_tokenize
+    tokenizer = _get_punkt_tokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\__init__.py", line 105, in _get_punkt_tokenizer
+    return PunktTokenizer(language)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1744, in __init__
+    self.load_lang(lang)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\tokenize\punkt.py", line 1749, in load_lang
+    lang_dir = find(f"tokenizers/punkt_tab/{lang}/")
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\nltk\data.py", line 579, in find
+    raise LookupError(resource_not_found)
+LookupError: 
+**********************************************************************
+  Resource [93mpunkt_tab[0m not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  [31m>>> import nltk
+  >>> nltk.download('punkt_tab')
+  [0m
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load [93mtokenizers/punkt_tab/english/[0m
+
+  Searched in:
+    - 'C:\\Users\\Irosh/nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\share\\nltk_data'
+    - 'C:\\Users\\Irosh\\Desktop\\Feedme\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\Irosh\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 131381
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 30643
+"GET /products/ HTTP/1.1" 200 59435
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 30643
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45163
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 41220
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/bose-Z-FOld/Business/ HTTP/1.1" 200 28703
+"GET /products/ HTTP/1.1" 200 59435
+"GET /admin/ HTTP/1.1" 200 19380
+"GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+"GET /admin/auth/user/ HTTP/1.1" 200 23474
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-yes.svg HTTP/1.1" 304 0
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38294
+"GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+"GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+"GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+"GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15845
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+"GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+"GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /products/ HTTP/1.1" 200 59447
+"GET /products/ HTTP/1.1" 200 59447
+"GET /products/ HTTP/1.1" 200 59447
+"GET /products/ HTTP/1.1" 200 59447
+"GET /products/ HTTP/1.1" 200 59447
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /media/profile_pics/default.png HTTP/1.1" 304 0
+"GET /media/profile_pics/iros.jpg HTTP/1.1" 304 0
+"GET /product/add/ HTTP/1.1" 200 37040
+"GET /products/ HTTP/1.1" 200 59447
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59447
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /products/ HTTP/1.1" 200 59447
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59447
+"GET /products/ HTTP/1.1" 200 59447
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /admin HTTP/1.1" 301 0
+"GET /admin/ HTTP/1.1" 200 19316
+"GET /admin/auth/user/ HTTP/1.1" 200 23474
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38286
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /products/ HTTP/1.1" 200 59435
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1896, in business_product_detail
+    keywords = extract_keywords(review.content)
+               ^^^^^^^^^^^^^^^^
+NameError: name 'extract_keywords' is not defined
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 81635
+"GET /products/ HTTP/1.1" 200 59435
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+Internal Server Error: /product/iphone-iphone-12-pro/Business/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1896, in business_product_detail
+    keywords = extract_keywords(review.content)
+               ^^^^^^^^^^^^^^^^
+NameError: name 'extract_keywords' is not defined
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 500 81635
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 41220
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 41220
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 41220
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 46610
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 40732
+"GET / HTTP/1.1" 200 46610
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53822
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45163
+"GET /products/ HTTP/1.1" 200 59435
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 40732
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 53737
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 40732
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 53737
+"GET /product/iphone-iphone-12-pro/Business/ HTTP/1.1" 200 58364
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38294
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /products/ HTTP/1.1" 200 59447
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581

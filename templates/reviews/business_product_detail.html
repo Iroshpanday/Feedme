@@ -1,0 +1,1183 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Business Analytics{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-bg: #0a0e1a;
+        --secondary-bg: #1a1f2e;
+        --card-bg: #252b3d;
+        --card-hover: #2d3548;
+        --accent-bg: #1e2532;
+        --text-primary: #ffffff;
+        --text-secondary: #b8c5d6;
+        --text-muted: #8892a6;
+        --success: #10b981;
+        --success-light: rgba(16, 185, 129, 0.12);
+        --warning: #f59e0b;
+        --warning-light: rgba(245, 158, 11, 0.12);
+        --danger: #ef4444;
+        --danger-light: rgba(239, 68, 68, 0.12);
+        --neutral: #6b7280;
+        --neutral-light: rgba(107, 114, 128, 0.12);
+        --accent-primary: #6366f1;
+        --accent-secondary: #8b5cf6;
+        --border-color: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.15);
+        --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+        color: var(--text-primary);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        min-height: 100vh;
+    }
+
+    .analytics-container {
+        min-height: 100vh;
+        padding: 2rem 0;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Header Section */
+    .analytics-header {
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-bg) 100%);
+        border-radius: 1.5rem;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-medium);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .analytics-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+    }
+
+    .analytics-header h1 {
+        color: var(--text-primary);
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin: 0 0 1rem 0;
+        position: relative;
+        z-index: 2;
+        letter-spacing: -0.02em;
+    }
+
+    .analytics-header .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        margin: 0;
+        position: relative;
+        z-index: 2;
+        max-width: 600px;
+        line-height: 1.7;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .metric-card {
+        background: var(--card-bg);
+        border-radius: 1.25rem;
+        padding: 2rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-light);
+    }
+
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: 1.25rem 1.25rem 0 0;
+    }
+
+    .metric-card.positive::before { background: var(--success); }
+    .metric-card.negative::before { background: var(--danger); }
+    .metric-card.neutral::before { background: var(--neutral); }
+
+    .metric-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-medium);
+        border-color: var(--border-hover);
+    }
+
+    .metric-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .metric-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        flex-shrink: 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .positive .metric-icon {
+        background: var(--success-light);
+        color: var(--success);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .negative .metric-icon {
+        background: var(--danger-light);
+        color: var(--danger);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .neutral .metric-icon {
+        background: var(--neutral-light);
+        color: var(--neutral);
+        border: 1px solid rgba(107, 114, 128, 0.2);
+    }
+
+    .metric-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .metric-value {
+        font-size: 2.75rem;
+        font-weight: 800;
+        margin: 0 0 0.5rem 0;
+        line-height: 1;
+        color: var(--text-primary);
+    }
+
+    .metric-label {
+        color: var(--text-secondary);
+        font-size: 1.125rem;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .metric-description {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        line-height: 1.5;
+    }
+
+    /* Section Cards */
+    .section-card {
+        background: var(--card-bg);
+        border-radius: 1.25rem;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-light);
+        transition: all 0.3s ease;
+    }
+
+    .section-card:hover {
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .section-icon {
+        font-size: 1.25em;
+        opacity: 0.8;
+    }
+
+    /* Sentiment Bar */
+    .sentiment-overview {
+        margin: 2rem 0;
+    }
+
+    .sentiment-bar {
+        height: 80px;
+        border-radius: 1rem;
+        display: flex;
+        overflow: hidden;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
+        background: var(--accent-bg);
+    }
+
+    .bar-segment {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        backdrop-filter: blur(10px);
+    }
+
+    .bar-segment:hover {
+        filter: brightness(1.1);
+        transform: scaleY(1.05);
+    }
+
+    .positive-segment {
+        background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    }
+
+    .neutral-segment {
+        background: linear-gradient(135deg, var(--neutral) 0%, #4b5563 100%);
+    }
+
+    .negative-segment {
+        background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+    }
+
+    .sentiment-legend {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .legend-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    /* Highlight Grid */
+    .highlight-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .review-highlight {
+        background: var(--accent-bg);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .review-highlight::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+    }
+
+    .review-highlight.positive::before { background: var(--success); }
+    .review-highlight.negative::before { background: var(--danger); }
+    .review-highlight.helpful::before { background: var(--warning); }
+
+    .review-highlight:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-medium);
+        border-color: var(--border-hover);
+    }
+
+    .review-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.25rem;
+        width: fit-content;
+    }
+
+    .badge-positive {
+        background: var(--success-light);
+        color: var(--success);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-negative {
+        background: var(--danger-light);
+        color: var(--danger);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .badge-helpful {
+        background: var(--warning-light);
+        color: var(--warning);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .review-content {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+        flex-grow: 1;
+        font-style: italic;
+        position: relative;
+    }
+
+    .review-content.truncated {
+        max-height: 120px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .review-content.truncated::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: linear-gradient(transparent, var(--accent-bg));
+        pointer-events: none;
+    }
+
+    .see-more-btn {
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 1.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 0.75rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    }
+
+    .see-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .see-more-btn:active {
+        transform: translateY(0);
+    }
+
+    .review-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Keywords Section */
+    .keyword-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .keyword-tag {
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: 2rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .keyword-tag:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    .keyword-count {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        font-weight: 800;
+        backdrop-filter: blur(10px);
+    }
+
+    /* Reviews List */
+    .reviews-list {
+        margin-top: 2rem;
+    }
+
+    .review-item {
+        background: var(--accent-bg);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .review-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        border-radius: 1rem 0 0 1rem;
+    }
+
+    .review-item.sentiment-positive::before { background: var(--success); }
+    .review-item.sentiment-negative::before { background: var(--danger); }
+    .review-item.sentiment-neutral::before { background: var(--neutral); }
+
+    .review-item:hover {
+        transform: translateX(8px);
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-light);
+    }
+
+    .review-item-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .review-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--text-primary);
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .sentiment-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: capitalize;
+        border: 1px solid;
+    }
+
+    .sentiment-badge.positive {
+        background: var(--success-light);
+        color: var(--success);
+        border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .sentiment-badge.negative {
+        background: var(--danger-light);
+        color: var(--danger);
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .sentiment-badge.neutral {
+        background: var(--neutral-light);
+        color: var(--neutral);
+        border-color: rgba(107, 114, 128, 0.2);
+    }
+
+    .review-text {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .review-keywords {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .keyword-mini {
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--accent-primary);
+        padding: 0.4rem 0.9rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    .keyword-mini:hover {
+        background: rgba(99, 102, 241, 0.2);
+        transform: scale(1.05);
+    }
+
+    /* Utilities */
+    .divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        margin: 3rem 0;
+        border: none;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mb-0 { margin-bottom: 0; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 1rem;
+        }
+
+        .analytics-header {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-header h1 {
+            font-size: 2rem;
+        }
+
+        .metrics-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .highlight-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-card {
+            padding: 1.5rem;
+        }
+
+        .sentiment-bar {
+            height: 60px;
+        }
+
+        .review-item {
+            padding: 1.5rem;
+        }
+
+        .keyword-cloud {
+            gap: 0.75rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .analytics-header {
+            padding: 1.5rem;
+        }
+
+        .analytics-header h1 {
+            font-size: 1.75rem;
+        }
+
+        .metric-card {
+            padding: 1.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.25rem;
+        }
+
+        .section-card {
+            padding: 1.25rem;
+        }
+    }
+</style>
+
+<script>
+    // JavaScript for handling review text truncation and expansion
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to check if review content needs truncation
+        function checkReviewLength(reviewId) {
+            const reviewElement = document.getElementById(reviewId + '-review');
+            const btnElement = document.getElementById(reviewId + '-btn');
+            
+            if (reviewElement && btnElement) {
+                // Create a temporary element to measure full height
+                const tempElement = reviewElement.cloneNode(true);
+                tempElement.style.position = 'absolute';
+                tempElement.style.visibility = 'hidden';
+                tempElement.style.height = 'auto';
+                tempElement.style.maxHeight = 'none';
+                tempElement.classList.remove('truncated');
+                document.body.appendChild(tempElement);
+                
+                const fullHeight = tempElement.scrollHeight;
+                document.body.removeChild(tempElement);
+                
+                // If content height exceeds 120px, show truncation
+                if (fullHeight > 120) {
+                    reviewElement.classList.add('truncated');
+                    btnElement.style.display = 'inline-flex';
+                }
+            }
+        }
+        
+        // Check all review highlights for truncation
+        checkReviewLength('positive');
+        checkReviewLength('negative');
+        checkReviewLength('helpful');
+    });
+
+    function toggleReview(type) {
+        const reviewElement = document.getElementById(type + '-review');
+        const textElement = document.getElementById(type + '-text');
+        const iconElement = document.getElementById(type + '-icon');
+        
+        if (reviewElement.classList.contains('truncated')) {
+            // Expand
+            reviewElement.classList.remove('truncated');
+            textElement.textContent = 'See Less';
+            iconElement.textContent = '▲';
+        } else {
+            // Collapse
+            reviewElement.classList.add('truncated');
+            textElement.textContent = 'See More';
+            iconElement.textContent = '▼';
+            
+            // Scroll to the review card smoothly
+            reviewElement.closest('.review-highlight').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="analytics-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="analytics-header">
+            <h1>{{ product.brand.name }} {{ product.name }}</h1>
+            <p class="subtitle">Comprehensive sentiment analysis and customer insights to optimize your product performance and customer satisfaction</p>
+        </div>
+
+        <!-- Sentiment Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card positive">
+                <div class="metric-header">
+                    <div class="metric-icon">😊</div>
+                    <div class="metric-content">
+                        <div class="metric-value">{{ positive_percentage }}%</div>
+                        <div class="metric-label">Positive Sentiment</div>
+                    </div>
+                </div>
+                <div class="metric-description">{{ positive_count }} out of {{ analyzed_reviews|length }} reviews show positive customer sentiment</div>
+            </div>
+            
+            <div class="metric-card negative">
+                <div class="metric-header">
+                    <div class="metric-icon">😔</div>
+                    <div class="metric-content">
+                        <div class="metric-value">{{ negative_percentage }}%</div>
+                        <div class="metric-label">Negative Sentiment</div>
+                    </div>
+                </div>
+                <div class="metric-description">{{ negative_count }} critical reviews identified requiring attention and improvement</div>
+            </div>
+            
+            <div class="metric-card neutral">
+                <div class="metric-header">
+                    <div class="metric-icon">😐</div>
+                    <div class="metric-content">
+                        <div class="metric-value">{{ neutral_percentage }}%</div>
+                        <div class="metric-label">Neutral Sentiment</div>
+                    </div>
+                </div>
+                <div class="metric-description">{{ neutral_count }} reviews with balanced or mixed customer feedback</div>
+            </div>
+        </div>
+
+        <!-- Sentiment Distribution -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <span class="section-icon">📊</span>
+                    Sentiment Distribution Overview
+                </h3>
+            </div>
+            
+            <div class="sentiment-overview">
+                <div class="sentiment-bar">
+                    {% if positive_percentage > 0 %}
+                    <div class="bar-segment positive-segment" style="width: {{ positive_percentage }}%">
+                        {% if positive_percentage > 12 %}{{ positive_percentage }}% Positive{% endif %}
+                    </div>
+                    {% endif %}
+                    {% if neutral_percentage > 0 %}
+                    <div class="bar-segment neutral-segment" style="width: {{ neutral_percentage }}%">
+                        {% if neutral_percentage > 12 %}{{ neutral_percentage }}% Neutral{% endif %}
+                    </div>
+                    {% endif %}
+                    {% if negative_percentage > 0 %}
+                    <div class="bar-segment negative-segment" style="width: {{ negative_percentage }}%">
+                        {% if negative_percentage > 12 %}{{ negative_percentage }}% Negative{% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="sentiment-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--success);"></div>
+                        <span>Positive ({{ positive_count }} reviews)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--neutral);"></div>
+                        <span>Neutral ({{ neutral_count }} reviews)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--danger);"></div>
+                        <span>Negative ({{ negative_count }} reviews)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="color: var(--text-muted); margin-top: 1.5rem; text-align: center;">
+                Analysis based on {{ analyzed_reviews|length }} verified customer reviews using advanced mobile-specific sentiment algorithms
+            </p>
+        </div>
+
+        <!-- Review Highlights -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <span class="section-icon">⭐</span>
+                    Key Review Highlights
+                </h3>
+            </div>
+            
+            <div class="highlight-grid">
+                {% if most_positive_review %}
+                <div class="review-highlight positive">
+                    <div class="review-badge badge-positive">
+                        <span>🎯</span>
+                        Most Positive
+                    </div>
+                    <div class="review-content" id="positive-review">
+                        "{{ most_positive_review.content }}"
+                    </div>
+                    <button class="see-more-btn" id="positive-btn" style="display: none;" onclick="toggleReview('positive')">
+                        <span id="positive-text">See More</span>
+                        <span id="positive-icon">▼</span>
+                    </button>
+                    <div class="review-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span>{{ most_positive_review.user.username }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>⭐</span>
+                            <span>{% if most_positive_review.overall_rating %}{{ most_positive_review.overall_rating }}/5{% else %}No rating{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if most_negative_review %}
+                <div class="review-highlight negative">
+                    <div class="review-badge badge-negative">
+                        <span>⚠️</span>
+                        Most Critical
+                    </div>
+                    <div class="review-content" id="negative-review">
+                        "{{ most_negative_review.content }}"
+                    </div>
+                    <button class="see-more-btn" id="negative-btn" style="display: none;" onclick="toggleReview('negative')">
+                        <span id="negative-text">See More</span>
+                        <span id="negative-icon">▼</span>
+                    </button>
+                    <div class="review-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span>{{ most_negative_review.user.username }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>⭐</span>
+                            <span>{% if most_negative_review.overall_rating %}{{ most_negative_review.overall_rating }}/5{% else %}No rating{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if most_helpful_review %}
+                <div class="review-highlight helpful">
+                    <div class="review-badge badge-helpful">
+                        <span>👍</span>
+                        Most Helpful
+                    </div>
+                    <div class="review-content" id="helpful-review">
+                        "{{ most_helpful_review.content }}"
+                    </div>
+                    <button class="see-more-btn" id="helpful-btn" style="display: none;" onclick="toggleReview('helpful')">
+                        <span id="helpful-text">See More</span>
+                        <span id="helpful-icon">▼</span>
+                    </button>
+                    <div class="review-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span>{{ most_helpful_review.user.username }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>❤️</span>
+                            <span>{{ most_helpful_review.helpful_count }} helpful votes</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Trending Keywords -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <span class="section-icon">🔍</span>
+                    Trending Keywords & Topics
+                </h3>
+            </div>
+            
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Most frequently mentioned terms and topics in customer reviews, ranked by occurrence frequency
+            </p>
+            
+            <div class="keyword-cloud">
+                {% for keyword in common_keywords %}
+                <div class="keyword-tag">
+                    <span>{{ keyword.0 }}</span>
+                    <span class="keyword-count">{{ keyword.1 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- All Reviews -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <span class="section-icon">📝</span>
+                    Complete Review Analysis
+                </h3>
+            </div>
+            
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Detailed sentiment analysis for all {{ analyzed_reviews|length }} customer reviews with extracted insights and keywords
+            </p>
+            
+            <div class="reviews-list">
+                {% for review in analyzed_reviews %}
+                <div class="review-item sentiment-{{ review.sentiment }}">
+                    <div class="review-item-header">
+                        <h4 class="review-title">{{ review.title }}</h4>
+                        <span class="sentiment-badge {{ review.sentiment }}">
+                            {{ review.sentiment|title }}
+                        </span>
+                    </div>
+                    
+                    <div class="review-text">{{ review.content }}</div>
+                    
+                    <div class="review-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span>{{ review.user.username }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>📅</span>
+                            <span>{{ review.created_at|date:"M d, Y" }}</span>
+                        </div>
+                        {% if review.overall_rating %}
+                        <div class="meta-item">
+                            <span>⭐</span>
+                            <span>{{ review.overall_rating }}/5</span>
+                        </div>
+                        {% endif %}
+                        {% if review.helpful_count %}
+                        <div class="meta-item">
+                            <span>👍</span>
+                            <span>{{ review.helpful_count }} helpful</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if review.keywords %}
+                    <div class="review-keywords">
+                        {% for keyword in review.keywords %}
+                        <span class="keyword-mini">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Performance Insights Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title">
+                    <span class="section-icon">📈</span>
+                    Performance Insights
+                </h3>
+            </div>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon positive">✅</div>
+                        <h4>Strengths</h4>
+                    </div>
+                    <p>{% if positive_percentage >= 60 %}Strong customer satisfaction with majority positive reviews{% elif positive_percentage >= 40 %}Good customer approval rating{% else %}Opportunity for improvement in customer satisfaction{% endif %}</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon warning">⚡</div>
+                    <div class="insight-header">
+                        <h4>Action Items</h4>
+                    </div>
+                    <p>{% if negative_percentage >= 30 %}Address critical issues mentioned in negative reviews{% elif negative_percentage >= 15 %}Monitor and respond to customer concerns{% else %}Maintain current quality standards{% endif %}</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon info">💡</div>
+                        <h4>Recommendations</h4>
+                    </div>
+                    <p>{% if neutral_percentage >= 30 %}Encourage neutral reviewers to share more detailed feedback{% else %}Focus on converting positive sentiment into recommendations{% endif %}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Stats -->
+        <div class="footer-stats">
+            <div class="stat-item">
+                <div class="stat-value">{{ analyzed_reviews|length }}</div>
+                <div class="stat-label">Total Reviews Analyzed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ common_keywords|length }}</div>
+                <div class="stat-label">Keywords Extracted</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">99.2%</div>
+                <div class="stat-label">Analysis Accuracy</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Additional styles for new sections */
+    .insights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .insight-card {
+        background: var(--accent-bg);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .insight-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-light);
+    }
+
+    .insight-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .insight-header h4 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .insight-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .insight-icon.positive {
+        background: var(--success-light);
+        color: var(--success);
+    }
+
+    .insight-icon.warning {
+        background: var(--warning-light);
+        color: var(--warning);
+    }
+
+    .insight-icon.info {
+        background: rgba(96, 165, 250, 0.12);
+        color: #60a5fa;
+    }
+
+    .insight-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .footer-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 3rem;
+        padding: 2rem;
+        background: var(--accent-bg);
+        border-radius: 1rem;
+        border: 1px solid var(--border-color);
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .stat-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+        .insights-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-stats {
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}

@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from reviews.alternativeviews import extract_keywords
 from .models import Product, Review, Brand, Specification, Category, SearchQuery, ProductView, UserProfile
 from .forms import ReviewForm, ProductForm, SpecificationFormSet,ProductEditForm
 import logging
@@ -31,6 +33,25 @@ import logging
 from django.utils import timezone
 
 logger = logging.getLogger(__name__)
+
+
+import nltk
+
+def download_nltk_data():
+    for path, package in [
+        ('tokenizers/punkt', 'punkt'),
+        ('corpora/stopwords', 'stopwords'),
+        ('corpora/wordnet', 'wordnet'),
+        ('taggers/averaged_perceptron_tagger', 'averaged_perceptron_tagger'),
+        ('corpora/omw-1.4', 'omw-1.4')
+    ]:
+        try:
+            nltk.data.find(path)
+        except LookupError:
+            nltk.download(package)
+
+download_nltk_data()  # Safe to call, only downloads if missing
+
 
 def generate_ai_summary(reviews):
     """
@@ -1844,3 +1865,219 @@ def export_comparison_csv(request):
         return JsonResponse({'error': 'Product not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from collections import Counter
+from django.shortcuts import get_object_or_404, render
+from .models import Product, Review
+  # assuming this function exists
+
+def get_mobile_enhanced_analyzer():
+    analyzer = SentimentIntensityAnalyzer()
+    
+    mobile_lexicon = {
+        # ✅ Positive Words
+        'battery life': 1.8,
+        'long-lasting': 2.0,
+        'power efficient': 1.5,
+        'fast charging': 1.7,
+        'quick charge': 1.5,
+        'power saver': 1.3,
+        'snappy': 1.6,
+        'lag-free': 1.8,
+        'responsive': 1.5,
+        'powerful': 1.7,
+        'fluid': 1.4,
+        'vibrant': 1.8,
+        'crisp': 1.5,
+        'bright': 1.3,
+        'immersive': 1.6,
+        'sharp display': 1.6,
+        'detailed': 1.5,
+        'clear shots': 1.6,
+        'natural colors': 1.4,
+        'low-light performance': 1.7,
+        'stable video': 1.3,
+        'high resolution': 1.4,
+        '4K support': 1.6,
+        'OLED': 1.7,
+        'retina display': 1.5,
+        'sleek': 1.5,
+        'premium feel': 1.6,
+        'modern design': 1.4,
+        'stylish': 1.5,
+        'minimalist': 1.3,
+        'solid build': 1.4,
+        'durable': 1.5,
+        'robust': 1.4,
+        'well-built': 1.3,
+        'loud and clear': 1.5,
+        'crisp audio': 1.4,
+        'immersive sound': 1.6,
+        'stereo speakers': 1.3,
+        # ❌ Negative Words
+        'battery drain': -1.9,
+        'poor battery': -2.0,
+        'heats up': -1.8,
+        'overheats': -2.0,
+        'lags': -1.5,
+        'crashes': -2.0,
+        'slow': -1.8,
+        'hangs': -1.7,
+        'buggy': -1.6,
+        'dim display': -1.4,
+        'washed out': -1.6,
+        'low brightness': -1.5,
+        'bad viewing angles': -1.7,
+        'grainy': -1.5,
+        'blurry': -1.6,
+        'overexposed': -1.3,
+        'noisy images': -1.4,
+        'bad low light': -1.8,
+        'pixelated': -1.4,
+        'low resolution': -1.5,
+        'poor contrast': -1.3,
+        'bulky': -1.3,
+        'outdated design': -1.5,
+        'cheap feel': -1.6,
+        'ugly': -2.0,
+        'fragile': -1.8,
+        'flimsy': -1.6,
+        'poor build': -1.7,
+        'cracked': -2.0,
+        'tinny': -1.5,
+        'distorted audio': -1.6,
+        'low volume': -1.4,
+        'weak speaker': -1.5,
+        # Extra common mobile terms
+        'buttery smooth': 1.9,
+        'laggy': -1.8,
+        'bloatware': -1.9,
+        'fast processor': 1.7,
+        'thermal throttling': -1.7,
+        'screen burn-in': -1.8,
+        'water resistant': 1.4,
+        'wireless charging': 1.3,
+        'face unlock': 1.2,
+        'fingerprint scanner': 1.3,
+    }
+
+    analyzer.lexicon.update(mobile_lexicon)
+    return analyzer
+
+
+def business_product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    reviews = Review.objects.filter(product=product, is_approved=True).select_related('user')
+
+    analyzer = get_mobile_enhanced_analyzer()
+
+    analyzed_reviews = []
+    sentiment_counts = {'positive': 0, 'negative': 0, 'neutral': 0}
+
+    for review in reviews:
+        vs = analyzer.polarity_scores(review.content)
+
+        # Initial sentiment determination
+        if vs['compound'] >= 0.05:
+            sentiment = 'positive'
+        elif vs['compound'] <= -0.10:
+            sentiment = 'negative'
+        else:
+            sentiment = 'neutral'
+
+        # Use ratings as tie-breaker for neutral sentiment
+        if sentiment == 'neutral':
+            # Use overall_rating if available, otherwise calculate average of specific ratings
+            if review.overall_rating:
+                if review.overall_rating >= 4:
+                    sentiment = 'positive'
+                elif review.overall_rating <= 2:
+                    sentiment = 'negative'
+            else:
+                # Calculate average of specific ratings if no overall_rating
+                ratings = [
+                    review.performance_rating,
+                    review.battery_rating,
+                    review.camera_rating,
+                    review.display_rating,
+                    review.value_rating
+                ]
+                valid_ratings = [r for r in ratings if r is not None]
+                if valid_ratings:
+                    avg_rating = sum(valid_ratings) / len(valid_ratings)
+                    if avg_rating >= 4:
+                        sentiment = 'positive'
+                    elif avg_rating <= 2:
+                        sentiment = 'negative'
+
+        sentiment_counts[sentiment] += 1
+
+        keywords = extract_keywords(review.content)
+
+        analyzed_reviews.append({
+            **review.__dict__,
+            'sentiment': sentiment,
+            'keywords': keywords,
+            'sentiment_scores': vs
+        })
+
+    total_reviews = len(analyzed_reviews)
+    positive_percentage = round((sentiment_counts['positive'] / total_reviews) * 100) if total_reviews else 0
+    negative_percentage = round((sentiment_counts['negative'] / total_reviews) * 100) if total_reviews else 0
+    neutral_percentage = round((sentiment_counts['neutral'] / total_reviews) * 100) if total_reviews else 0
+
+    # Find most positive/negative reviews considering both sentiment and ratings
+    def review_score(review):
+        # Weighted score combining sentiment and ratings
+        sentiment_weight = 0.7
+        rating_weight = 0.3
+        
+        # Normalize sentiment scores
+        sentiment_score = review['sentiment_scores']['pos'] - review['sentiment_scores']['neg']
+        
+        # Calculate rating score (use overall_rating if available, otherwise average of specific ratings)
+        if review['overall_rating']:
+            rating_score = (review['overall_rating'] - 3) / 2  # Normalize to -1 to 1 range
+        else:
+            ratings = [
+                review['performance_rating'],
+                review['battery_rating'],
+                review['camera_rating'],
+                review['display_rating'],
+                review['value_rating']
+            ]
+            valid_ratings = [r for r in ratings if r is not None]
+            if valid_ratings:
+                rating_score = (sum(valid_ratings) / len(valid_ratings) - 3) / 2
+            else:
+                rating_score = 0
+        
+        return (sentiment_weight * sentiment_score) + (rating_weight * rating_score)
+
+    most_positive_review = max(analyzed_reviews, key=review_score, default=None)
+    most_negative_review = min(analyzed_reviews, key=review_score, default=None)
+    most_helpful_review = max(reviews, key=lambda x: x.helpful_count, default=None)
+
+    all_keywords = []
+    for review in analyzed_reviews:
+        all_keywords.extend(review['keywords'])
+    common_keywords = Counter(all_keywords).most_common(10)
+
+    context = {
+        'product': product,
+        'analyzed_reviews': analyzed_reviews,
+        'positive_percentage': positive_percentage,
+        'negative_percentage': negative_percentage,
+        'neutral_percentage': neutral_percentage,
+        'positive_count': sentiment_counts['positive'],
+        'negative_count': sentiment_counts['negative'],
+        'neutral_count': sentiment_counts['neutral'],
+        'most_positive_review': most_positive_review,
+        'most_negative_review': most_negative_review,
+        'most_helpful_review': most_helpful_review,
+        'common_keywords': common_keywords,
+    }
+
+    return render(request, 'reviews/business_product_detail.html', context)
