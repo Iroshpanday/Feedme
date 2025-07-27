@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product, Review, Brand, Specification, Category, SearchQuery, ProductView, UserProfile
-from .forms import ReviewForm, ProductForm, SpecificationFormSet
+from .forms import ReviewForm, ProductForm, SpecificationFormSet,ProductEditForm
 import logging
 from django.utils.text import slugify
 from django.db.models import Avg, Count, Q
@@ -148,17 +148,19 @@ def home_view(request):
         product_count=Count('products', filter=Q(products__is_active=True))
     ).order_by('name')[:12]
     
+    # Changed from 'reviews__rating' to 'reviews__overall_rating'
     top_products = Product.objects.filter(
         is_active=True,
         reviews__is_approved=True
     ).annotate(
-        avg_rating=Avg('reviews__rating', filter=Q(reviews__is_approved=True)),
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
         review_count=Count('reviews', filter=Q(reviews__is_approved=True))
     ).filter(
         review_count__gte=1
     ).order_by('-avg_rating', '-review_count')[:4]
     
     thirty_days_ago = timezone.now() - timedelta(days=30)
+    # Changed from 'reviews__rating' to 'reviews__overall_rating'
     popular_products = Product.objects.filter(
         is_active=True
     ).annotate(
@@ -173,10 +175,11 @@ def home_view(request):
             'product_views',
             filter=Q(product_views__created_at__gte=thirty_days_ago)
         ),
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
         total_review_count=Count('reviews', filter=Q(reviews__is_approved=True))
     ).filter(
         Q(recent_reviews__gt=0) | Q(recent_views__gt=0)
-    ).order_by('-recent_reviews', '-recent_views', '-view_count')[:4]
+    ).order_by('-recent_reviews', '-recent_views', '-avg_rating')[:4]
     
     context = {
         'categories': categories,
@@ -185,7 +188,6 @@ def home_view(request):
     }
     
     return render(request, 'reviews/home.html', context)
-
 def search_view(request):
     """Handle search functionality"""
     query = request.GET.get('q', '').strip()
@@ -524,13 +526,11 @@ def autocomplete_brands(request):
     return JsonResponse({'brands': suggestions})
 
 @login_required
-# @permission_required('reviews.add_product', raise_exception=True)
 def add_product_view(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
-        spec_formset = SpecificationFormSet(request.POST, instance=Product())
         
-        if form.is_valid() and spec_formset.is_valid():
+        if form.is_valid():
             brand_name = form.cleaned_data['brand_name']
             brand, created = Brand.objects.get_or_create(
                 name=brand_name,
@@ -545,23 +545,141 @@ def add_product_view(request):
                 product.slug = slugify(f"{brand.name}-{product.name}")
             
             product.save()
-            form.save_m2m()
             
-            spec_formset.instance = product
-            spec_formset.save()
+            # Create specification
+            specification = Specification(
+                product=product,
+                ram=form.cleaned_data['ram'],
+                storage=form.cleaned_data['storage'],
+                processor=form.cleaned_data['processor'],
+                rear_camera=form.cleaned_data['rear_camera'],
+                # Optional fields
+                screen_size=form.cleaned_data.get('screen_size', ''),
+                resolution=form.cleaned_data.get('resolution', ''),
+                refresh_rate=form.cleaned_data.get('refresh_rate', ''),
+                display_type=form.cleaned_data.get('display_type', ''),
+                front_camera=form.cleaned_data.get('front_camera', ''),
+                video_recording=form.cleaned_data.get('video_recording', ''),
+                battery_capacity=form.cleaned_data.get('battery_capacity', ''),
+                network_support=form.cleaned_data.get('network_support', ''),
+                wifi=form.cleaned_data.get('wifi', ''),
+                bluetooth=form.cleaned_data.get('bluetooth', ''),
+                nfc=form.cleaned_data.get('nfc', False),
+                dimensions=form.cleaned_data.get('dimensions', ''),
+                weight=form.cleaned_data.get('weight', ''),
+                fingerprint_sensor=form.cleaned_data.get('fingerprint_sensor', ''),
+                face_unlock=form.cleaned_data.get('face_unlock', False),
+                operating_system=form.cleaned_data.get('operating_system', ''),
+                audio_jack=form.cleaned_data.get('audio_jack', False),
+                # Initialize key/value fields (can be updated later)
+                key='general',
+                value='specifications'
+            )
+            specification.save()
             
             messages.success(request, f'Product "{product.name}" added successfully!')
             return redirect('reviews:product_detail', slug=product.slug)
     else:
         form = ProductForm()
-        spec_formset = SpecificationFormSet(instance=Product())
     
     context = {
         'form': form,
-        'spec_formset': spec_formset,
         'title': 'Add New Product'
     }
     return render(request, 'reviews/product_form.html', context)
+
+from django.views.generic.edit import UpdateView
+from django.urls import reverse
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductEditForm
+    template_name = 'reviews/product_form.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Edit {self.object.name}'
+        return context
+    
+    def form_valid(self, form):
+        # Handle brand update first
+        brand_name = form.cleaned_data['brand_name']
+        brand, created = Brand.objects.get_or_create(
+            name=brand_name,
+            defaults={'slug': slugify(brand_name)}
+        )
+        
+        # Update product with new brand
+        self.object = form.save(commit=False)
+        self.object.brand = brand
+        self.object.save()
+        
+        # Update or create specification
+        spec, created = Specification.objects.get_or_create(
+            product=self.object,
+            defaults={
+                'ram': form.cleaned_data['ram'],
+                'storage': form.cleaned_data['storage'],
+                'processor': form.cleaned_data['processor'],
+                'rear_camera': form.cleaned_data['rear_camera'],
+                # Optional fields
+                'screen_size': form.cleaned_data.get('screen_size', ''),
+                'resolution': form.cleaned_data.get('resolution', ''),
+                'refresh_rate': form.cleaned_data.get('refresh_rate', ''),
+                'display_type': form.cleaned_data.get('display_type', ''),
+                'front_camera': form.cleaned_data.get('front_camera', ''),
+                'video_recording': form.cleaned_data.get('video_recording', ''),
+                'battery_capacity': form.cleaned_data.get('battery_capacity', ''),
+                'network_support': form.cleaned_data.get('network_support', ''),
+                'wifi': form.cleaned_data.get('wifi', ''),
+                'bluetooth': form.cleaned_data.get('bluetooth', ''),
+                'nfc': form.cleaned_data.get('nfc', False),
+                'dimensions': form.cleaned_data.get('dimensions', ''),
+                'weight': form.cleaned_data.get('weight', ''),
+                'fingerprint_sensor': form.cleaned_data.get('fingerprint_sensor', ''),
+                'face_unlock': form.cleaned_data.get('face_unlock', False),
+                'operating_system': form.cleaned_data.get('operating_system', ''),
+                'audio_jack': form.cleaned_data.get('audio_jack', False),
+                'key': 'general',
+                'value': 'specifications'
+            }
+        )
+        
+        if not created:
+            # Update existing specification
+            spec.ram = form.cleaned_data['ram']
+            spec.storage = form.cleaned_data['storage']
+            spec.processor = form.cleaned_data['processor']
+            spec.rear_camera = form.cleaned_data['rear_camera']
+            # Optional fields
+            spec.screen_size = form.cleaned_data.get('screen_size', '')
+            spec.resolution = form.cleaned_data.get('resolution', '')
+            spec.refresh_rate = form.cleaned_data.get('refresh_rate', '')
+            spec.display_type = form.cleaned_data.get('display_type', '')
+            spec.front_camera = form.cleaned_data.get('front_camera', '')
+            spec.video_recording = form.cleaned_data.get('video_recording', '')
+            spec.battery_capacity = form.cleaned_data.get('battery_capacity', '')
+            spec.network_support = form.cleaned_data.get('network_support', '')
+            spec.wifi = form.cleaned_data.get('wifi', '')
+            spec.bluetooth = form.cleaned_data.get('bluetooth', '')
+            spec.nfc = form.cleaned_data.get('nfc', False)
+            spec.dimensions = form.cleaned_data.get('dimensions', '')
+            spec.weight = form.cleaned_data.get('weight', '')
+            spec.fingerprint_sensor = form.cleaned_data.get('fingerprint_sensor', '')
+            spec.face_unlock = form.cleaned_data.get('face_unlock', False)
+            spec.operating_system = form.cleaned_data.get('operating_system', '')
+            spec.audio_jack = form.cleaned_data.get('audio_jack', False)
+            spec.save()
+        
+        messages.success(self.request, f'Product "{self.object.name}" updated successfully!')
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('reviews:product_detail', kwargs={'slug': self.object.slug})
+    
+    def get_success_url(self):
+        return reverse('reviews:product_detail', kwargs={'slug': self.object.slug})
+
 
 class ProductCreateView(CreateView):
     model = Product
@@ -571,39 +689,56 @@ class ProductCreateView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            context['spec_formset'] = SpecificationFormSet(self.request.POST, instance=Product())
-        else:
-            context['spec_formset'] = SpecificationFormSet(instance=Product())
         context['title'] = 'Add New Product'
         return context
     
     def form_valid(self, form):
-        spec_formset = SpecificationFormSet(self.request.POST, instance=Product())
-        if spec_formset.is_valid():
-            brand_name = form.cleaned_data['brand_name']
-            brand, created = Brand.objects.get_or_create(
-                name=brand_name,
-                defaults={'slug': slugify(brand_name)}
-            )
-            
-            self.object = form.save(commit=False)
-            self.object.brand = brand
-            self.object.created_by = self.request.user
-            
-            if not self.object.slug:
-                self.object.slug = slugify(f"{brand.name}-{self.object.name}")
-            
-            self.object.save()
-            form.save_m2m()
-            
-            spec_formset.instance = self.object
-            spec_formset.save()
-            
-            messages.success(self.request, f'Product "{self.object.name}" added successfully!')
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
+        brand_name = form.cleaned_data['brand_name']
+        brand, created = Brand.objects.get_or_create(
+            name=brand_name,
+            defaults={'slug': slugify(brand_name)}
+        )
+        
+        self.object = form.save(commit=False)
+        self.object.brand = brand
+        self.object.created_by = self.request.user
+        
+        if not self.object.slug:
+            self.object.slug = slugify(f"{brand.name}-{self.object.name}")
+        
+        self.object.save()
+        
+        # Create specification
+        Specification.objects.create(
+            product=self.object,
+            ram=form.cleaned_data['ram'],
+            storage=form.cleaned_data['storage'],
+            processor=form.cleaned_data['processor'],
+            rear_camera=form.cleaned_data['rear_camera'],
+            # Optional fields with defaults
+            screen_size=form.cleaned_data.get('screen_size', ''),
+            resolution=form.cleaned_data.get('resolution', ''),
+            refresh_rate=form.cleaned_data.get('refresh_rate', ''),
+            display_type=form.cleaned_data.get('display_type', ''),
+            front_camera=form.cleaned_data.get('front_camera', ''),
+            video_recording=form.cleaned_data.get('video_recording', ''),
+            battery_capacity=form.cleaned_data.get('battery_capacity', ''),
+            network_support=form.cleaned_data.get('network_support', ''),
+            wifi=form.cleaned_data.get('wifi', ''),
+            bluetooth=form.cleaned_data.get('bluetooth', ''),
+            nfc=form.cleaned_data.get('nfc', False),
+            dimensions=form.cleaned_data.get('dimensions', ''),
+            weight=form.cleaned_data.get('weight', ''),
+            fingerprint_sensor=form.cleaned_data.get('fingerprint_sensor', ''),
+            face_unlock=form.cleaned_data.get('face_unlock', False),
+            operating_system=form.cleaned_data.get('operating_system', ''),
+            audio_jack=form.cleaned_data.get('audio_jack', False),
+            key='general',
+            value='specifications'
+        )
+        
+        messages.success(self.request, f'Product "{self.object.name}" added successfully!')
+        return super().form_valid(form)
 
 @login_required
 def add_review_view(request):
@@ -1079,21 +1214,49 @@ Add these to your urlpatterns in urls.py:
 """
 @login_required
 def business_dashboard_view(request):
-    """Business user dashboard"""
-    if not request.user.profile.is_business_user:
+    """Business user dashboard with proper calculations"""
+    if not hasattr(request.user, 'profile') or not request.user.profile.is_business_user:
         # Normal users shouldn't access this
         raise PermissionDenied("You don't have permission to access this page")
     
-    # Get business-specific data
-    from .models import Product
+    # Get business-specific data with proper annotations
     products = Product.objects.filter(created_by=request.user).annotate(
-        review_count=Count('reviews'),
-        avg_rating=Avg('reviews__overall_rating')
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True)),
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True))
+    ).select_related('brand', 'category').order_by('-created_at')
+    
+    # Calculate summary statistics
+    total_reviews = sum(product.review_count or 0 for product in products)
+    total_views = sum(product.view_count or 0 for product in products)
+    
+    # Calculate average rating across all products
+    products_with_ratings = [p for p in products if p.avg_rating is not None]
+    overall_avg_rating = (
+        sum(p.avg_rating for p in products_with_ratings) / len(products_with_ratings)
+        if products_with_ratings else 0
     )
+    
+    # Find top performer (highest rated product with at least 1 review)
+    top_performer = None
+    products_with_reviews = [p for p in products if (p.avg_rating or 0) > 0 and (p.review_count or 0) > 0]
+    if products_with_reviews:
+        top_performer = max(products_with_reviews, key=lambda x: x.avg_rating or 0)
+    
+    # Find most reviewed product
+    most_reviewed = None
+    if products_with_reviews:
+        most_reviewed = max(products_with_reviews, key=lambda x: x.review_count or 0)
     
     context = {
         'products': products,
-        'is_business_user': True
+        'is_business_user': True,
+        # Summary statistics
+        'total_reviews': total_reviews,
+        'total_views': total_views,
+        'overall_avg_rating': round(overall_avg_rating, 1),
+        # Top products
+        'top_performer': top_performer,
+        'most_reviewed': most_reviewed,
     }
     return render(request, 'reviews/business_dashboard.html', context)
 

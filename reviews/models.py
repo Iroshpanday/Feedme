@@ -120,12 +120,47 @@ class Brand(models.Model):
 
 
 class Specification(models.Model):
-    """Product specifications"""
+    """Product specifications for smartphones"""
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='specifications')
+    
+    # Core Specifications
     ram = models.CharField(max_length=50, default='4 GB')
+    storage = models.CharField(max_length=50, default='128 GB')
     processor = models.CharField(max_length=100, default='Unknown Processor')
-    camera = models.CharField(max_length=200, default='Unknown Camera')
-    display_quality = models.CharField(max_length=200, default='Unknown Display')
+    chipset = models.CharField(max_length=100, blank=True)
+    gpu = models.CharField(max_length=100, blank=True)
+    
+    # Display
+    screen_size = models.CharField(max_length=50, blank=True)
+    resolution = models.CharField(max_length=100, blank=True)
+    refresh_rate = models.CharField(max_length=50, blank=True)
+    display_type = models.CharField(max_length=100, blank=True)
+    
+    # Camera
+    rear_camera = models.CharField(max_length=200, default='Unknown Camera')
+    front_camera = models.CharField(max_length=200, blank=True)
+    video_recording = models.CharField(max_length=200, blank=True)
+    
+    # Battery
+    battery_capacity = models.CharField(max_length=100, blank=True)
+    
+    # Connectivity
+    network_support = models.CharField(max_length=200, blank=True)
+    wifi = models.CharField(max_length=100, blank=True)
+    bluetooth = models.CharField(max_length=100, blank=True)
+    nfc = models.BooleanField(default=False)
+    
+    # Body & Sensors
+    dimensions = models.CharField(max_length=100, blank=True)
+    weight = models.CharField(max_length=50, blank=True)
+    fingerprint_sensor = models.CharField(max_length=100, blank=True)
+    face_unlock = models.BooleanField(default=False)
+    
+    # OS & Other
+    operating_system = models.CharField(max_length=100, blank=True)
+    audio_jack = models.BooleanField(default=False)
+    
+    # Key-Value for flexible additions
     key = models.CharField(max_length=100)
     value = models.CharField(max_length=200)
 

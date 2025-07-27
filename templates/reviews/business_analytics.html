@@ -154,7 +154,7 @@
                                     class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Select Product 1</option>
                                 {% for product in top_products %}
-                                <option value="{{ product.id }}">{{ product.brand.name }} {{ product.name }}</option>
+                                <option value="{{ product.id }}"> {{ product.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -164,7 +164,7 @@
                                     class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Select Product 2</option>
                                 {% for product in top_products %}
-                                <option value="{{ product.id }}">{{ product.brand.name }} {{ product.name }}</option>
+                                <option value="{{ product.id }}"> {{ product.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="benchmark_loading" class="hidden flex items-center justify-center h-full">
+                        <div id="benchmark_loading" class=" flex items-center justify-center h-full">
                             <div class="loading-spinner"></div>
                             <span class="ml-2 text-gray-400">Loading comparison...</span>
                         </div>
@@ -244,7 +244,7 @@
                         {% for product in quick_insights.underrated_products|slice:":3" %}
                         <div class="bg-gray-800/50 rounded-lg p-3 border border-teal-500/20">
                             <h4 class="font-medium text-white text-sm">
-                                {{ product.brand.name }} {{ product.name }}
+                                {{ product.name }}
                             </h4>
                             <div class="flex justify-between items-center mt-1">
                                 <span class="text-yellow-400 text-xs">
@@ -285,7 +285,7 @@
                                 </div>
                                 <div>
                                     <h3 class="font-medium text-white">
-                                        {{ item.product.brand.name }} {{ item.product.name }}
+                                         {{ item.product.name }}
                                     </h3>
                                     <p class="text-gray-400 text-sm">{{ item.product.category.name }}</p>
                                 </div>
@@ -335,7 +335,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="wordcloud_loading" class="hidden flex items-center justify-center h-full">
+                    <div id="wordcloud_loading" class=" flex items-center justify-center h-full">
                         <div class="loading-spinner"></div>
                         <span class="ml-2 text-gray-400">Generating word cloud...</span>
                     </div>

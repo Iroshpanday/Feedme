@@ -196,9 +196,37 @@ class UserTypeForm(forms.ModelForm):
             'is_business_user': 'Register as a Business User'
         }
 
+from django import forms
+from .models import Product, Specification
+
 class ProductForm(forms.ModelForm):
     brand_name = forms.CharField(max_length=100, required=True, label='Brand Name')
     category = forms.ModelChoiceField(queryset=Category.objects.filter(is_active=True), required=True)
+    
+    # Specification fields
+    ram = forms.CharField(max_length=50, initial='4 GB')
+    storage = forms.CharField(max_length=50, initial='128 GB')
+    processor = forms.CharField(max_length=100, initial='Unknown Processor')
+    rear_camera = forms.CharField(max_length=200, initial='Unknown Camera')
+    
+    # Optional fields (will be handled in the view)
+    screen_size = forms.CharField(max_length=50, required=False)
+    resolution = forms.CharField(max_length=100, required=False)
+    refresh_rate = forms.CharField(max_length=50, required=False)
+    display_type = forms.CharField(max_length=100, required=False)
+    front_camera = forms.CharField(max_length=200, required=False)
+    video_recording = forms.CharField(max_length=200, required=False)
+    battery_capacity = forms.CharField(max_length=100, required=False)
+    network_support = forms.CharField(max_length=200, required=False)
+    wifi = forms.CharField(max_length=100, required=False)
+    bluetooth = forms.CharField(max_length=100, required=False)
+    nfc = forms.BooleanField(required=False)
+    dimensions = forms.CharField(max_length=100, required=False)
+    weight = forms.CharField(max_length=50, required=False)
+    fingerprint_sensor = forms.CharField(max_length=100, required=False)
+    face_unlock = forms.BooleanField(required=False)
+    operating_system = forms.CharField(max_length=100, required=False)
+    audio_jack = forms.BooleanField(required=False)
 
     class Meta:
         model = Product
@@ -213,6 +241,41 @@ class ProductForm(forms.ModelForm):
 
     def clean_brand_name(self):
         return self.cleaned_data['brand_name'].strip()
+    
+class ProductEditForm(ProductForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            # Set initial brand name from existing product
+            self.fields['brand_name'].initial = self.instance.brand.name
+            
+            
+            spec = self.instance.specifications.first()
+            if spec:
+                # Required specifications
+                self.fields['ram'].initial = spec.ram
+                self.fields['storage'].initial = spec.storage
+                self.fields['processor'].initial = spec.processor or 'Unknown Processor'
+                self.fields['rear_camera'].initial = spec.rear_camera or 'Unknown Camera'
+                
+                # Optional specifications
+                self.fields['screen_size'].initial = spec.screen_size
+                self.fields['resolution'].initial = spec.resolution
+                self.fields['refresh_rate'].initial = spec.refresh_rate
+                self.fields['display_type'].initial = spec.display_type
+                self.fields['front_camera'].initial = spec.front_camera
+                self.fields['video_recording'].initial = spec.video_recording
+                self.fields['battery_capacity'].initial = spec.battery_capacity
+                self.fields['network_support'].initial = spec.network_support
+                self.fields['wifi'].initial = spec.wifi
+                self.fields['bluetooth'].initial = spec.bluetooth
+                self.fields['nfc'].initial = spec.nfc
+                self.fields['dimensions'].initial = spec.dimensions
+                self.fields['weight'].initial = spec.weight
+                self.fields['fingerprint_sensor'].initial = spec.fingerprint_sensor
+                self.fields['face_unlock'].initial = spec.face_unlock
+                self.fields['operating_system'].initial = spec.operating_system
+                self.fields['audio_jack'].initial = spec.audio_jack
 
 class SpecificationForm(forms.ModelForm):
     class Meta:

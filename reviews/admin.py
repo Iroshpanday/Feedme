@@ -70,8 +70,15 @@ class BrandAdmin(admin.ModelAdmin):
 class SpecificationInline(admin.TabularInline):
     model = Specification
     extra = 1
-    fields = ['key', 'value', 'ram', 'processor', 'camera', 'display_quality']
-    can_delete = True    
+    fields = [
+        'key', 'value', 'ram', 'storage', 'processor', 'chipset', 'gpu',
+        'screen_size', 'resolution', 'refresh_rate', 'display_type',
+        'rear_camera', 'front_camera', 'video_recording',
+        'battery_capacity', 'network_support', 'wifi', 'bluetooth', 'nfc',
+        'dimensions', 'weight', 'fingerprint_sensor', 'face_unlock',
+        'operating_system', 'audio_jack'
+    ]
+    can_delete = True 
 
 class ReviewInline(admin.TabularInline):
     model = Review
@@ -260,20 +267,60 @@ class SearchQueryAdmin(admin.ModelAdmin):
 
 @admin.register(ProductView)
 class ProductViewAdmin(admin.ModelAdmin):
-    list_display = ['product_name', 'user', 'ip_address', 'created_at']
-    list_filter = ['created_at', 'product__category']
+    list_display = ['product_link', 'category', 'user_info', 'ip_address', 'view_date']
+    list_filter = ['created_at', 'product__category', 'product__brand']
     search_fields = ['product__name', 'user__username', 'ip_address']
     date_hierarchy = 'created_at'
-    readonly_fields = ['product', 'user', 'ip_address', 'user_agent', 'created_at']
+    readonly_fields = ['product', 'user', 'ip_address', 'user_agent', 'created_at', 'device_info']
     
-    def product_name(self, obj):
-        return obj.product.name
-    product_name.short_description = 'Product'
+    fieldsets = (
+        ('View Information', {
+            'fields': ('product', 'user', 'created_at')
+        }),
+        ('Technical Details', {
+            'fields': ('ip_address', 'user_agent', 'device_info'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def product_link(self, obj):
+        url = reverse('admin:reviews_product_change', args=[obj.product.id])
+        return format_html('<a href="{}">{}</a>', url, obj.product.name)
+    product_link.short_description = 'Product'
+    
+    def category(self, obj):
+        return obj.product.category.name
+    category.short_description = 'Category'
+    
+    def user_info(self, obj):
+        if obj.user:
+            url = reverse('admin:auth_user_change', args=[obj.user.id])
+            return format_html('<a href="{}">{}</a>', url, obj.user.username)
+        return "Anonymous"
+    user_info.short_description = 'User'
+    
+    def view_date(self, obj):
+        return obj.created_at.strftime("%b %d, %Y %H:%M")
+    view_date.short_description = 'View Date'
+    view_date.admin_order_field = 'created_at'
+    
+    def device_info(self, obj):
+        if obj.user_agent:
+            from user_agents import parse
+            ua = parse(obj.user_agent)
+            return format_html(
+                '<strong>Device:</strong> {}<br>'
+                '<strong>OS:</strong> {}<br>'
+                '<strong>Browser:</strong> {}',
+                ua.device.family if ua.device.family != "Other" else "Desktop",
+                ua.os.family,
+                ua.browser.family
+            )
+        return "Unknown"
+    device_info.short_description = 'Device Details'
     
     def has_add_permission(self, request):
         return False
-
-# Customize admin site
-admin.site.site_header = 'FeedMe Administration'
-admin.site.site_title = 'FeedMe Admin'
-admin.site.index_title = 'Welcome to FeedMe Administration'
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('product__category', 'product__brand', 'user')

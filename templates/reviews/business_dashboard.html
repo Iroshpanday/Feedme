@@ -113,10 +113,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-green-100 text-sm font-medium">Total Reviews</p>
-                        <p class="text-3xl font-bold mt-1">
-                            {% widthratio products|length 1 products|length as total_reviews %}
-                            {% for product in products %}{{ product.review_count|add:0 }}{% if not forloop.last %} + {% endif %}{% empty %}0{% endfor %}
-                        </p>
+                        <p class="text-3xl font-bold mt-1">{{ total_reviews }}</p>
                         <p class="text-green-200 text-xs mt-1">
                             <i class="fas fa-star mr-1"></i>
                             Customer feedback
@@ -132,13 +129,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-yellow-100 text-sm font-medium">Avg Rating</p>
-                        <p class="text-3xl font-bold mt-1">
-                            {% if products %}
-                                {% for product in products %}
-                                    {% if product.avg_rating %}{{ product.avg_rating|floatformat:1 }}{% endif %}
-                                {% empty %}0.0{% endfor %}
-                            {% else %}0.0{% endif %}
-                        </p>
+                        <p class="text-3xl font-bold mt-1">{{ overall_avg_rating }}</p>
                         <p class="text-yellow-200 text-xs mt-1">
                             <i class="fas fa-star mr-1"></i>
                             Overall performance
@@ -154,9 +145,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-pink-100 text-sm font-medium">Total Views</p>
-                        <p class="text-3xl font-bold mt-1">
-                            {% for product in products %}{{ product.view_count|add:0 }}{% if not forloop.last %} + {% endif %}{% empty %}0{% endfor %}
-                        </p>
+                        <p class="text-3xl font-bold mt-1">{{ total_views }}</p>
                         <p class="text-pink-200 text-xs mt-1">
                             <i class="fas fa-eye mr-1"></i>
                             Product visibility
@@ -178,33 +167,31 @@
                     <i class="fas fa-trophy mr-3 text-yellow-400"></i>
                     Top Performer
                 </h3>
-                {% for product in products %}
-                    {% if product.avg_rating and forloop.first %}
-                    <div class="bg-gray-800/50 rounded-lg p-4 border border-yellow-500/30">
-                        <div class="flex items-center space-x-3">
-                            {% if product.image %}
-                            <img class="h-12 w-12 rounded-lg object-cover" src="{{ product.image.url }}" alt="{{ product.name }}">
-                            {% else %}
-                            <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-                                <i class="fas fa-box text-white"></i>
-                            </div>
-                            {% endif %}
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white">{{ product.brand.name }} {{ product.name }}</h4>
-                                <div class="flex items-center mt-1">
-                                    <span class="text-yellow-400">{{ product.avg_rating|floatformat:1 }}★</span>
-                                    <span class="text-gray-400 text-sm ml-2">({{ product.review_count }} reviews)</span>
-                                </div>
+                {% if top_performer %}
+                <div class="bg-gray-800/50 rounded-lg p-4 border border-yellow-500/30">
+                    <div class="flex items-center space-x-3">
+                        {% if top_performer.image %}
+                        <img class="h-12 w-12 rounded-lg object-cover" src="{{ top_performer.image.url }}" alt="{{ top_performer.name }}">
+                        {% else %}
+                        <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                            <i class="fas fa-box text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="flex-1">
+                            <h4 class="font-medium text-white">{{ top_performer.name }}</h4>
+                            <div class="flex items-center mt-1">
+                                <span class="text-yellow-400">{{ top_performer.avg_rating|floatformat:1 }}★</span>
+                                <span class="text-gray-400 text-sm ml-2">({{ top_performer.review_count }} reviews)</span>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                {% empty %}
+                </div>
+                {% else %}
                 <div class="text-center text-gray-400 py-4">
                     <i class="fas fa-chart-line text-2xl mb-2"></i>
                     <p class="text-sm">No performance data yet</p>
                 </div>
-                {% endfor %}
+                {% endif %}
             </div>
 
             <!-- Most Reviewed -->
@@ -213,35 +200,33 @@
                     <i class="fas fa-fire mr-3 text-red-400"></i>
                     Most Reviewed
                 </h3>
-                {% for product in products %}
-                    {% if product.review_count > 0 and forloop.first %}
-                    <div class="bg-gray-800/50 rounded-lg p-4 border border-red-500/30">
-                        <div class="flex items-center space-x-3">
-                            {% if product.image %}
-                            <img class="h-12 w-12 rounded-lg object-cover" src="{{ product.image.url }}" alt="{{ product.name }}">
-                            {% else %}
-                            <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
-                                <i class="fas fa-box text-white"></i>
-                            </div>
-                            {% endif %}
-                            <div class="flex-1">
-                                <h4 class="font-medium text-white">{{ product.brand.name }} {{ product.name }}</h4>
-                                <div class="flex items-center mt-1">
-                                    <span class="text-red-400">{{ product.review_count }} reviews</span>
-                                    {% if product.avg_rating %}
-                                    <span class="text-yellow-400 text-sm ml-2">{{ product.avg_rating|floatformat:1 }}★</span>
-                                    {% endif %}
-                                </div>
+                {% if most_reviewed %}
+                <div class="bg-gray-800/50 rounded-lg p-4 border border-red-500/30">
+                    <div class="flex items-center space-x-3">
+                        {% if most_reviewed.image %}
+                        <img class="h-12 w-12 rounded-lg object-cover" src="{{ most_reviewed.image.url }}" alt="{{ most_reviewed.name }}">
+                        {% else %}
+                        <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
+                            <i class="fas fa-box text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="flex-1">
+                            <h4 class="font-medium text-white">{{ most_reviewed.brand.name }} {{ most_reviewed.name }}</h4>
+                            <div class="flex items-center mt-1">
+                                <span class="text-red-400">{{ most_reviewed.review_count }} reviews</span>
+                                {% if most_reviewed.avg_rating %}
+                                <span class="text-yellow-400 text-sm ml-2">{{ most_reviewed.avg_rating|floatformat:1 }}★</span>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    {% endif %}
-                {% empty %}
+                </div>
+                {% else %}
                 <div class="text-center text-gray-400 py-4">
                     <i class="fas fa-comments text-2xl mb-2"></i>
                     <p class="text-sm">No reviews yet</p>
                 </div>
-                {% endfor %}
+                {% endif %}
             </div>
 
             <!-- Recent Activity -->
@@ -255,7 +240,7 @@
                     <div class="bg-gray-800/50 rounded-lg p-3 border border-blue-500/20">
                         <div class="flex justify-between items-center">
                             <div>
-                                <h4 class="font-medium text-white text-sm">{{ product.brand.name }} {{ product.name }}</h4>
+                                <h4 class="font-medium text-white text-sm">{{ product.name }}</h4>
                                 <p class="text-gray-400 text-xs">Added {{ product.created_at|timesince }} ago</p>
                             </div>
                             <div class="text-right">
@@ -316,7 +301,7 @@
                                     </div>
                                     {% endif %}
                                     <div>
-                                        <div class="text-sm font-medium text-white">{{ product.brand.name }} {{ product.name }}</div>
+                                        <div class="text-sm font-medium text-white">{{ product.name }}</div>
                                         <div class="text-sm text-gray-400">
                                             {% if product.price %}${{ product.price }}{% else %}Price not set{% endif %}
                                         </div>
@@ -374,7 +359,7 @@
                                         View
                                     </a>
                                     <span class="text-gray-600">|</span>
-                                    <a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                    <a href="{% url 'reviews:edit_product' slug=product.slug %}" class="text-gray-400 hover:text-white transition-colors flex items-center">
                                         <i class="fas fa-edit mr-1"></i>
                                         Edit
                                     </a>

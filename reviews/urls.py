@@ -14,6 +14,7 @@ urlpatterns = [
     # Product management routes
     path('product/add/', views.add_product_view, name='add_product'),
     path('product/create/', views.ProductCreateView.as_view(), name='create_product'),
+    path('product/<slug:slug>/edit/', login_required(views.ProductUpdateView.as_view()), name='edit_product'),
     
     # Product detail routes
     path('product/<slug:slug>/', views.product_detail_view, name='product_detail'),
