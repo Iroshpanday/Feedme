@@ -1,64 +1,431 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}Business Dashboard - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-card {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border: 1px solid #475569;
+        transition: all 0.3s ease;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border-color: #64748b;
+    }
+    .stats-card {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        border: 1px solid #4c1d95;
+    }
+    .products-card {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border: 1px solid #374151;
+    }
+    .gradient-text {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .action-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        transition: all 0.3s ease;
+    }
+    .action-btn:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+    }
+    .analytics-btn {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        transition: all 0.3s ease;
+    }
+    .analytics-btn:hover {
+        background: linear-gradient(135deg, #047857 0%, #059669 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+    }
+    .status-active {
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+    }
+    .status-inactive {
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+        color: white;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Business Dashboard</h2>
-    
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Business Profile</h5>
-                    <img src="{{ user.profile.profile_picture.url }}" class="rounded-circle" width="100" height="100">
-                    <p class="mt-3">{{ user.username }}</p>
-                    <p>{{ user.email }}</p>
-                    <p><strong>Business Account</strong></p>
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-gray-800 to-gray-900 shadow-2xl border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-bold gradient-text flex items-center">
+                        <i class="fas fa-briefcase mr-4 text-blue-500"></i>
+                        Business Dashboard
+                    </h1>
+                    <p class="mt-2 text-lg text-gray-300">
+                        Manage your products and track performance metrics
+                    </p>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="flex gap-3">
+                    <a href="{% url 'reviews:business_analytics' %}" 
+                       class="analytics-btn text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl flex items-center">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Analytics Dashboard
+                    </a>
+                    <a href="{% url 'reviews:add_product' %}" 
+                       class="action-btn text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl flex items-center">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Product
+                    </a>
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Your Products</h5>
-                    
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Reviews</th>
-                                <th>Avg Rating</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for product in products %}
-                            <tr>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.review_count }}</td>
-                                <td>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Analytics Preview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="stats-card rounded-xl p-6 text-white shadow-2xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-purple-200 text-sm font-medium">Total Products</p>
+                        <p class="text-3xl font-bold mt-1">{{ products.count }}</p>
+                        <p class="text-purple-300 text-xs mt-1">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            Active listings
+                        </p>
+                    </div>
+                    <div class="text-4xl opacity-80">
+                        <i class="fas fa-box text-purple-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card rounded-xl p-6 text-white shadow-2xl bg-gradient-to-br from-green-600 to-emerald-600">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-green-100 text-sm font-medium">Total Reviews</p>
+                        <p class="text-3xl font-bold mt-1">
+                            {% widthratio products|length 1 products|length as total_reviews %}
+                            {% for product in products %}{{ product.review_count|add:0 }}{% if not forloop.last %} + {% endif %}{% empty %}0{% endfor %}
+                        </p>
+                        <p class="text-green-200 text-xs mt-1">
+                            <i class="fas fa-star mr-1"></i>
+                            Customer feedback
+                        </p>
+                    </div>
+                    <div class="text-4xl opacity-80">
+                        <i class="fas fa-comments text-green-300"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card rounded-xl p-6 text-white shadow-2xl bg-gradient-to-br from-yellow-500 to-orange-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-yellow-100 text-sm font-medium">Avg Rating</p>
+                        <p class="text-3xl font-bold mt-1">
+                            {% if products %}
+                                {% for product in products %}
+                                    {% if product.avg_rating %}{{ product.avg_rating|floatformat:1 }}{% endif %}
+                                {% empty %}0.0{% endfor %}
+                            {% else %}0.0{% endif %}
+                        </p>
+                        <p class="text-yellow-200 text-xs mt-1">
+                            <i class="fas fa-star mr-1"></i>
+                            Overall performance
+                        </p>
+                    </div>
+                    <div class="text-4xl opacity-80">
+                        <i class="fas fa-chart-bar text-yellow-300"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card rounded-xl p-6 text-white shadow-2xl bg-gradient-to-br from-pink-500 to-rose-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-pink-100 text-sm font-medium">Total Views</p>
+                        <p class="text-3xl font-bold mt-1">
+                            {% for product in products %}{{ product.view_count|add:0 }}{% if not forloop.last %} + {% endif %}{% empty %}0{% endfor %}
+                        </p>
+                        <p class="text-pink-200 text-xs mt-1">
+                            <i class="fas fa-eye mr-1"></i>
+                            Product visibility
+                        </p>
+                    </div>
+                    <div class="text-4xl opacity-80">
+                        <i class="fas fa-eye text-pink-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Insights Section -->
+        {% if products %}
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Top Performing Product -->
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                    <i class="fas fa-trophy mr-3 text-yellow-400"></i>
+                    Top Performer
+                </h3>
+                {% for product in products %}
+                    {% if product.avg_rating and forloop.first %}
+                    <div class="bg-gray-800/50 rounded-lg p-4 border border-yellow-500/30">
+                        <div class="flex items-center space-x-3">
+                            {% if product.image %}
+                            <img class="h-12 w-12 rounded-lg object-cover" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                                <i class="fas fa-box text-white"></i>
+                            </div>
+                            {% endif %}
+                            <div class="flex-1">
+                                <h4 class="font-medium text-white">{{ product.brand.name }} {{ product.name }}</h4>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-yellow-400">{{ product.avg_rating|floatformat:1 }}★</span>
+                                    <span class="text-gray-400 text-sm ml-2">({{ product.review_count }} reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% empty %}
+                <div class="text-center text-gray-400 py-4">
+                    <i class="fas fa-chart-line text-2xl mb-2"></i>
+                    <p class="text-sm">No performance data yet</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Most Reviewed -->
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                    <i class="fas fa-fire mr-3 text-red-400"></i>
+                    Most Reviewed
+                </h3>
+                {% for product in products %}
+                    {% if product.review_count > 0 and forloop.first %}
+                    <div class="bg-gray-800/50 rounded-lg p-4 border border-red-500/30">
+                        <div class="flex items-center space-x-3">
+                            {% if product.image %}
+                            <img class="h-12 w-12 rounded-lg object-cover" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                            <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
+                                <i class="fas fa-box text-white"></i>
+                            </div>
+                            {% endif %}
+                            <div class="flex-1">
+                                <h4 class="font-medium text-white">{{ product.brand.name }} {{ product.name }}</h4>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-red-400">{{ product.review_count }} reviews</span>
                                     {% if product.avg_rating %}
-                                        {{ product.avg_rating|floatformat:1 }}/5
-                                    {% else %}
-                                        No reviews
+                                    <span class="text-yellow-400 text-sm ml-2">{{ product.avg_rating|floatformat:1 }}★</span>
                                     {% endif %}
-                                </td>
-                                <td>
-                                    <a href="{% url 'product_detail' slug=product.slug %}" class="btn btn-sm btn-primary">View</a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4">You haven't added any products yet.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                    <a href="{% url 'add_product' %}" class="btn btn-success">Add New Product</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% empty %}
+                <div class="text-center text-gray-400 py-4">
+                    <i class="fas fa-comments text-2xl mb-2"></i>
+                    <p class="text-sm">No reviews yet</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                    <i class="fas fa-clock mr-3 text-blue-400"></i>
+                    Recent Activity
+                </h3>
+                <div class="space-y-3">
+                    {% for product in products|slice:":3" %}
+                    <div class="bg-gray-800/50 rounded-lg p-3 border border-blue-500/20">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h4 class="font-medium text-white text-sm">{{ product.brand.name }} {{ product.name }}</h4>
+                                <p class="text-gray-400 text-xs">Added {{ product.created_at|timesince }} ago</p>
+                            </div>
+                            <div class="text-right">
+                                {% if product.is_active %}
+                                <span class="status-active px-2 py-1 rounded text-xs font-medium">Active</span>
+                                {% else %}
+                                <span class="status-inactive px-2 py-1 rounded text-xs font-medium">Inactive</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        <!-- Products Table -->
+        <div class="products-card rounded-xl shadow-2xl overflow-hidden">
+            <div class="px-6 py-6 border-b border-gray-700">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-white flex items-center">
+                        <i class="fas fa-table mr-3 text-gray-400"></i>
+                        Your Products
+                    </h2>
+                    {% if products %}
+                    <div class="text-gray-400 text-sm">
+                        Showing {{ products.count }} product{{ products.count|pluralize }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if products %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-800/50">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Product</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Reviews</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Rating</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Views</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        {% for product in products %}
+                        <tr class="hover:bg-gray-800/30 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    {% if product.image %}
+                                    <img class="h-12 w-12 rounded-lg object-cover mr-4 border border-gray-600" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    {% else %}
+                                    <div class="h-12 w-12 rounded-lg bg-gradient-to-br from-gray-600 to-gray-700 flex items-center justify-center mr-4 border border-gray-600">
+                                        <i class="fas fa-box text-gray-400"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <div class="text-sm font-medium text-white">{{ product.brand.name }} {{ product.name }}</div>
+                                        <div class="text-sm text-gray-400">
+                                            {% if product.price %}${{ product.price }}{% else %}Price not set{% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900/50 text-blue-200 border border-blue-700">
+                                    {{ product.category.name }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">
+                                <div class="flex items-center">
+                                    <i class="fas fa-comments text-gray-400 mr-2"></i>
+                                    {{ product.review_count|default:0 }}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if product.avg_rating %}
+                                <div class="flex items-center">
+                                    <span class="text-sm font-medium text-white">{{ product.avg_rating|floatformat:1 }}</span>
+                                    <span class="text-yellow-400 ml-1 text-lg">★</span>
+                                </div>
+                                {% else %}
+                                <span class="text-sm text-gray-400 flex items-center">
+                                    <i class="fas fa-minus-circle mr-1"></i>
+                                    No reviews
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">
+                                <div class="flex items-center">
+                                    <i class="fas fa-eye text-gray-400 mr-2"></i>
+                                    {{ product.view_count|default:0 }}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {% if product.is_active %}
+                                <span class="status-active px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    Active
+                                </span>
+                                {% else %}
+                                <span class="status-inactive px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas fa-times-circle mr-1"></i>
+                                    Inactive
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <a href="{% url 'reviews:product_detail' slug=product.slug %}" 
+                                       class="text-blue-400 hover:text-blue-300 transition-colors flex items-center">
+                                        <i class="fas fa-eye mr-1"></i>
+                                        View
+                                    </a>
+                                    <span class="text-gray-600">|</span>
+                                    <a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+                                        <i class="fas fa-edit mr-1"></i>
+                                        Edit
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-16">
+                <div class="max-w-md mx-auto">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-box-open text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">No products yet</h3>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Start building your product portfolio by adding your first product. 
+                        Track reviews, analyze performance, and grow your business.
+                    </p>
+                    <a href="{% url 'reviews:add_product' %}" 
+                       class="action-btn text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl inline-flex items-center">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Your First Product
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Call to Action for Analytics -->
+        {% if products %}
+        <div class="mt-8">
+            <div class="dashboard-card rounded-xl p-8 shadow-2xl text-center">
+                <div class="max-w-2xl mx-auto">
+                    <i class="fas fa-chart-line text-5xl text-blue-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-4">Ready for Advanced Analytics?</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Unlock powerful insights with our comprehensive analytics dashboard. 
+                        Compare products, track trends, and make data-driven decisions.
+                    </p>
+                    <a href="{% url 'reviews:business_analytics' %}" 
+                       class="analytics-btn text-white px-8 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl inline-flex items-center">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Launch Analytics Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

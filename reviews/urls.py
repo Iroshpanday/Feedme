@@ -54,6 +54,16 @@ urlpatterns = [
     #About us Page
     path('about/', views.about_us, name='about-us'),
 
+     # Business Analytics Dashboard
+# Business Analytics Dashboard
+path('business/analytics/', login_required(views.business_analytics_dashboard), name='business_analytics'),
+
+# Analytics API endpoints  
+path('api/benchmark-data/', views.benchmark_data_ajax, name='benchmark_data'),
+path('api/word-cloud-data/', views.word_cloud_data_ajax, name='word_cloud_data'),
+path('api/export-comparison-pdf/', views.export_comparison_pdf, name='export_comparison_pdf'),
+path('api/export-comparison-csv/', views.export_comparison_csv, name='export_comparison_csv'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

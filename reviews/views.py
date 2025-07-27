@@ -121,6 +121,9 @@ def generate_ai_summary(reviews):
         logger.error(f"AI summary failed: {str(e)}")
         return None
     
+
+
+    
 class CustomSignupView(SignupView):
     form_class = UserTypeForm  # Your custom form
     
@@ -521,7 +524,7 @@ def autocomplete_brands(request):
     return JsonResponse({'brands': suggestions})
 
 @login_required
-@permission_required('reviews.add_product', raise_exception=True)
+# @permission_required('reviews.add_product', raise_exception=True)
 def add_product_view(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -1273,3 +1276,408 @@ def about_us(request):
         # Add any other context variables you need
     }
     return render(request, 'reviews/aboutus.html', context)
+
+# Add these imports to your existing views.py
+import json
+from datetime import datetime, timedelta
+from django.http import HttpResponse
+from django.db.models import Avg, Count, Q, F, Case, When, IntegerField
+from django.core.cache import cache
+from django.utils import timezone
+from collections import Counter
+import re
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.units import inch
+import csv
+from io import BytesIO, StringIO
+
+@login_required
+def business_analytics_dashboard(request):
+    """Enhanced Business Analytics Dashboard"""
+    if not hasattr(request.user, 'profile') or not request.user.profile.is_business_user:
+        messages.error(request, "Access denied. Business account required.")
+        return redirect('reviews:home')
+    
+    # Get filter parameters
+    price_min = request.GET.get('price_min', 0)
+    price_max = request.GET.get('price_max', 100000)
+    category_id = request.GET.get('category', '')
+    date_from = request.GET.get('date_from', '')
+    date_to = request.GET.get('date_to', '')
+    
+    # Base queryset with filters
+    products_qs = Product.objects.filter(is_active=True)
+    
+    if price_min:
+        products_qs = products_qs.filter(price__gte=price_min)
+    if price_max:
+        products_qs = products_qs.filter(price__lte=price_max)
+    if category_id:
+        products_qs = products_qs.filter(category_id=category_id)
+    
+    # Date filtering for reviews
+    reviews_qs = Review.objects.filter(is_approved=True)
+    if date_from:
+        reviews_qs = reviews_qs.filter(created_at__gte=date_from)
+    if date_to:
+        reviews_qs = reviews_qs.filter(created_at__lte=date_to)
+    
+    # Calculate trending products
+    cache_key = f"trending_products_{hash(str(request.GET))}"
+    trending_products = cache.get(cache_key)
+    
+    if not trending_products:
+        trending_products = calculate_trending_products(products_qs, reviews_qs)
+        cache.set(cache_key, trending_products, 300)  # Cache for 5 minutes
+    
+    # Calculate quick insights
+    quick_insights = calculate_quick_insights(products_qs, reviews_qs)
+    
+    # Get categories for filters
+    categories = Category.objects.filter(is_active=True).order_by('name')
+    
+    # Get top products for dropdowns
+    top_products = products_qs.annotate(
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True))
+    ).filter(review_count__gte=1).order_by('-avg_rating', '-review_count')[:20]
+    
+    context = {
+        'trending_products': trending_products,
+        'quick_insights': quick_insights,
+        'categories': categories,
+        'top_products': top_products,
+        'filters': {
+            'price_min': price_min,
+            'price_max': price_max,
+            'category_id': category_id,
+            'date_from': date_from,
+            'date_to': date_to,
+        }
+    }
+    
+    return render(request, 'reviews/business_analytics.html', context)
+
+def calculate_trending_products(products_qs, reviews_qs):
+    """Calculate trending products based on the formula"""
+    trending = []
+    
+    for product in products_qs.annotate(
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True))
+    ).filter(review_count__gte=1):
+        
+        # Calculate product age in days
+        age_days = (timezone.now() - product.created_at).days
+        if age_days == 0:
+            age_days = 1  # Prevent division by zero
+        
+        # Calculate trending score
+        score = (product.review_count * (product.avg_rating or 0)) / age_days
+        
+        trending.append({
+            'product': product,
+            'score': round(score, 2),
+            'avg_rating': product.avg_rating or 0,
+            'review_count': product.review_count,
+            'age_days': age_days
+        })
+    
+    # Sort by score and return top 5
+    trending.sort(key=lambda x: x['score'], reverse=True)
+    return trending[:5]
+
+def calculate_quick_insights(products_qs, reviews_qs):
+    """Calculate quick insights for the dashboard"""
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    
+    # Fastest improving products (30-day rating improvement)
+    improving_products = []
+    for product in products_qs.annotate(
+        recent_avg=Avg('reviews__overall_rating', 
+                      filter=Q(reviews__created_at__gte=thirty_days_ago, reviews__is_approved=True)),
+        older_avg=Avg('reviews__overall_rating', 
+                     filter=Q(reviews__created_at__lt=thirty_days_ago, reviews__is_approved=True)),
+        recent_count=Count('reviews', 
+                          filter=Q(reviews__created_at__gte=thirty_days_ago, reviews__is_approved=True))
+    ).filter(recent_count__gte=2, recent_avg__isnull=False, older_avg__isnull=False):
+        
+        improvement = (product.recent_avg or 0) - (product.older_avg or 0)
+        if improvement > 0:
+            improving_products.append({
+                'product': product,
+                'improvement': round(improvement, 2),
+                'recent_avg': round(product.recent_avg, 1),
+                'older_avg': round(product.older_avg, 1)
+            })
+    
+    improving_products.sort(key=lambda x: x['improvement'], reverse=True)
+    
+    # Underrated products (high rating, low review count)
+    underrated_products = products_qs.annotate(
+        avg_rating=Avg('reviews__overall_rating', filter=Q(reviews__is_approved=True)),
+        review_count=Count('reviews', filter=Q(reviews__is_approved=True))
+    ).filter(
+        avg_rating__gte=4.0,
+        review_count__lt=10,
+        review_count__gte=1
+    ).order_by('-avg_rating')[:5]
+    
+    return {
+        'improving_products': improving_products[:5],
+        'underrated_products': underrated_products
+    }
+
+@login_required
+def benchmark_data_ajax(request):
+    """AJAX endpoint for benchmarking chart data"""
+    if not request.user.profile.is_business_user:
+        return JsonResponse({'error': 'Access denied'}, status=403)
+    
+    product1_id = request.GET.get('product1')
+    product2_id = request.GET.get('product2')
+    
+    if not product1_id or not product2_id:
+        return JsonResponse({'error': 'Both products required'}, status=400)
+    
+    try:
+        product1 = Product.objects.get(id=product1_id, is_active=True)
+        product2 = Product.objects.get(id=product2_id, is_active=True)
+        
+        # Generate 6 months of data
+        months_data = []
+        for i in range(6):
+            month_start = timezone.now().replace(day=1) - timedelta(days=30*i)
+            month_end = month_start + timedelta(days=32)
+            month_end = month_end.replace(day=1) - timedelta(days=1)
+            
+            # Product 1 data
+            p1_reviews = Review.objects.filter(
+                product=product1,
+                created_at__gte=month_start,
+                created_at__lte=month_end,
+                is_approved=True
+            )
+            p1_avg = p1_reviews.aggregate(avg=Avg('overall_rating'))['avg'] or 0
+            p1_count = p1_reviews.count()
+            
+            # Product 2 data
+            p2_reviews = Review.objects.filter(
+                product=product2,
+                created_at__gte=month_start,
+                created_at__lte=month_end,
+                is_approved=True
+            )
+            p2_avg = p2_reviews.aggregate(avg=Avg('overall_rating'))['avg'] or 0
+            p2_count = p2_reviews.count()
+            
+            months_data.append({
+                'month': month_start.strftime('%b'),
+                'product1': {
+                    'rating': round(p1_avg, 1),
+                    'count': p1_count
+                },
+                'product2': {
+                    'rating': round(p2_avg, 1),
+                    'count': p2_count
+                }
+            })
+        
+        months_data.reverse()
+        
+        return JsonResponse({
+            'success': True,
+            'data': months_data,
+            'products': {
+                'product1': f"{product1.brand.name} {product1.name}",
+                'product2': f"{product2.brand.name} {product2.name}"
+            }
+        })
+        
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def word_cloud_data_ajax(request):
+    """AJAX endpoint for word cloud data"""
+    if not request.user.profile.is_business_user:
+        return JsonResponse({'error': 'Access denied'}, status=403)
+    
+    category_id = request.GET.get('category')
+    
+    if not category_id:
+        return JsonResponse({'error': 'Category required'}, status=400)
+    
+    try:
+        category = Category.objects.get(id=category_id, is_active=True)
+        
+        # Get all reviews for products in this category
+        reviews = Review.objects.filter(
+            product__category=category,
+            is_approved=True,
+            content__isnull=False
+        ).values_list('content', flat=True)
+        
+        # Extract common words
+        all_text = ' '.join(reviews).lower()
+        
+        # Remove common words and extract meaningful terms
+        stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'been', 'be', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'shall', 'can', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them', 'my', 'your', 'his', 'her', 'its', 'our', 'their'}
+        
+        words = re.findall(r'\b[a-zA-Z]{4,}\b', all_text)
+        filtered_words = [word for word in words if word not in stop_words]
+        
+        # Count word frequency
+        word_counts = Counter(filtered_words)
+        top_words = word_counts.most_common(20)
+        
+        # Format for word cloud
+        word_data = [{'text': word, 'size': count} for word, count in top_words]
+        
+        return JsonResponse({
+            'success': True,
+            'words': word_data,
+            'category': category.name
+        })
+        
+    except Category.DoesNotExist:
+        return JsonResponse({'error': 'Category not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def export_comparison_pdf(request):
+    """Export product comparison as PDF"""
+    if not request.user.profile.is_business_user:
+        return JsonResponse({'error': 'Access denied'}, status=403)
+    
+    product1_id = request.GET.get('product1')
+    product2_id = request.GET.get('product2')
+    
+    if not product1_id or not product2_id:
+        return JsonResponse({'error': 'Both products required'}, status=400)
+    
+    try:
+        product1 = Product.objects.get(id=product1_id, is_active=True)
+        product2 = Product.objects.get(id=product2_id, is_active=True)
+        
+        # Create PDF
+        buffer = BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=A4)
+        
+        # Get styles
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle('CustomTitle', parent=styles['Heading1'], fontSize=18, spaceAfter=30)
+        
+        # Build PDF content
+        story = []
+        
+        # Title
+        story.append(Paragraph(f"Product Comparison Report", title_style))
+        story.append(Spacer(1, 12))
+        
+        # Product comparison table
+        data = [
+            ['Metric', f'{product1.brand.name} {product1.name}', f'{product2.brand.name} {product2.name}'],
+            ['Category', product1.category.name, product2.category.name],
+            ['Price', f'${product1.price}' if product1.price else 'N/A', f'${product2.price}' if product2.price else 'N/A'],
+        ]
+        
+        # Add rating data
+        p1_avg = product1.reviews.filter(is_approved=True).aggregate(avg=Avg('overall_rating'))['avg'] or 0
+        p2_avg = product2.reviews.filter(is_approved=True).aggregate(avg=Avg('overall_rating'))['avg'] or 0
+        p1_count = product1.reviews.filter(is_approved=True).count()
+        p2_count = product2.reviews.filter(is_approved=True).count()
+        
+        data.extend([
+            ['Average Rating', f'{p1_avg:.1f}', f'{p2_avg:.1f}'],
+            ['Total Reviews', str(p1_count), str(p2_count)],
+            ['Views', str(product1.view_count), str(product2.view_count)]
+        ])
+        
+        table = Table(data)
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 14),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ]))
+        
+        story.append(table)
+        story.append(Spacer(1, 30))
+        
+        # Add summary
+        story.append(Paragraph("Summary", styles['Heading2']))
+        story.append(Paragraph(f"Generated on {timezone.now().strftime('%B %d, %Y at %I:%M %p')}", styles['Normal']))
+        
+        # Build PDF
+        doc.build(story)
+        
+        # Return response
+        buffer.seek(0)
+        response = HttpResponse(buffer, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="product_comparison_{timezone.now().strftime("%Y%m%d")}.pdf"'
+        return response
+        
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@login_required
+def export_comparison_csv(request):
+    """Export product comparison as CSV"""
+    if not request.user.profile.is_business_user:
+        return JsonResponse({'error': 'Access denied'}, status=403)
+    
+    product1_id = request.GET.get('product1')
+    product2_id = request.GET.get('product2')
+    
+    if not product1_id or not product2_id:
+        return JsonResponse({'error': 'Both products required'}, status=400)
+    
+    try:
+        product1 = Product.objects.get(id=product1_id, is_active=True)
+        product2 = Product.objects.get(id=product2_id, is_active=True)
+        
+        # Create CSV
+        output = StringIO()
+        writer = csv.writer(output)
+        
+        # Header
+        writer.writerow(['Metric', f'{product1.brand.name} {product1.name}', f'{product2.brand.name} {product2.name}'])
+        
+        # Data rows
+        writer.writerow(['Category', product1.category.name, product2.category.name])
+        writer.writerow(['Price', f'${product1.price}' if product1.price else 'N/A', f'${product2.price}' if product2.price else 'N/A'])
+        
+        # Rating data
+        p1_avg = product1.reviews.filter(is_approved=True).aggregate(avg=Avg('overall_rating'))['avg'] or 0
+        p2_avg = product2.reviews.filter(is_approved=True).aggregate(avg=Avg('overall_rating'))['avg'] or 0
+        p1_count = product1.reviews.filter(is_approved=True).count()
+        p2_count = product2.reviews.filter(is_approved=True).count()
+        
+        writer.writerow(['Average Rating', f'{p1_avg:.1f}', f'{p2_avg:.1f}'])
+        writer.writerow(['Total Reviews', str(p1_count), str(p2_count)])
+        writer.writerow(['Views', str(product1.view_count), str(product2.view_count)])
+        
+        # Return response
+        output.seek(0)
+        response = HttpResponse(output.getvalue(), content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="product_comparison_{timezone.now().strftime("%Y%m%d")}.csv"'
+        return response
+        
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

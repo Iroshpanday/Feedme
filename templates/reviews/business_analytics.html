@@ -1,0 +1,657 @@
+{% extends 'base.html' %}
+
+{% block title %}Business Analytics Dashboard - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-card {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border: 1px solid #475569;
+        transition: all 0.3s ease;
+    }
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border-color: #64748b;
+    }
+    .chart-container {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 12px;
+    }
+    .filter-card {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        border: 1px solid #4c1d95;
+    }
+    .insight-card {
+        background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+        border: 1px solid #14b8a6;
+    }
+    .trending-card {
+        background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%);
+        border: 1px solid #f97316;
+    }
+    .loading-spinner {
+        border: 2px solid #f3f4f6;
+        border-top: 2px solid #3b82f6;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .gradient-text {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .export-btn {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        transition: all 0.3s ease;
+    }
+    .export-btn:hover {
+        background: linear-gradient(135deg, #047857 0%, #059669 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-gray-800 to-gray-900 shadow-2xl border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-bold gradient-text flex items-center">
+                        <i class="fas fa-chart-line mr-4 text-blue-500"></i>
+                        Business Analytics Dashboard
+                    </h1>
+                    <p class="mt-2 text-lg text-gray-300">
+                        Advanced competitive insights and market intelligence
+                    </p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="exportComparison('pdf')" 
+                            class="export-btn text-white px-6 py-3 rounded-lg font-medium shadow-lg">
+                        <i class="fas fa-file-pdf mr-2"></i>Export PDF
+                    </button>
+                    <button onclick="exportComparison('csv')" 
+                            class="export-btn text-white px-6 py-3 rounded-lg font-medium shadow-lg">
+                        <i class="fas fa-file-csv mr-2"></i>Export CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Filters Section -->
+        <div class="filter-card rounded-xl p-6 mb-8 shadow-2xl">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                <i class="fas fa-filter mr-3 text-purple-400"></i>
+                Advanced Filters
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Price Range</label>
+                    <div class="flex gap-2">
+                        <input type="number" id="price_min" placeholder="Min" 
+                               class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <input type="number" id="price_max" placeholder="Max" 
+                               class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                    <select id="category_filter" 
+                            class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Date From</label>
+                    <input type="date" id="date_from" 
+                           class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Date To</label>
+                    <input type="date" id="date_to" 
+                           class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="applyFilters()" 
+                            class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl">
+                        <i class="fas fa-search mr-2"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <!-- Benchmarking Tool -->
+            <div class="lg:col-span-2">
+                <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-balance-scale mr-3 text-blue-400"></i>
+                        Product Benchmarking Tool
+                    </h2>
+                    
+                    <!-- Product Selection -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Product 1</label>
+                            <select id="product1_select" onchange="updateBenchmark()"
+                                    class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Product 1</option>
+                                {% for product in top_products %}
+                                <option value="{{ product.id }}">{{ product.brand.name }} {{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Product 2</label>
+                            <select id="product2_select" onchange="updateBenchmark()"
+                                    class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Product 2</option>
+                                {% for product in top_products %}
+                                <option value="{{ product.id }}">{{ product.brand.name }} {{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Benchmark Chart -->
+                    <div class="chart-container p-4">
+                        <div id="benchmark_chart" style="height: 400px;">
+                            <div class="flex items-center justify-center h-full text-gray-400">
+                                <div class="text-center">
+                                    <i class="fas fa-chart-line text-4xl mb-4"></i>
+                                    <p>Select two products to compare</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="benchmark_loading" class="hidden flex items-center justify-center h-full">
+                            <div class="loading-spinner"></div>
+                            <span class="ml-2 text-gray-400">Loading comparison...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Insights -->
+            <div class="space-y-6">
+                <!-- Trending Products -->
+                <div class="trending-card rounded-xl p-6 shadow-2xl">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-fire mr-3"></i>
+                        Top Trending
+                    </h3>
+                    <div class="space-y-3">
+                        {% for item in trending_products|slice:":3" %}
+                        <div class="bg-gray-800/50 rounded-lg p-3 border border-orange-500/20">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-white text-sm">
+                                        {{ item.product.brand.name }} {{ item.product.name }}
+                                    </h4>
+                                    <div class="flex items-center mt-1">
+                                        <span class="text-yellow-400 text-xs">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= item.avg_rating|floatformat:0 %}★{% else %}☆{% endif %}
+                                            {% endfor %}
+                                        </span>
+                                        <span class="text-gray-400 text-xs ml-2">
+                                            {{ item.review_count }} reviews
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-orange-400 font-bold text-sm">
+                                        {{ item.score }}
+                                    </div>
+                                    <div class="text-gray-400 text-xs">
+                                        trend score
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-gray-400 py-4">
+                            <i class="fas fa-chart-line text-2xl mb-2"></i>
+                            <p class="text-sm">No trending data available</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Underrated Products -->
+                <div class="insight-card rounded-xl p-6 shadow-2xl">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                        <i class="fas fa-gem mr-3"></i>
+                        Hidden Gems
+                    </h3>
+                    <div class="space-y-3">
+                        {% for product in quick_insights.underrated_products|slice:":3" %}
+                        <div class="bg-gray-800/50 rounded-lg p-3 border border-teal-500/20">
+                            <h4 class="font-medium text-white text-sm">
+                                {{ product.brand.name }} {{ product.name }}
+                            </h4>
+                            <div class="flex justify-between items-center mt-1">
+                                <span class="text-yellow-400 text-xs">
+                                    {{ product.avg_rating|floatformat:1 }}★
+                                </span>
+                                <span class="text-teal-400 text-xs">
+                                    {{ product.review_count }} reviews
+                                </span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-gray-400 py-4">
+                            <i class="fas fa-gem text-2xl mb-2"></i>
+                            <p class="text-sm">No underrated products found</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Trends & Word Cloud -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Market Trends -->
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-trending-up mr-3 text-green-400"></i>
+                    Market Trends
+                </h2>
+                
+                <div class="space-y-4">
+                    {% for item in trending_products %}
+                    <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">{{ forloop.counter }}</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-white">
+                                        {{ item.product.brand.name }} {{ item.product.name }}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm">{{ item.product.category.name }}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-green-400 font-bold">
+                                    Score: {{ item.score }}
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    {{ item.avg_rating|floatformat:1 }}★ ({{ item.review_count }})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                        <p>No trending products data available</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Category Word Cloud -->
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-cloud mr-3 text-purple-400"></i>
+                    Category Word Cloud
+                </h2>
+                
+                <div class="mb-4">
+                    <select id="wordcloud_category" onchange="updateWordCloud()"
+                            class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <option value="">Select Category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="chart-container p-4">
+                    <div id="wordcloud_container" style="height: 300px;">
+                        <div class="flex items-center justify-center h-full text-gray-400">
+                            <div class="text-center">
+                                <i class="fas fa-cloud text-4xl mb-4"></i>
+                                <p>Select a category to view word cloud</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="wordcloud_loading" class="hidden flex items-center justify-center h-full">
+                        <div class="loading-spinner"></div>
+                        <span class="ml-2 text-gray-400">Generating word cloud...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Improving Products Section -->
+        {% if quick_insights.improving_products %}
+        <div class="mt-8">
+            <div class="dashboard-card rounded-xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-arrow-trend-up mr-3 text-yellow-400"></i>
+                    Fastest Improving Products (30-day trend)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {% for item in quick_insights.improving_products %}
+                    <div class="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 rounded-lg p-4 border border-yellow-500/30">
+                        <h3 class="font-medium text-white mb-2">
+                            {{ item.product.brand.name }} {{ item.product.name }}
+                        </h3>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="text-yellow-400 font-bold">
+                                    +{{ item.improvement }} points
+                                </div>
+                                <div class="text-gray-400 text-sm">
+                                    {{ item.older_avg }} → {{ item.recent_avg }}
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <i class="fas fa-arrow-up text-green-400 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+let currentProducts = { product1: null, product2: null };
+
+// Apply filters function
+function applyFilters() {
+    const filters = {
+        price_min: document.getElementById('price_min').value,
+        price_max: document.getElementById('price_max').value,
+        category: document.getElementById('category_filter').value,
+        date_from: document.getElementById('date_from').value,
+        date_to: document.getElementById('date_to').value
+    };
+    
+    // Build query string
+    const params = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.append(key, value);
+    });
+    
+    // Reload page with filters
+    window.location.search = params.toString();
+}
+
+// Update benchmark chart
+function updateBenchmark() {
+    const product1 = document.getElementById('product1_select').value;
+    const product2 = document.getElementById('product2_select').value;
+    
+    if (!product1 || !product2) {
+        document.getElementById('benchmark_chart').innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-400">
+                <div class="text-center">
+                    <i class="fas fa-chart-line text-4xl mb-4"></i>
+                    <p>Select two products to compare</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    currentProducts = { product1, product2 };
+    
+    // Show loading
+    document.getElementById('benchmark_loading').classList.remove('hidden');
+    document.getElementById('benchmark_chart').style.display = 'none';
+    
+    // Fetch data
+    fetch(`/api/benchmark-data/?product1=${product1}&product2=${product2}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                renderBenchmarkChart(data.data, data.products);
+            } else {
+                console.error('Error:', data.error);
+                showError('Failed to load comparison data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showError('Network error occurred');
+        })
+        .finally(() => {
+            document.getElementById('benchmark_loading').classList.add('hidden');
+            document.getElementById('benchmark_chart').style.display = 'block';
+        });
+}
+
+// Render benchmark chart
+function renderBenchmarkChart(data, products) {
+    const months = data.map(d => d.month);
+    const product1Ratings = data.map(d => d.product1.rating);
+    const product2Ratings = data.map(d => d.product2.rating);
+    const product1Counts = data.map(d => d.product1.count);
+    const product2Counts = data.map(d => d.product2.count);
+    
+    const traces = [
+        {
+            x: months,
+            y: product1Ratings,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: products.product1 + ' (Rating)',
+            line: { color: '#3b82f6', width: 3 },
+            marker: { size: 8 }
+        },
+        {
+            x: months,
+            y: product2Ratings,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: products.product2 + ' (Rating)',
+            line: { color: '#10b981', width: 3 },
+            marker: { size: 8 }
+        },
+        {
+            x: months,
+            y: product1Counts,
+            type: 'bar',
+            name: products.product1 + ' (Reviews)',
+            yaxis: 'y2',
+            opacity: 0.6,
+            marker: { color: '#3b82f6' }
+        },
+        {
+            x: months,
+            y: product2Counts,
+            type: 'bar',
+            name: products.product2 + ' (Reviews)',
+            yaxis: 'y2',
+            opacity: 0.6,
+            marker: { color: '#10b981' }
+        }
+    ];
+    
+    const layout = {
+        title: {
+            text: 'Product Performance Comparison',
+            font: { color: '#ffffff', size: 18 }
+        },
+        paper_bgcolor: '#0f172a',
+        plot_bgcolor: '#1e293b',
+        font: { color: '#ffffff' },
+        xaxis: {
+            title: 'Month',
+            gridcolor: '#374151',
+            color: '#ffffff'
+        },
+        yaxis: {
+            title: 'Average Rating',
+            side: 'left',
+            gridcolor: '#374151',
+            color: '#ffffff',
+            range: [0, 5]
+        },
+        yaxis2: {
+            title: 'Review Count',
+            side: 'right',
+            overlaying: 'y',
+            gridcolor: 'transparent',
+            color: '#ffffff'
+        },
+        legend: {
+            orientation: 'h',
+            y: -0.2,
+            font: { color: '#ffffff' }
+        },
+        margin: { t: 50, b: 80, l: 60, r: 60 }
+    };
+    
+    Plotly.newPlot('benchmark_chart', traces, layout, {
+        responsive: true,
+        displayModeBar: false
+    });
+}
+
+// Update word cloud
+function updateWordCloud() {
+    const categoryId = document.getElementById('wordcloud_category').value;
+    
+    if (!categoryId) {
+        document.getElementById('wordcloud_container').innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-400">
+                <div class="text-center">
+                    <i class="fas fa-cloud text-4xl mb-4"></i>
+                    <p>Select a category to view word cloud</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Show loading
+    document.getElementById('wordcloud_loading').classList.remove('hidden');
+    document.getElementById('wordcloud_container').style.display = 'none';
+    
+    // Fetch data
+    fetch(`/api/word-cloud-data/?category=${categoryId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                renderWordCloud(data.words, data.category);
+            } else {
+                console.error('Error:', data.error);
+                showError('Failed to load word cloud data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showError('Network error occurred');
+        })
+        .finally(() => {
+            document.getElementById('wordcloud_loading').classList.add('hidden');
+            document.getElementById('wordcloud_container').style.display = 'block';
+        });
+}
+
+// Render word cloud (simple version with styled text)
+function renderWordCloud(words, category) {
+    if (words.length === 0) {
+        document.getElementById('wordcloud_container').innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-400">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
+                    <p>No words found for ${category}</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    const maxSize = Math.max(...words.map(w => w.size));
+    const minSize = Math.min(...words.map(w => w.size));
+    
+    let html = '<div class="flex flex-wrap justify-center items-center h-full p-4">';
+    
+    words.forEach(word => {
+        const normalizedSize = ((word.size - minSize) / (maxSize - minSize)) * 30 + 14;
+        const opacity = ((word.size - minSize) / (maxSize - minSize)) * 0.6 + 0.4;
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        html += `<span class="inline-block m-1 font-bold cursor-pointer hover:scale-110 transition-transform" 
+                      style="font-size: ${normalizedSize}px; color: ${color}; opacity: ${opacity}">
+                    ${word.text}
+                 </span>`;
+    });
+    
+    html += '</div>';
+    document.getElementById('wordcloud_container').innerHTML = html;
+}
+
+// Export functions
+function exportComparison(format) {
+    if (!currentProducts.product1 || !currentProducts.product2) {
+        showError('Please select two products to compare first');
+        return;
+    }
+    
+    const url = `/api/export-comparison-${format}/?product1=${currentProducts.product1}&product2=${currentProducts.product2}`;
+    window.open(url, '_blank');
+}
+
+// Show error message
+function showError(message) {
+    // Using Toastify for notifications (already included in base.html)
+    if (typeof Toastify !== 'undefined') {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "linear-gradient(to right, #ef4444, #dc2626)",
+        }).showToast();
+    } else {
+        alert(message);
+    }
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default filter values from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    ['price_min', 'price_max', 'category_filter', 'date_from', 'date_to'].forEach(param => {
+        const element = document.getElementById(param);
+        const value = urlParams.get(param.replace('_filter', ''));
+        if (element && value) {
+            element.value = value;
+        }
+    });
+});
+</script>
+{% endblock %}
