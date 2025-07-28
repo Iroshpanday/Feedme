@@ -414,6 +414,18 @@ def product_detail_view(request, slug):
     context['ai_summary'] = generate_ai_summary(reviews) if reviews.count() > 3 else None
     
     return render(request, 'reviews/product_detail.html', context)
+
+from django.shortcuts import render
+
+def privacy_policy(request):
+    return render(request, 'reviews/privacy_policy.html')
+
+def terms_of_service(request):
+    return render(request, 'reviews/terms_of_service.html')
+
+def cookie_policy(request):
+    return render(request, 'reviews/cookie_policy.html')
+
 def category_view(request, slug):
     category = get_object_or_404(Category, slug=slug, is_active=True)
     

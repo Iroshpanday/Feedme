@@ -348,7 +348,7 @@ class Review(models.Model):
             self.user_profile_picture = self.user.profile.profile_picture
             
         super().save(*args, **kwargs)
-        cache.delete(f"ai_summary_{self.product.id}")  
+        cache.delete(f"ai_summary_roberta_{self.product.id}") 
 
 class ReviewHelpful(models.Model):
     """Track which users found reviews helpful"""

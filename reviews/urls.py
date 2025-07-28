@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
+
 app_name = 'reviews'
 
 urlpatterns = [
@@ -67,6 +68,10 @@ path('api/export-comparison-csv/', views.export_comparison_csv, name='export_com
 
 
 path('product/<slug:slug>/Business/', views.business_product_detail, name='business_product_detail'),
+
+path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
+    path('cookie-policy/', views.cookie_policy, name='cookie_policy'),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

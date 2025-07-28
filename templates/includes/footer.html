@@ -60,9 +60,9 @@
                     © 2025 FeedMe. All rights reserved.
                 </div>
                 <div class="flex space-x-6 text-sm">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
+                    <a href="{% url 'reviews:privacy_policy' %}" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="{% url 'reviews:terms_of_service' %}" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                    <a href="{% url 'reviews:cookie_policy' %}" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
                 </div>
             </div>
         </div>

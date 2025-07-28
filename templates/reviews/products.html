@@ -78,6 +78,7 @@
         text-decoration: none;
         font-weight: 500;
         transition: all 0.3s;
+        white-space: nowrap;
     }
 
     .btn-primary {
@@ -130,6 +131,7 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         outline: none;
         color: #333;
+        padding-right: 120px;
     }
 
     .search-btn {
@@ -171,6 +173,7 @@
         display: flex;
         gap: 1rem;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .filter-select {
@@ -180,6 +183,7 @@
         background: white;
         cursor: pointer;
         font-size: 0.9rem;
+        min-width: 120px;
     }
 
     .filter-select:focus {
@@ -190,6 +194,7 @@
     .results-info {
         font-weight: 600;
         color: #666;
+        white-space: nowrap;
     }
 
     .products-section {
@@ -308,11 +313,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
 
     .review-count {
         display: flex;
-        align-items: center;  /* Added missing property */
+        align-items: center;
         gap: 0.5rem;
         color: #666;
         font-size: 0.9rem;
@@ -357,6 +364,7 @@
         text-align: center;
         padding: 4rem 2rem;
         color: #666;
+        grid-column: 1 / -1;
     }
 
     .no-results i {
@@ -391,6 +399,7 @@
         align-items: center;
         gap: 0.5rem;
         margin-top: 3rem;
+        flex-wrap: wrap;
     }
 
     .page-btn {
@@ -401,6 +410,8 @@
         text-decoration: none;
         border-radius: 6px;
         transition: all 0.3s;
+        min-width: 44px;
+        text-align: center;
     }
 
     .page-btn:hover, .page-btn.active {
@@ -409,9 +420,124 @@
         border-color: #ff6b35;
     }
 
-    @media (max-width: 768px) {
+    /* Mobile First Responsive Design */
+    
+    /* Extra Small devices (phones, 576px and down) */
+    @media (max-width: 575.98px) {
         .hero-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+        
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .hero-container,
+        .nav-container,
+        .filters-container,
+        .products-container {
+            padding: 0 1rem;
+        }
+        
+        .nav-container {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .nav-links {
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .user-section {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .search-box {
+            font-size: 1rem;
+            padding: 0.8rem 1rem;
+            padding-right: 100px;
+        }
+        
+        .search-btn {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .filters-container {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.5rem;
+        }
+        
+        .filter-group {
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-select {
+            flex: 1;
+            min-width: auto;
+            font-size: 0.8rem;
+        }
+        
+        .results-info {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .products-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .product-stats {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+        }
+        
+        .view-details-btn {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .pagination {
+            gap: 0.25rem;
+        }
+        
+        .page-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            min-width: 40px;
+        }
+        
+        .logo {
+            font-size: 1.3rem;
+        }
+        
+        .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Small devices (landscape phones, 576px and up) */
+    @media (min-width: 576px) and (max-width: 767.98px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .hero-section {
+            padding: 3rem 0;
         }
         
         .nav-container {
@@ -419,13 +545,10 @@
             gap: 1rem;
         }
         
-        .nav-links {
-            gap: 1rem;
-        }
-        
         .filters-container {
             flex-direction: column;
             align-items: stretch;
+            gap: 1.5rem;
         }
         
         .filter-group {
@@ -433,8 +556,246 @@
         }
         
         .products-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
+        }
+        
+        .product-stats {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .view-details-btn {
+            width: 100%;
+        }
+    }
+    
+    /* Medium devices (tablets, 768px and up) */
+    @media (min-width: 768px) and (max-width: 991.98px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .nav-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .nav-links {
+            order: 3;
+            flex-basis: 100%;
+            justify-content: center;
+        }
+        
+        .filters-container {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .filter-group {
+            justify-content: center;
+        }
+        
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem;
+        }
+    }
+    
+    /* Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+        .products-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .filters-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+    
+    /* Extra large devices (large desktops, 1200px and up) - default styles apply */
+    
+    /* Autocomplete Responsive Styles */
+    .search-suggestions {
+        font-family: inherit;
+    }
+    
+    .suggestions-header {
+        padding: 0.75rem 1rem;
+        background: #f8f9fa;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #666;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .suggestion-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        border-bottom: 1px solid #f1f3f4;
+        transition: background-color 0.2s;
+    }
+    
+    .suggestion-item:hover,
+    .suggestion-item.active {
+        background-color: #f8f9fa;
+    }
+    
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+    
+    .suggestion-image {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 6px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    
+    .suggestion-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .suggestion-image i {
+        color: #666;
+        font-size: 1.2rem;
+    }
+    
+    .suggestion-content {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .suggestion-name {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: #333;
+        word-break: break-word;
+    }
+    
+    .suggestion-name mark {
+        background: #fff3cd;
+        color: #856404;
+        padding: 0.1rem 0.2rem;
+        border-radius: 3px;
+    }
+    
+    .suggestion-meta {
+        font-size: 0.85rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .brand-name {
+        color: #ff6b35;
+        font-weight: 500;
+    }
+    
+    .rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: #ffc107;
+    }
+    
+    .rating i {
+        font-size: 0.8rem;
+    }
+    
+    .suggestion-arrow {
+        color: #ccc;
+        margin-left: 0.5rem;
+        flex-shrink: 0;
+    }
+    
+    .view-all {
+        background: #f8f9fa;
+        font-weight: 500;
+        color: #ff6b35;
+    }
+    
+    .view-all:hover {
+        background: #e9ecef;
+    }
+    
+    .no-results-suggestion {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: #666;
+    }
+    
+    .no-results-suggestion i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: #dee2e6;
+    }
+    
+    .no-results-suggestion small {
+        display: block;
+        margin-top: 0.5rem;
+        color: #999;
+    }
+    
+    /* Mobile autocomplete adjustments */
+    @media (max-width: 575.98px) {
+        .suggestion-item {
+            padding: 0.6rem 0.8rem;
+        }
+        
+        .suggestion-image {
+            width: 35px;
+            height: 35px;
+            margin-right: 0.5rem;
+        }
+        
+        .suggestion-name {
+            font-size: 0.9rem;
+        }
+        
+        .suggestion-meta {
+            font-size: 0.8rem;
+        }
+        
+        .suggestions-header {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+        }
+    }
+    
+    /* Fix for very small screens */
+    @media (max-width: 380px) {
+        .search-box {
+            padding-right: 90px;
+        }
+        
+        .search-btn {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        
+        .filter-group {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .filter-select {
+            width: 100%;
         }
     }
 </style>
@@ -951,142 +1312,6 @@ class ProductSearchAutocomplete {
         this.currentFocus = -1;
     }
 }
-
-// CSS Styles for autocomplete (add to your stylesheet)
-const autocompleteStyles = `
-    .search-suggestions {
-        font-family: inherit;
-    }
-    
-    .suggestions-header {
-        padding: 0.75rem 1rem;
-        background: #f8f9fa;
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #666;
-        border-bottom: 1px solid #e9ecef;
-    }
-    
-    .suggestion-item {
-        display: flex;
-        align-items: center;
-        padding: 0.75rem 1rem;
-        cursor: pointer;
-        border-bottom: 1px solid #f1f3f4;
-        transition: background-color 0.2s;
-    }
-    
-    .suggestion-item:hover,
-    .suggestion-item.active {
-        background-color: #f8f9fa;
-    }
-    
-    .suggestion-item:last-child {
-        border-bottom: none;
-    }
-    
-    .suggestion-image {
-        width: 40px;
-        height: 40px;
-        margin-right: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f8f9fa;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-    
-    .suggestion-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    .suggestion-image i {
-        color: #666;
-        font-size: 1.2rem;
-    }
-    
-    .suggestion-content {
-        flex: 1;
-    }
-    
-    .suggestion-name {
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-        color: #333;
-    }
-    
-    .suggestion-name mark {
-        background: #fff3cd;
-        color: #856404;
-        padding: 0.1rem 0.2rem;
-        border-radius: 3px;
-    }
-    
-    .suggestion-meta {
-        font-size: 0.85rem;
-        color: #666;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    
-    .brand-name {
-        color: #ff6b35;
-        font-weight: 500;
-    }
-    
-    .rating {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        color: #ffc107;
-    }
-    
-    .rating i {
-        font-size: 0.8rem;
-    }
-    
-    .suggestion-arrow {
-        color: #ccc;
-        margin-left: 0.5rem;
-    }
-    
-    .view-all {
-        background: #f8f9fa;
-        font-weight: 500;
-        color: #ff6b35;
-    }
-    
-    .view-all:hover {
-        background: #e9ecef;
-    }
-    
-    .no-results-suggestion {
-        text-align: center;
-        padding: 2rem 1rem;
-        color: #666;
-    }
-    
-    .no-results-suggestion i {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-        color: #dee2e6;
-    }
-    
-    .no-results-suggestion small {
-        display: block;
-        margin-top: 0.5rem;
-        color: #999;
-    }
-`;
-
-// Add styles to head
-const styleElement = document.createElement('style');
-styleElement.textContent = autocompleteStyles;
-document.head.appendChild(styleElement);
 
 // Initialize autocomplete
 if (document.getElementById('searchInput')) {

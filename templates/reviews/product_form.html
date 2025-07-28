@@ -1,501 +1,827 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container mx-auto px-4 py-8 max-w-6xl">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">{{ title }}</h1>
+{% block title %}{{ title }} - FeedMe{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Dark theme overrides */
+    body {
+        background-color: #111827 !important;
+    }
     
-    <form method="post" enctype="multipart/form-data" class="space-y-6">
-        {% csrf_token %}
-        
-        {% if form.non_field_errors %}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {% for error in form.non_field_errors %}
-                {{ error }}
-            {% endfor %}
+    .dark-bg {
+        background-color: #1f2937;
+    }
+    
+    .dark-card {
+        background-color: #374151;
+    }
+    
+    .dark-accent {
+        background-color: #4b5563;
+    }
+    
+    .form-input, .form-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: #4b5563;
+        border: 1px solid #6b7280;
+        border-radius: 0.5rem;
+        color: white;
+        transition: all 0.2s;
+    }
+    
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .form-input::placeholder {
+        color: #9ca3af;
+    }
+    
+    .gradient-header-blue {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    }
+    
+    .gradient-header-green {
+        background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    }
+    
+    .gradient-header-purple {
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    }
+    
+    .gradient-button {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    }
+    
+    .gradient-button:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    }
+    
+    .spec-section.expanded .transform {
+        transform: rotate(180deg);
+    }
+    
+    .animate-slide-down {
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            max-height: 0;
+        }
+        to {
+            opacity: 1;
+            max-height: 1000px;
+        }
+    }
+    
+    /* Toggle switch styles */
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+    }
+    
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #6b7280;
+        transition: .4s;
+        border-radius: 24px;
+    }
+    
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    
+    input:checked + .toggle-slider {
+        background-color: #10b981;
+    }
+    
+    input:checked + .toggle-slider:before {
+        transform: translateX(20px);
+    }
+    
+    input:checked + .toggle-slider.featured {
+        background-color: #f59e0b;
+    }
+
+    /* File input styling */
+    input[type="file"] {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen" style="background-color: #111827;">
+    <!-- Header -->
+    <div class="dark-bg border-b border-gray-700 px-6 py-4">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <div class="flex items-center space-x-4">
+                <div class="bg-orange-500 rounded-lg p-2">
+                    <i class="fas fa-plus text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white">{{ title }}</h1>
+                    <p class="text-gray-400 text-sm">Create a comprehensive product listing</p>
+                </div>
+            </div>
+            <div class="flex space-x-3">
+                <button type="button" class="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors">
+                    <i class="fas fa-save mr-2"></i>Save Draft
+                </button>
+                <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-eye mr-2"></i>Preview
+                </button>
+            </div>
         </div>
-        {% endif %}
-        
-        <!-- Basic Product Information Card -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Basic Information</h2>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div>
-                        <label for="id_name" class="block text-sm font-medium text-gray-700 mb-1">Product Name*</label>
-                        {{ form.name }}
-                        {% if form.name.errors %}
-                        <p class="mt-1 text-sm text-red-600">
-                            {{ form.name.errors.0 }}
-                        </p>
-                        {% endif %}
-                    </div>
-                    
-                    <div>
-                        <label for="id_brand_name" class="block text-sm font-medium text-gray-700 mb-1">Brand*</label>
-                        {{ form.brand_name }}
-                        {% if form.brand_name.errors %}
-                        <p class="mt-1 text-sm text-red-600">
-                            {{ form.brand_name.errors.0 }}
-                        </p>
-                        {% endif %}
-                        <p class="mt-1 text-sm text-gray-500">Start typing to see existing brands</p>
-                    </div>
-                    
-                    <div>
-                        <label for="id_category" class="block text-sm font-medium text-gray-700 mb-1">Category*</label>
-                        {{ form.category }}
-                        {% if form.category.errors %}
-                        <p class="mt-1 text-sm text-red-600">
-                            {{ form.category.errors.0 }}
-                        </p>
-                        {% endif %}
+            {% if form.non_field_errors %}
+            <div class="bg-red-600/20 border border-red-500 text-red-400 px-4 py-3 rounded-lg">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Progress Indicator -->
+            <div class="dark-card rounded-xl p-6 border border-gray-700">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm font-medium text-gray-300">Form Progress</span>
+                    <span class="text-sm text-blue-400" id="progress-text">0% Complete</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300" style="width: 0%" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- Basic Information -->
+            <div class="dark-card rounded-xl border border-gray-700 overflow-hidden">
+                <div class="gradient-header-blue px-6 py-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-info-circle text-white text-lg"></i>
+                        <h2 class="text-xl font-semibold text-white">Basic Information</h2>
                     </div>
                 </div>
                 
-                <div class="space-y-4">
-                    <div>
-                        <label for="id_price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <div class="form-group">
+                                <label for="id_name" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-tag mr-2 text-blue-400"></i>Product Name*
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <p class="mt-1 text-sm text-red-400">
+                                    {{ form.name.errors.0 }}
+                                </p>
+                                {% endif %}
                             </div>
-                            {{ form.price }}
-                        </div>
-                        {% if form.price.errors %}
-                        <p class="mt-1 text-sm text-red-600">
-                            {{ form.price.errors.0 }}
-                        </p>
-                        {% endif %}
-                    </div>
-                    
-                    <div>
-                        <label for="id_image" class="block text-sm font-medium text-gray-700 mb-1">Product Image*</label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500 transition-colors">
-                            <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <div class="flex text-sm text-gray-600">
-                                    <label for="id_image" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                        <span>Upload a file</span>
-                                        {{ form.image }}
-                                    </label>
-                                    <p class="pl-1">or drag and drop</p>
+                            
+                            <div class="form-group">
+                                <label for="id_brand_name" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-copyright mr-2 text-green-400"></i>Brand*
+                                </label>
+                                <div class="relative">
+                                    {{ form.brand_name }}
+                                    <datalist id="brand-suggestions"></datalist>
+                                    <div class="absolute right-3 top-3">
+                                        <i class="fas fa-search text-gray-400"></i>
+                                    </div>
                                 </div>
-                                <p class="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                                {% if form.brand_name.errors %}
+                                <p class="mt-1 text-sm text-red-400">
+                                    {{ form.brand_name.errors.0 }}
+                                </p>
+                                {% endif %}
+                                <p class="mt-1 text-xs text-gray-500">Start typing to see existing brands</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="id_category" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-list mr-2 text-yellow-400"></i>Category*
+                                </label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                <p class="mt-1 text-sm text-red-400">
+                                    {{ form.category.errors.0 }}
+                                </p>
+                                {% endif %}
                             </div>
                         </div>
-                        {% if form.image.errors %}
-                        <p class="mt-1 text-sm text-red-600">
-                            {{ form.image.errors.0 }}
+                        
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <div class="form-group">
+                                <label for="id_price" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-dollar-sign mr-2 text-green-400"></i>Price ($)
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <span class="text-gray-400">$</span>
+                                    </div>
+                                    {{ form.price }}
+                                </div>
+                                {% if form.price.errors %}
+                                <p class="mt-1 text-sm text-red-400">
+                                    {{ form.price.errors.0 }}
+                                </p>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Image Upload -->
+                            <div class="form-group">
+                                <label for="id_image" class="block text-sm font-medium text-gray-300 mb-2">
+                                    <i class="fas fa-image mr-2 text-purple-400"></i>Product Image*
+                                </label>
+                                <div class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-purple-500 transition-colors relative" style="background-color: rgba(75, 85, 99, 0.5);">
+                                    <div class="space-y-3">
+                                        <div class="mx-auto w-16 h-16 rounded-full flex items-center justify-center" style="background-color: rgba(139, 92, 246, 0.2);">
+                                            <i class="fas fa-cloud-upload-alt text-2xl text-purple-400"></i>
+                                        </div>
+                                        <div>
+                                            <label for="id_image" class="cursor-pointer text-purple-400 hover:text-purple-300 font-medium">
+                                                Click to upload
+                                            </label>
+                                            <span class="text-gray-400"> or drag and drop</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                                    </div>
+                                    {{ form.image }}
+                                </div>
+                                {% if form.image.errors %}
+                                <p class="mt-1 text-sm text-red-400">
+                                    {{ form.image.errors.0 }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_description" class="block text-sm font-medium text-gray-300 mb-2">
+                            <i class="fas fa-align-left mr-2 text-blue-400"></i>Description*
+                        </label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <p class="mt-1 text-sm text-red-400">
+                            {{ form.description.errors.0 }}
                         </p>
                         {% endif %}
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-4">
-                <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">Description*</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                <p class="mt-1 text-sm text-red-600">
-                    {{ form.description.errors.0 }}
-                </p>
-                {% endif %}
-            </div>
-        </div>
 
-        <!-- Required Specifications Card -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Required Specifications</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- RAM -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">RAM*</label>
-                    <select name="ram" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="2 GB">2 GB</option>
-                        <option value="4 GB" selected>4 GB</option>
-                        <option value="6 GB">6 GB</option>
-                        <option value="8 GB">8 GB</option>
-                        <option value="12 GB">12 GB</option>
-                        <option value="16 GB">16 GB</option>
-                    </select>
-                </div>
-                
-                <!-- Storage -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Storage*</label>
-                    <select name="storage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        <option value="32 GB">32 GB</option>
-                        <option value="64 GB">64 GB</option>
-                        <option value="128 GB" selected>128 GB</option>
-                        <option value="256 GB">256 GB</option>
-                        <option value="512 GB">512 GB</option>
-                        <option value="1 TB">1 TB</option>
-                    </select>
-                </div>
-                
-                <!-- Processor -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Processor*</label>
-                    <input type="text" name="processor" value="{{ form.processor.value }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-                
-                <!-- Rear Camera -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Rear Camera*</label>
-                    <input type="text" name="rear_camera" value="{{ form.rear_camera.value }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" required>
-                </div>
-            </div>
-        </div>
-
-        <!-- Optional Specifications - Expandable Sections -->
-        <div class="space-y-4">
-            <!-- Display Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('display-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">Display Specifications</h2>
-                    <svg id="display-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="display-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Screen Size</label>
-                            <input type="text" name="screen_size" placeholder="e.g. 6.7 inches" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Resolution</label>
-                            <input type="text" name="resolution" placeholder="e.g. 1440x3200 pixels" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Refresh Rate</label>
-                            <input type="text" name="refresh_rate" placeholder="e.g. 120Hz" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Display Type</label>
-                            <input type="text" name="display_type" placeholder="e.g. AMOLED" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Camera Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('camera-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">Camera Specifications</h2>
-                    <svg id="camera-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="camera-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Front Camera</label>
-                            <input type="text" name="front_camera" placeholder="e.g. 32MP Selfie Camera" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Video Recording</label>
-                            <input type="text" name="video_recording" placeholder="e.g. 8K@24fps, 4K@60fps" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Battery Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('battery-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">Battery & Charging</h2>
-                    <svg id="battery-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="battery-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Battery Capacity</label>
-                            <input type="text" name="battery_capacity" placeholder="e.g. 5000 mAh" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Connectivity Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('connectivity-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">Connectivity</h2>
-                    <svg id="connectivity-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="connectivity-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Network Support</label>
-                            <input type="text" name="network_support" placeholder="e.g. 5G, 4G LTE, Dual SIM" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Wi-Fi</label>
-                            <input type="text" name="wifi" placeholder="e.g. Wi-Fi 6, Dual-Band" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Bluetooth</label>
-                            <input type="text" name="bluetooth" placeholder="e.g. Bluetooth 5.3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" name="nfc" id="nfc" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="nfc" class="ml-2 block text-sm text-gray-700">NFC Support</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Body & Sensors Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('body-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">Body & Sensors</h2>
-                    <svg id="body-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="body-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Dimensions</label>
-                            <input type="text" name="dimensions" placeholder="e.g. 163.7 x 76.2 x 8.9 mm" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Weight</label>
-                            <input type="text" name="weight" placeholder="e.g. 205 grams" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Fingerprint Sensor</label>
-                            <input type="text" name="fingerprint_sensor" placeholder="e.g. Under-display" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" name="face_unlock" id="face_unlock" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="face_unlock" class="ml-2 block text-sm text-gray-700">Face Unlock</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OS & Other Section -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <button type="button" class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleSection('os-section')">
-                    <h2 class="text-xl font-semibold text-gray-700">OS & Other Features</h2>
-                    <svg id="os-arrow" class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div id="os-section" class="px-6 pb-6 hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Operating System</label>
-                            <input type="text" name="operating_system" placeholder="e.g. Android 13" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" name="audio_jack" id="audio_jack" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="audio_jack" class="ml-2 block text-sm text-gray-700">3.5mm Audio Jack</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEO Information Card -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">SEO Information</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="id_meta_title" class="block text-sm font-medium text-gray-700 mb-1">Meta Title</label>
-                    {{ form.meta_title }}
-                    {% if form.meta_title.errors %}
-                    <p class="mt-1 text-sm text-red-600">
-                        {{ form.meta_title.errors.0 }}
-                    </p>
-                    {% endif %}
-                    <p class="mt-1 text-sm text-gray-500">Recommended: 50-60 characters</p>
-                </div>
-                <div>
-                    <label for="id_meta_description" class="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
-                    {{ form.meta_description }}
-                    {% if form.meta_description.errors %}
-                    <p class="mt-1 text-sm text-red-600">
-                        {{ form.meta_description.errors.0 }}
-                    </p>
-                    {% endif %}
-                    <p class="mt-1 text-sm text-gray-500">Recommended: 150-160 characters</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Status & Submission -->
-        <div class="bg-white shadow rounded-lg p-6">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                <div class="space-y-2">
-                    <div class="flex items-center">
-                        <input type="checkbox" name="is_active" id="is_active" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="is_active" class="ml-2 block text-sm text-gray-700">Active (Visible to customers)</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" name="is_featured" id="is_featured" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="is_featured" class="ml-2 block text-sm text-gray-700">Featured (Show on homepage)</label>
+            <!-- Technical Specifications -->
+            <div class="dark-card rounded-xl border border-gray-700 overflow-hidden">
+                <div class="gradient-header-green px-6 py-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-microchip text-white text-lg"></i>
+                        <h2 class="text-xl font-semibold text-white">Required Specifications</h2>
                     </div>
                 </div>
                 
-                <div class="flex justify-end space-x-3">
-                    <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Save Product
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-memory mr-2 text-blue-400"></i>RAM*
+                            </label>
+                            <select name="ram" required class="form-select">
+                                <option value="2 GB">2 GB</option>
+                                <option value="4 GB" selected>4 GB</option>
+                                <option value="6 GB">6 GB</option>
+                                <option value="8 GB">8 GB</option>
+                                <option value="12 GB">12 GB</option>
+                                <option value="16 GB">16 GB</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-hdd mr-2 text-yellow-400"></i>Storage*
+                            </label>
+                            <select name="storage" required class="form-select">
+                                <option value="32 GB">32 GB</option>
+                                <option value="64 GB">64 GB</option>
+                                <option value="128 GB" selected>128 GB</option>
+                                <option value="256 GB">256 GB</option>
+                                <option value="512 GB">512 GB</option>
+                                <option value="1 TB">1 TB</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-microchip mr-2 text-purple-400"></i>Processor*
+                            </label>
+                            <input type="text" name="processor" value="{{ form.processor.value|default:'' }}" required class="form-input" placeholder="e.g. Snapdragon 8 Gen 2">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-camera mr-2 text-red-400"></i>Rear Camera*
+                            </label>
+                            <input type="text" name="rear_camera" value="{{ form.rear_camera.value|default:'' }}" required class="form-input" placeholder="e.g. 108MP Triple Camera">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Specifications -->
+            <div class="space-y-4">
+                <!-- Display -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('display')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-desktop text-blue-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Display Specifications</h3>
+                            <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="display-arrow"></i>
                     </button>
-                    <a href="{% url 'reviews:home' %}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Cancel
-                    </a>
+                    <div id="display-content" class="hidden px-6 pb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Screen Size</label>
+                                <input type="text" name="screen_size" class="form-input" placeholder="e.g. 6.7 inches">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Resolution</label>
+                                <input type="text" name="resolution" class="form-input" placeholder="e.g. 1440x3200 pixels">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Refresh Rate</label>
+                                <input type="text" name="refresh_rate" class="form-input" placeholder="e.g. 120Hz">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Display Type</label>
+                                <input type="text" name="display_type" class="form-input" placeholder="e.g. AMOLED">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('camera')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-camera text-red-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Camera Specifications</h3>
+                            <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="camera-arrow"></i>
+                    </button>
+                    <div id="camera-content" class="hidden px-6 pb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Front Camera</label>
+                                <input type="text" name="front_camera" class="form-input" placeholder="e.g. 32MP Selfie Camera">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Video Recording</label>
+                                <input type="text" name="video_recording" class="form-input" placeholder="e.g. 8K@24fps, 4K@60fps">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Battery -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('battery')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-battery-full text-green-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Battery & Charging</h3>
+                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="battery-arrow"></i>
+                    </button>
+                    <div id="battery-content" class="hidden px-6 pb-6">
+                        <div class="form-group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Battery Capacity</label>
+                            <input type="text" name="battery_capacity" class="form-input" placeholder="e.g. 5000 mAh">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connectivity -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('connectivity')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-wifi text-cyan-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Connectivity</h3>
+                            <span class="bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="connectivity-arrow"></i>
+                    </button>
+                    <div id="connectivity-content" class="hidden px-6 pb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Network Support</label>
+                                <input type="text" name="network_support" class="form-input" placeholder="e.g. 5G, 4G LTE, Dual SIM">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Wi-Fi</label>
+                                <input type="text" name="wifi" class="form-input" placeholder="e.g. Wi-Fi 6, Dual-Band">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Bluetooth</label>
+                                <input type="text" name="bluetooth" class="form-input" placeholder="e.g. Bluetooth 5.3">
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" name="nfc" id="nfc">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <label for="nfc" class="text-white font-medium">NFC Support</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body & Sensors -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('body')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-mobile-alt text-indigo-400"></i>
+                            <h3 class="text-lg font-semibold text-white">Body & Sensors</h3>
+                            <span class="bg-indigo-500/20 text-indigo-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="body-arrow"></i>
+                    </button>
+                    <div id="body-content" class="hidden px-6 pb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Dimensions</label>
+                                <input type="text" name="dimensions" class="form-input" placeholder="e.g. 163.7 x 76.2 x 8.9 mm">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Weight</label>
+                                <input type="text" name="weight" class="form-input" placeholder="e.g. 205 grams">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Fingerprint Sensor</label>
+                                <input type="text" name="fingerprint_sensor" class="form-input" placeholder="e.g. Under-display">
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" name="face_unlock" id="face_unlock">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <label for="face_unlock" class="text-white font-medium">Face Unlock</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OS & Other -->
+                <div class="dark-card rounded-xl border border-gray-700 overflow-hidden spec-section">
+                    <button type="button" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-600/50 transition-colors" onclick="toggleSection('os')">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-cog text-orange-400"></i>
+                            <h3 class="text-lg font-semibold text-white">OS & Other Features</h3>
+                            <span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full text-xs">Optional</span>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400 transform transition-transform" id="os-arrow"></i>
+                    </button>
+                    <div id="os-content" class="hidden px-6 pb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Operating System</label>
+                                <input type="text" name="operating_system" class="form-input" placeholder="e.g. Android 13">
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" name="audio_jack" id="audio_jack">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <label for="audio_jack" class="text-white font-medium">3.5mm Audio Jack</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
 
+            <!-- SEO Information -->
+            <div class="dark-card rounded-xl border border-gray-700 overflow-hidden">
+                <div class="gradient-header-purple px-6 py-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-search text-white text-lg"></i>
+                        <h2 class="text-xl font-semibold text-white">SEO Information</h2>
+                    </div>
+                </div>
+                
+                <div class="p-6 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-group">
+                            <label for="id_meta_title" class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-heading mr-2 text-purple-400"></i>Meta Title
+                            </label>
+                            {{ form.meta_title }}
+                            {% if form.meta_title.errors %}
+                            <p class="mt-1 text-sm text-red-400">
+                                {{ form.meta_title.errors.0 }}
+                            </p>
+                            {% endif %}
+                            <div class="flex justify-between mt-1">
+                                <p class="text-xs text-gray-500">Recommended: 50-60 characters</p>
+                                <span class="text-xs text-gray-400" id="title-counter">0/60</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_meta_description" class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fas fa-align-left mr-2 text-pink-400"></i>Meta Description
+                            </label>
+                            {{ form.meta_description }}
+                            {% if form.meta_description.errors %}
+                            <p class="mt-1 text-sm text-red-400">
+                                {{ form.meta_description.errors.0 }}
+                            </p>
+                            {% endif %}
+                            <div class="flex justify-between mt-1">
+                                <p class="text-xs text-gray-500">Recommended: 150-160 characters</p>
+                                <span class="text-xs text-gray-400" id="desc-counter">0/160</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status & Actions -->
+            <div class="dark-card rounded-xl border border-gray-700 p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="is_active" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div>
+                                <span class="text-white font-medium">Active Status</span>
+                                <p class="text-sm text-gray-400">Product will be visible to customers</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="is_featured">
+                                <span class="toggle-slider featured"></span>
+                            </label>
+                            <div>
+                                <span class="text-white font-medium">Featured Product</span>
+                                <p class="text-sm text-gray-400">Show on homepage and featured sections</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <a href="{% url 'reviews:home' %}" class="px-6 py-3 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition-colors font-medium">
+                            <i class="fas fa-times mr-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="px-6 py-3 gradient-button text-white rounded-lg transition-all font-medium shadow-lg">
+                            <i class="fas fa-plus mr-2"></i>Save Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
 <script>
 // Brand autocomplete functionality
 document.addEventListener('DOMContentLoaded', function() {
     const brandInput = document.getElementById('id_brand_name');
     const brandCache = {};
-    const datalist = document.createElement('datalist');
-    datalist.id = 'brand-suggestions';
-    document.body.appendChild(datalist);
+    const datalist = document.getElementById('brand-suggestions');
     
-    brandInput.setAttribute('list', 'brand-suggestions');
-    
-    function showBrandSuggestions(brands) {
-        datalist.innerHTML = '';
-        brands.forEach(brand => {
-            const option = document.createElement('option');
-            option.value = brand.name;
-            datalist.appendChild(option);
+    if (brandInput && datalist) {
+        brandInput.setAttribute('list', 'brand-suggestions');
+        
+        function showBrandSuggestions(brands) {
+            datalist.innerHTML = '';
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand.name;
+                datalist.appendChild(option);
+            });
+        }
+        
+        brandInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+                datalist.innerHTML = '';
+                return;
+            }
+            
+            if (brandCache[query]) {
+                showBrandSuggestions(brandCache[query]);
+                return;
+            }
+            
+            fetch(`/api/autocomplete-brands/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    brandCache[query] = data.brands;
+                    showBrandSuggestions(data.brands);
+                })
+                .catch(error => console.log('Brand autocomplete error:', error));
         });
     }
-    
-    brandInput.addEventListener('input', function() {
-        const query = this.value.trim();
-        
-        if (query.length < 2) {
-            datalist.innerHTML = '';
-            return;
-        }
-        
-        if (brandCache[query]) {
-            showBrandSuggestions(brandCache[query]);
-            return;
-        }
-        
-        fetch(`/api/autocomplete-brands/?q=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-                brandCache[query] = data.brands;
-                showBrandSuggestions(data.brands);
-            });
-    });
 
-    // Toggle section visibility
-    window.toggleSection = function(sectionId) {
-        const section = document.getElementById(sectionId);
-        const arrow = document.getElementById(sectionId.replace('section', 'arrow'));
+    // Progress tracking
+    function updateProgress() {
+        const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+        const filledFields = Array.from(requiredFields).filter(field => field.value.trim() !== '');
+        const progress = Math.round((filledFields.length / requiredFields.length) * 100);
         
-        if (section.classList.contains('hidden')) {
-            section.classList.remove('hidden');
-            arrow.classList.add('rotate-180');
-        } else {
-            section.classList.add('hidden');
-            arrow.classList.remove('rotate-180');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        if (progressBar && progressText) {
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '% Complete';
         }
     }
-});
 
-// Character counters for SEO fields
-document.addEventListener('DOMContentLoaded', function() {
+    // Section toggle
+    window.toggleSection = function(sectionName) {
+        const content = document.getElementById(sectionName + '-content');
+        const arrow = document.getElementById(sectionName + '-arrow');
+        const section = content.closest('.spec-section');
+        
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            content.classList.add('animate-slide-down');
+            arrow.style.transform = 'rotate(180deg)';
+            section.classList.add('expanded');
+        } else {
+            content.classList.add('hidden');
+            content.classList.remove('animate-slide-down');
+            arrow.style.transform = 'rotate(0deg)';
+            section.classList.remove('expanded');
+        }
+    }
+
+    // Character counters for SEO fields
     const metaTitle = document.getElementById('id_meta_title');
     const metaDesc = document.getElementById('id_meta_description');
     
     if (metaTitle) {
-        const titleCounter = document.createElement('div');
-        titleCounter.className = 'text-xs text-gray-500 mt-1 text-right';
-        metaTitle.parentNode.appendChild(titleCounter);
-        
         metaTitle.addEventListener('input', function() {
-            titleCounter.textContent = `${this.value.length}/60 characters`;
+            const counter = document.getElementById('title-counter');
+            if (counter) {
+                counter.textContent = this.value.length + '/60';
+                counter.className = this.value.length > 60 ? 'text-xs text-red-400' : 'text-xs text-gray-400';
+            }
         });
+        // Initial count
+        const initialTitleCount = metaTitle.value ? metaTitle.value.length : 0;
+        const titleCounter = document.getElementById('title-counter');
+        if (titleCounter) {
+            titleCounter.textContent = initialTitleCount + '/60';
+        }
     }
     
     if (metaDesc) {
-        const descCounter = document.createElement('div');
-        descCounter.className = 'text-xs text-gray-500 mt-1 text-right';
-        metaDesc.parentNode.appendChild(descCounter);
-        
         metaDesc.addEventListener('input', function() {
-            descCounter.textContent = `${this.value.length}/160 characters`;
+            const counter = document.getElementById('desc-counter');
+            if (counter) {
+                counter.textContent = this.value.length + '/160';
+                counter.className = this.value.length > 160 ? 'text-xs text-red-400' : 'text-xs text-gray-400';
+            }
         });
+        // Initial count
+        const initialDescCount = metaDesc.value ? metaDesc.value.length : 0;
+        const descCounter = document.getElementById('desc-counter');
+        if (descCounter) {
+            descCounter.textContent = initialDescCount + '/160';
+        }
+    }
+
+    // Progress tracking for all form inputs
+    const formInputs = document.querySelectorAll('input, select, textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('input', updateProgress);
+        input.addEventListener('change', updateProgress);
+    });
+
+    // Initial progress update
+    updateProgress();
+
+    // Image upload preview
+    const imageUpload = document.getElementById('id_image');
+    if (imageUpload) {
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.createElement('img');
+                    preview.src = e.target.result;
+                    preview.className = 'w-full h-32 object-cover rounded-lg mt-3';
+                    
+                    const uploadArea = imageUpload.closest('.border-dashed');
+                    const existingPreview = uploadArea.querySelector('img');
+                    if (existingPreview) {
+                        existingPreview.remove();
+                    }
+                    uploadArea.appendChild(preview);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Style form fields to match dark theme
+    const allInputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="email"], textarea, select');
+    allInputs.forEach(input => {
+        input.classList.add('form-input');
+    });
+
+    // Handle price field with dollar sign padding
+    const priceField = document.getElementById('id_price');
+    if (priceField) {
+        priceField.style.paddingLeft = '2rem';
+        priceField.classList.add('form-input');
+    }
+
+    // Add custom styling to Django form fields
+    const nameField = document.getElementById('id_name');
+    const brandField = document.getElementById('id_brand_name');
+    const categoryField = document.getElementById('id_category');
+    const descriptionField = document.getElementById('id_description');
+    const metaTitleField = document.getElementById('id_meta_title');
+    const metaDescField = document.getElementById('id_meta_description');
+    
+    if (nameField) nameField.classList.add('form-input');
+    if (brandField) {
+        brandField.classList.add('form-input');
+        brandField.style.paddingRight = '2.5rem';
+    }
+    if (categoryField) categoryField.classList.add('form-select');
+    if (descriptionField) {
+        descriptionField.classList.add('form-input');
+        descriptionField.style.resize = 'none';
+    }
+    if (metaTitleField) metaTitleField.classList.add('form-input');
+    if (metaDescField) {
+        metaDescField.classList.add('form-input');
+        metaDescField.style.resize = 'none';
+    }
+
+    // Initialize character counters on page load
+    if (metaTitleField && metaTitleField.value) {
+        const titleCounter = document.getElementById('title-counter');
+        if (titleCounter) {
+            titleCounter.textContent = metaTitleField.value.length + '/60';
+        }
+    }
+    
+    if (metaDescField && metaDescField.value) {
+        const descCounter = document.getElementById('desc-counter');
+        if (descCounter) {
+            descCounter.textContent = metaDescField.value.length + '/160';
+        }
     }
 });
 </script>
-
-<style>
-/* Form field styling */
-input[type="text"],
-input[type="number"],
-textarea,
-select {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: #374151;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-textarea:focus,
-select:focus {
-    border-color: #6366f1;
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
-}
-
-/* Custom checkbox styling */
-input[type="checkbox"] {
-    border-color: #d1d5db;
-}
-
-input[type="checkbox"]:checked {
-    background-color: #6366f1;
-    border-color: #6366f1;
-}
-
-/* Section toggle animation */
-.rotate-180 {
-    transform: rotate(180deg);
-}
-
-/* Required field indicators */
-label[for]:after {
-    content: " *";
-    color: #ef4444;
-}
-
-label[for="id_meta_title"]:after,
-label[for="id_meta_description"]:after {
-    content: "";
-}
-</style>
 {% endblock %}

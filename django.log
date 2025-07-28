@@ -6099,3 +6099,509 @@ Initial form for GET: {}
 "GET /products/ HTTP/1.1" 200 59447
 Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
 "GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /products/ HTTP/1.1" 200 59447
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 304 0
+"GET /media/products/s25.jpg HTTP/1.1" 304 0
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59359
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59359
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38286
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45163
+"GET / HTTP/1.1" 200 46610
+"GET /products/ HTTP/1.1" 200 59435
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 304 0
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45163
+"GET /business/analytics/ HTTP/1.1" 200 51037
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53822
+"GET /product/add/ HTTP/1.1" 200 37040
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53822
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 45163
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\models.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38294
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET / HTTP/1.1" 200 46610
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+"GET /products/ HTTP/1.1" 200 59447
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58056
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58056
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58056
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58056
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58056
+"GET /admin/auth/user/ HTTP/1.1" 200 23474
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /products/ HTTP/1.1" 200 59447
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58053
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+AI summary failed: Yseop/roberta-base-aspect-sentiment is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 58053
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+Generated new AI summary for product fc30e85d-89f7-467a-9794-b1683c1540b6
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38286
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET /product/iphone-iphone-12-pro/ HTTP/1.1" 200 59581
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /product/add/ HTTP/1.1" 200 50314
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Mo HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Mot HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Moti HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Mot HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Moto HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Motor HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Motoro HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Motorol HTTP/1.1" 405 0
+Method Not Allowed (GET): /api/autocomplete-brands/
+"GET /api/autocomplete-brands/?q=Motorola HTTP/1.1" 405 0
+"POST /product/add/ HTTP/1.1" 302 0
+No valid reviews with product association found
+"GET /product/motorola-motorola-edge-40/ HTTP/1.1" 200 27755
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview_Qk8XfI4.png HTTP/1.1" 200 254495
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 49070
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview_Qk8XfI4.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 46612
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET / HTTP/1.1" 200 46594
+"GET / HTTP/1.1" 200 46371
+"GET / HTTP/1.1" 200 46371
+"GET / HTTP/1.1" 200 46373
+"GET / HTTP/1.1" 200 46295
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /products/ HTTP/1.1" 200 58220
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview_Qk8XfI4.png HTTP/1.1" 200 254495
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET / HTTP/1.1" 200 46295
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 200 567854
+"GET /about/ HTTP/1.1" 200 24468
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /dashboard/ HTTP/1.1" 302 0
+"GET /dashboard/business/ HTTP/1.1" 200 48754
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview_Qk8XfI4.png HTTP/1.1" 200 254495
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /admin/auth/user/3/change/ HTTP/1.1" 200 38456
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"POST /admin/auth/user/3/change/ HTTP/1.1" 302 0
+"GET /admin/auth/user/ HTTP/1.1" 200 23667
+"GET /admin/jsi18n/ HTTP/1.1" 200 3342
+"GET / HTTP/1.1" 200 46291
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 200 567854
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 53946
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /api/product-autocomplete/?q=sa HTTP/1.1" 200 1238
+"GET /api/product-autocomplete/?q=sam HTTP/1.1" 200 1238
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 63972
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /products/ HTTP/1.1" 200 63207
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview_Qk8XfI4.png HTTP/1.1" 200 254495
+"GET /media/products/iphone_12_pro_max.webp HTTP/1.1" 200 25594
+"GET /media/products/samsung_galaxy_s25_ultra_small_1738647377070.webp HTTP/1.1" 200 2260
+"GET /media/products/s25.jpg HTTP/1.1" 200 39279
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 200 397874
+"GET /media/products/Iphone_16_pro_max_Ll6OWXG.webp HTTP/1.1" 200 9228
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 200 254495
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_72z4wNL.png HTTP/1.1" 200 175896
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 200 175845
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 200 9228
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+"GET /about/ HTTP/1.1" 200 24464
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+Initial form for GET: {}
+"GET /review/add/ HTTP/1.1" 200 63972
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+"GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 12008
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Irosh\Desktop\Feedme\reviews\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Initial form for GET: {}
+Internal Server Error: /review/add/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 822, in add_review_view
+    return render(request, 'reviews/review_form.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 1421, in url
+    viewname = parser.compile_filter(bits[1])
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: 'reviews:terms_of_service' from ''url 'reviews:terms_of_service'
+"GET /review/add/ HTTP/1.1" 500 226354
+Internal Server Error: /about/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1474, in about_us
+    return render(request, 'reviews/aboutus.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 1421, in url
+    viewname = parser.compile_filter(bits[1])
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: 'reviews:terms_of_service' from ''url 'reviews:terms_of_service'
+"GET /about/ HTTP/1.1" 500 214916
+Internal Server Error: /about/
+Traceback (most recent call last):
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Irosh\Desktop\Feedme\reviews\views.py", line 1474, in about_us
+    return render(request, 'reviews/aboutus.html', context)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loader_tags.py", line 199, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 208, in select_template
+    return self.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\defaulttags.py", line 1421, in url
+    viewname = parser.compile_filter(bits[1])
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 609, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Irosh\Desktop\Feedme\venv\Lib\site-packages\django\template\base.py", line 710, in __init__
+    raise TemplateSyntaxError(
+    ...<2 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: 'reviews:cookie_policy' from ''url 'reviews:cookie_policy'
+"GET /about/ HTTP/1.1" 500 213955
+"GET /about/ HTTP/1.1" 200 24510
+"GET /privacy-policy/ HTTP/1.1" 200 14895
+"GET / HTTP/1.1" 200 46337
+"GET /media/products/Iphone_16_pro_max.webp HTTP/1.1" 304 0
+"GET /media/products/1samsung_galaxy_23_ultra-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1samsung-galaxy-z-fold-7-removebg-preview_n0EwSAY.png HTTP/1.1" 304 0
+"GET /media/products/11Iphone_12-removebg-preview.png HTTP/1.1" 304 0
+"GET /media/products/1google-pixel-8-pro-03-removebg-preview.png HTTP/1.1" 304 0
